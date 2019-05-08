@@ -1,0 +1,192 @@
+﻿enum DataTypes{
+	S
+	DT
+	B
+	N
+}
+
+#  all the edges originating from or terminating at a vertex
+type ConnectedEdges {
+	#  all the edges connected to the vertex
+	all: [Edge]!
+	#  only the edges terminating at the vertex
+	inbound: [Edge]!
+	#  only the edges originating at the vertex
+	outbound: [Edge]!
+}
+
+#  designates a relationship between two vertexes
+type Edge {
+	#  the unique identifier of the edge
+	internal_id: ID!
+	#  the descriptive label for the edge
+	edge_label: String!
+	identifier_stem: String!
+	id_value: String!
+	#  the properties of the edge, filterable by property name
+	edge_properties(property_names: [String]): [ObjectProperty]!
+	#  the vertex the edge originates from
+	from_vertex: Vertex!
+	#  the vertex the edge terminates at
+	to_vertex: Vertex!
+}
+
+#  the connection object used to inspect and paginate ConnectedEdges
+type EdgeConnection {
+	#  the connected edges, grouped by their direction (all, inbound, outbound), filterable by edge_label
+	edges(edge_labels: [String]): ConnectedEdges!
+	#  the count of the edges terminating at the vertex
+	in_count: Int!
+	#  the count of the edges originating at the vertex
+	out_count: Int!
+	#  information about the returned page of the pagination
+	page_info: PageInfo!
+	#  the count of all the edges originating from, or terminating at, the vertex
+	total_count: Int!
+}
+
+# input type allowing complex edges to be inserted
+input InputEdge {
+	internal_id: ID!
+	edge_label: String!
+	source_vertex_internal_id: ID!
+	target_vertex_internal_id: ID!
+	edge_properties: InputProperties
+}
+
+# input type used for properties that are PHI or HIPAA sensitive
+input InputSensitiveProperty {
+	# name of the object property
+	property_name: String!
+	# the sensitive data expressed as a string
+	property_value: String!
+	# the data type of the sensitive information
+	data_type: DataTypes!
+	# the internal_id of the object hosting the property
+	source_internal_id: String!
+}
+
+# input type for properties stored directly onto the graph
+input InputLocalProperty {
+	# the name of hte property
+	property_name: String!
+	#  one of String, Integer, DateTime
+	data_type: DataTypes!
+	#  value of the property, expressed as a string
+	property_value: String!
+}
+
+# the collected inputs for declaring properties in the graph
+input InputProperties{
+	# a list of object properties stored locally in the graph
+	local_properties: [InputLocalProperty!]
+	# a list of sensitive object properties, to be stored elsewhere and
+	# referenced by pointer
+	sensitive_properties: [InputSensitiveProperty!]
+	# a list of stored object properties, which have already been stored elsewhere
+	stored_properties: [InputStoredProperty!]
+}
+
+# input type allowing complex vertexes to be inserted
+input InputVertex {
+	# the uniquely identifying ID value for the vertex
+	internal_id: ID!
+	# the type of vertex
+	vertex_type: String!
+	# the uniquely identifiable pointer for the vertex in the remote system
+	id_value: InputLocalProperty!
+	identifier_stem: InputLocalProperty!
+	vertex_properties: InputProperties
+}
+
+# input type for declaring properties stored elsewhere
+input InputStoredProperty{
+	property_name: String!
+	storage_class: String!
+	storage_uri: String!
+	data_type: String!
+}
+
+type Mutation {
+	# adds a vertex to the graph and index
+	addVertex(vertex: InputVertex!): String
+	deleteVertex(internal_id: ID!): String
+	addEdge(edge: InputEdge): String
+	deleteEdge(internal_id: ID!): String
+}
+
+#  a single property set on a vertex or edge
+type ObjectProperty {
+	# the name of the property
+	property_name: String!
+	property_value: ObjectPropertyValue
+}
+
+# the various ways of storing data into the graph as properties of a vertex
+union ObjectPropertyValue = LocalPropertyValue | SensitivePropertyValue | StoredPropertyValue
+
+# for vertex properties stored directly into the graph
+type LocalPropertyValue {
+	#  one of String, Integer, DateTime
+	data_type: String!
+	#  value of the property, expressed as a string
+	property_value: String!
+}
+
+# a vertex property which contains PHI or HIPAA relevant information, the actual vertex property holds an opaque pointer to a seperate storage location
+type SensitivePropertyValue{
+	# accepted values to store into the graph
+	data_type: DataTypes!
+	# the uniquely identifying pointer for the sensitive data
+	pointer: String!
+}
+
+# a vertex property which contains a large amount of information, or information not agreable to being strung and stored in the graph, instead archived elsewhere
+type StoredPropertyValue{
+	# how the object is stored, currently S3 is supported
+	storage_class: String!
+	# a URI to find and retrieve the object,
+	# for S3 this is the object ARN
+	storage_uri: String!
+	# a descsriptor of the data as it is stored remotely
+	data_type: String!
+}
+
+#  information regarding a single returned page of a pagination
+type PageInfo {
+	#  are there more pages after this one
+	more: Boolean!
+	#  string pagination token returned to retrieve the next page of objects
+	token: ID!
+}
+
+type Query {
+	#  retrieves an edge by internal_id
+	edge(internal_id: ID!): Edge
+	#  retrieves additional edges, given an edge connection
+	edges(internal_id: ID!, token: ID): EdgeConnection
+	#  retrieves a vertex determined by it's internal_id
+	vertex(internal_id: ID!, token: ID): Vertex
+}
+
+#  any object stored in the graph
+type Vertex {
+	#  the unique internal identifier of the vertex
+	internal_id: ID!
+	#  the type of object represented by the vertex
+	vertex_type: String!
+	# the object identifier, which combines with the the id_value to generate
+	# a unique reference to an object in a remote source
+	identifier_stem: ObjectProperty!
+	# the unique pointer which identifies an object from the other peer objects in a remote system
+	id_value: ObjectProperty!
+	#  the properties of the vertex, filterable by property name
+	vertex_properties(property_names: [String]): [ObjectProperty]!
+	#  the connection object used to paginate and inspect the edges connected to the vertex
+	connected_edges(page_size: Int, token: ID): EdgeConnection
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}

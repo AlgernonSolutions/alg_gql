@@ -1,0 +1,10 @@
+#set( $myMap = {
+  "context" : $context,
+  "field_name": "connected_edges",
+  "type_name": "Vertex"
+} )
+{
+    "version" : "2017-02-28",
+    "operation": "Invoke",
+    "payload": $util.toJson($myMap)
+}

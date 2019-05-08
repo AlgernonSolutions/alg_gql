@@ -1,0 +1,10 @@
+#set( $myMap = {
+  "context" : $context,
+  "field_name": "vertex",
+  "type_name": "Query"
+} )
+{
+    "version" : "2017-02-28",
+    "operation": "Invoke",
+    "payload": $util.toJson($myMap)
+}

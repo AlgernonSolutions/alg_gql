@@ -1,0 +1,219 @@
+{
+  "@type": "g:List",
+  "@value": [
+    {
+      "@type": "g:Map",
+      "@value": [
+        "secret_number",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 499414204
+                },
+                "value": "ddb9c0da497e9d2a6235af4ff2cfcdf578b366009a9fc4482e7fe62fd4e8ea38d4ac0b6834ceff66a0d7762a021a57f1a02fd67beed703436d096b30ee2941dd",
+                "label": "secret_number"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -1066561464
+                },
+                "value": "N",
+                "label": "secret_number"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -1602474544
+                },
+                "value": "SensitivePropertyValue",
+                "label": "secret_number"
+              }
+            }
+          ]
+        },
+        "id_source",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -646384279
+                },
+                "value": "some_id_source",
+                "label": "id_source"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -2078770390
+                },
+                "value": "S",
+                "label": "id_source"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -1194721236
+                },
+                "value": "LocalPropertyValue",
+                "label": "id_source"
+              }
+            }
+          ]
+        },
+        "identifier_stem",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 599783618
+                },
+                "value": "#some_id_source#some_id_type#algernon#1001",
+                "label": "identifier_stem"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 966976522
+                },
+                "value": "S",
+                "label": "identifier_stem"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1851025676
+                },
+                "value": "LocalPropertyValue",
+                "label": "identifier_stem"
+              }
+            }
+          ]
+        },
+        "stored_html",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1636304227
+                },
+                "value": "s3://bucket_name/object_name",
+                "label": "stored_html"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 32029658
+                },
+                "value": "HTML",
+                "label": "stored_html"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -537640020
+                },
+                "value": "StoredPropertyValue",
+                "label": "stored_html"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -36961307
+                },
+                "value": "S3",
+                "label": "stored_html"
+              }
+            }
+          ]
+        },
+        "id_value",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1331154018
+                },
+                "value": {
+                  "@type": "g:Int32",
+                  "@value": 1001
+                },
+                "label": "id_value"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1331125405
+                },
+                "value": "N",
+                "label": "id_value"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -2079792582
+                },
+                "value": "LocalPropertyValue",
+                "label": "id_value"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

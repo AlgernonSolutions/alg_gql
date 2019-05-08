@@ -1,0 +1,154 @@
+{
+  "@type": "g:List",
+  "@value": [
+    {
+      "@type": "g:Vertex",
+      "@value": {
+        "id": "1235fghjgjdj`213",
+        "label": "MockVertex",
+        "properties": {
+          "secret_number": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 5458800
+                },
+                "value": "660aec4998f2aeee59e1612d0c1afc3c0c672be11fb10dc6ef971fcd187c13f9f0bccbc4e0a5f98c547ca7e37a53f93d363a33a1a966a65c4bf7d2147ef98637",
+                "label": "secret_number"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1089527660
+                },
+                "value": "N",
+                "label": "secret_number"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 553614580
+                },
+                "value": "SensitivePropertyValue",
+                "label": "secret_number"
+              }
+            }
+          ],
+          "id_source": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 2020626877
+                },
+                "value": "Algernon",
+                "label": "id_source"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 77318734
+                },
+                "value": "S",
+                "label": "id_source"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 961367888
+                },
+                "value": "LocalPropertyValue",
+                "label": "id_source"
+              }
+            }
+          ],
+          "id_type": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1807667675
+                },
+                "value": "Employees",
+                "label": "id_type"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -353829203
+                },
+                "value": "S",
+                "label": "id_type"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 530219951
+                },
+                "value": "LocalPropertyValue",
+                "label": "id_type"
+              }
+            }
+          ],
+          "id_name": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 2122643967
+                },
+                "value": "emp_id",
+                "label": "id_name"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -547857986
+                },
+                "value": "S",
+                "label": "id_name"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 336191168
+                },
+                "value": "LocalPropertyValue",
+                "label": "id_name"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

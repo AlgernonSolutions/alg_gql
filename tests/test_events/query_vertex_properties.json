@@ -1,0 +1,66 @@
+{
+  "context": {
+    "arguments": {},
+    "identity": {
+      "accountId": "726075243133",
+      "cognitoIdentityPoolId": null,
+      "cognitoIdentityId": null,
+      "sourceIp": ["72.21.217.143"],
+      "username": "AROA2SDLU7J62MMDYWKJB:jcubeta",
+      "userArn": "arn:aws:sts::726075243133:assumed-role/OrganizationAccountAccessRole/jcubeta",
+      "cognitoIdentityAuthType": null,
+      "cognitoIdentityAuthProvider": null
+    },
+    "source": {
+      "internal_id": "1235fghjgjdj`213",
+      "vertex_type": "MockVertex",
+      "__typename": "Vertex",
+      "vertex_properties": [
+        {
+          "__typename": "ObjectProperty",
+          "property_name": "secret_number",
+          "property_value": {
+            "__typename": "ObjectPropertyValue",
+            "data_type": "S",
+            "property_value": "660aec4998f2aeee59e1612d0c1afc3c0c672be11fb10dc6ef971fcd187c13f9f0bccbc4e0a5f98c547ca7e37a53f93d363a33a1a966a65c4bf7d2147ef98637"
+          }
+        },
+        {
+          "__typename": "ObjectProperty",
+          "property_name": "id_source",
+          "property_value": {
+            "__typename": "ObjectPropertyValue",
+            "data_type": "S",
+            "property_value": "Algernon"
+          }
+        },
+        {
+          "__typename": "ObjectProperty",
+          "property_name": "id_type",
+          "property_value": {
+            "__typename": "ObjectPropertyValue",
+            "data_type": "S",
+            "property_value": "Employees"
+          }
+        },
+        {
+          "__typename": "ObjectProperty",
+          "property_name": "id_name",
+          "property_value": {
+            "__typename": "ObjectPropertyValue",
+            "data_type": "S",
+            "property_value": "emp_id"
+          }
+        }
+      ]
+    },
+    "result": null,
+    "request": {"headers": {"content-encoding": "amz-1.0", "x-forwarded-for": "72.21.217.143, 70.132.60.84", "amz-sdk-invocation-id": "5ddc963d-b3a3-97f5-87ad-5e7a34938b13", "cloudfront-viewer-country": "US", "cloudfront-is-tablet-viewer": "false", "x-amz-security-token": "AgoGb3JpZ2luEFgaCXVzLWVhc3QtMSKAAktO4BnvbLy9pWQ0egexK5qQg5yd6j7RR573tCuRKJKqN+NuCxYs7lw+/7JQzf+TK6WgJ3O0+COAfmpeAgeDTgEe0qc2abMQOiMjqkCd/N5jfiJtvT5/aZZNybSn/E9/gELqCcvskyd7Wa7DPBfVHjznRWVjv4T2TtyhxfNzangtetAdvEZUdqiUb2ykz+Tf4p7N+28Yvi6lA9pkp87fR79eOK747aNJ9y2OXdqUOe53go3q535ZANokbPT01TMGpn3UiCKTA5jRANOaJ7LrGxX9l7H1o6A8o12Ho/ip40HzCo7Gn5HaFs6s4U+5Q6zKLi+8HK7bb09Eaot1wXiia3wq3wMI3f//////////ARAAGgw3MjYwNzUyNDMxMzMiDG+9Uu/G7PWugdRDXSqzA1rRFqEnhlyp7Ftxsxfm002AVOfsX2gZZyNwNzrPl9Hv9ouj06Pgs2FlIto3M9+gQuzfnz9nQCSm4y3RAB6pX5QP4Ew9UZ5vE1nnvkecnU2LyGHCxmn8UNf3FPAVWFzp/NPKJEKH69aR4aEC/Pnc18IHOThAfpm55PlK/5+YQZOv6RJg4MY/xIRXAiJrRfzdDlzq//mH8cw6mcJkkHJcC47D1xp+D0Oz+0PdWhH62JrI1ieCkmly8cwuSWODyKN1QG06gzaUQzLeKhkNd+MK6QqeA4wjWB9R6gkICxSw0k25oIPpuLUF+N1BBmGSHYtWXrp+Y5WZBXp1knWCWAcW5BhPc1hqsR2qqHGzTZ5BNqO2vVsBVi8LrZXPuXeqvn+Lxq+B+hjBo23zDsCQCwBn3nWNYe6Tb9efursxdcYgJ9mxP8J9tjAhJxcvjoM57YENO3G9cQORvjgS/bGLymz/pTVLT+Q+x9X4BLbA4v1UuwwN49uV8jh8Lk86qC1X9FxIOvl3s5usCGKr9jyFG+yeTUHhDOFtHnZjMfpUlrJ5TxAEc8MVCxJpUcvSdaT2qmhwQQrnCzCahIPmBQ==", "via": "1.1 ade18dc841d2e1cc8ef49611c5d4c93e.cloudfront.net (CloudFront)", "content-type": "application/json", "cloudfront-forwarded-proto": "https", "x-amzn-trace-id": "Root=1-5cc0c8f4-d81a72e8df6c2b296447dd44", "x-amz-cf-id": "MS6Y_-noIGuAtUnik3XO3Ig4kUgXKfk1J004woudU0_FMP895p8qCw==", "authorization": "AWS4-HMAC-SHA256 Credential=ASIA2SDLU7J63QCIEHHF/20190424/us-east-1/appsync/aws4_request, SignedHeaders=accept;content-encoding;content-length;content-type;host;x-amz-date;x-amz-security-token, Signature=0f725ffb69d15eb9f40d3741a6ccfc4e3407cf57f93ef0192a9c05ed2ab5232b", "content-length": "2742", "amz-sdk-retry": "0/0/500", "x-forwarded-proto": "https", "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com", "user-agent": "aws-internal/3 aws-sdk-java/1.11.465 Linux/4.9.137-0.1.ac.218.74.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.192-b12 java/1.8.0_192", "cloudfront-is-desktop-viewer": "true", "accept": "application/json, text/javascript", "cloudfront-is-mobile-viewer": "false", "x-forwarded-port": "443", "x-amz-date": "20190424T203708Z", "cloudfront-is-smarttv-viewer": "false"}},
+    "error": null,
+    "prev": null,
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "vertex_properties",
+  "type_name": "Vertex"
+}

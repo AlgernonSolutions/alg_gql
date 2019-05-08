@@ -1,0 +1,203 @@
+{
+  "@type": "g:List",
+  "@value": [
+    {
+      "@type": "g:Vertex",
+      "@value": {
+        "id": "46345747gfhdfy354365w29385fd",
+        "label": "AlgernonVertex",
+        "properties": {
+          "secret_number": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -1791888637
+                },
+                "value": "ddb9c0da497e9d2a6235af4ff2cfcdf578b366009a9fc4482e7fe62fd4e8ea38d4ac0b6834ceff66a0d7762a021a57f1a02fd67beed703436d096b30ee2941dd",
+                "label": "secret_number"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 937102991
+                },
+                "value": "N",
+                "label": "secret_number"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 401189911
+                },
+                "value": "SensitivePropertyValue",
+                "label": "secret_number"
+              }
+            }
+          ],
+          "id_source": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1357280176
+                },
+                "value": "some_id_source",
+                "label": "id_source"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -75105935
+                },
+                "value": "S",
+                "label": "id_source"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 808943219
+                },
+                "value": "LocalPropertyValue",
+                "label": "id_source"
+              }
+            }
+          ],
+          "identifier_stem": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -1691519223
+                },
+                "value": "#some_id_source#some_id_type#algernon#1001",
+                "label": "identifier_stem"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -1324326319
+                },
+                "value": "S",
+                "label": "identifier_stem"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -440277165
+                },
+                "value": "LocalPropertyValue",
+                "label": "identifier_stem"
+              }
+            }
+          ],
+          "stored_html": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 2035694113
+                },
+                "value": "HTML",
+                "label": "stored_html"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1466024435
+                },
+                "value": "StoredPropertyValue",
+                "label": "stored_html"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -1453984327
+                },
+                "value": "s3://bucket_name/other_object_name",
+                "label": "stored_html"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1966703148
+                },
+                "value": "S3",
+                "label": "stored_html"
+              }
+            }
+          ],
+          "id_value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -960148792
+                },
+                "value": {
+                  "@type": "g:Int32",
+                  "@value": 1002
+                },
+                "label": "id_value"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -960177436
+                },
+                "value": "N",
+                "label": "id_value"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -76128127
+                },
+                "value": "LocalPropertyValue",
+                "label": "id_value"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

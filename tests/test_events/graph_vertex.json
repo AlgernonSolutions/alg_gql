@@ -1,0 +1,51 @@
+{
+  "context": {
+    "arguments": {"internal_id": "1234"},
+    "identity": {
+      "accountId": "726075243133",
+      "cognitoIdentityPoolId": null,
+      "cognitoIdentityId": null,
+      "sourceIp": ["72.21.217.191"],
+      "username": "AROA2SDLU7J62MMDYWKJB:jcubeta",
+      "userArn": "arn:aws:sts::726075243133:assumed-role/OrganizationAccountAccessRole/jcubeta",
+      "cognitoIdentityAuthType": null,
+      "cognitoIdentityAuthProvider": null
+    },
+    "source": null,
+    "result": null,
+    "request": {
+      "headers": {
+        "content-encoding": "amz-1.0",
+        "x-forwarded-for": "72.21.217.191, 70.132.60.83",
+        "amz-sdk-invocation-id": "e6da3ae2-c224-4f0e-6d21-31d6fd640c0a",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "x-amz-security-token": "AgoGb3JpZ2luEDwaCXVzLWVhc3QtMSKAAl9TXVI8vB7Ph8pcIcfub82TwDlke6uIEf83wkdtF4fOvsbDrD2lG+SHPCTTecIRtauusWgl+4at7N4JGGrRXKiY8C9LbzssYc5W8A72Yx9/lu55avf2WCh2mC1w8ncjLhzW9R3TKzoL87hcPrHsgBNSAJJnakm3kxZMsqQnq0lgn/AGoIhTX+A3tJYFQQyK1HY2IEva7juqyWhYARwPL4Lv/5ySHVB7joz9oh5I0Kv//mm/vHwdBtPss0zR48JMBl7cb7CBKIybTzH/2t3IKFWjVqKX7+S4ruzSjduRgrGcJX25h2ez/5Ytln8SpKy7jwDba0VtIREllrXxUdesncsq3wMIwf//////////ARAAGgw3MjYwNzUyNDMxMzMiDAR4VhuPA390IZw00SqzAwxBpWCD55vW/NXUeoxL3xXtYXcEyjN3pWU1OiHo/dN5vn4BSSY9XkGMt8K02ZeoYt1GqgFiaAfRt7lVxCdYHZcSE4SoLfnbmQZE0x4/R7HwT3W+NGTGnXdMF0EWsTa8Ou3+7XaX7MaoVyxsT0SkEqEN7LAZQyl5phmUtsWMqsp97iG/+izUdkfHF7yHWhsYBe2faEkmJkgVYj75z+eRXu4UkpJwdY/UdwKBWusMyY4EVLYQ0IKW6w+gtvZUfFvE0VqVqzoAzuM0ixBUSIHLIVU2a2+iUt5mPzCinxYYqGvUuqeRB3hll0UAxnw+zYWC3Rsmgw5n6hMuAb0S0dv9iXQKFQleIHJdFXLnPlg3MrMVBxMenIjIe0TYtNGFZG5HbDll8a6nP6rZ1aDGVhRmyXpCc4xCUKNieNd+PbGGxRmEs4o7rRLFNhVa6hxks950ODvBXSlzManzde/958xBI8TrO0Xdn4frt0eNce3KxjQeEmSLa46zJ0ty7FlhDEzqCJZaw+kxe3pWJHOLrrV5rmyLJdkXLF4F8/xgoe6AH5yfGhC6RSp5/kwMy3T4JR28Uywy5TCs6vzlBQ==",
+        "via": "1.1 9742923607374c982a5b7e9258144eab.cloudfront.net (CloudFront)",
+        "content-type": "application/json",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Root=1-5cbf38fb-0ec812fa832607c0f20a09e3",
+        "x-amz-cf-id": "ImBdItJsfNHtdmE8pTNKBWgKPKiwIu9OMGbvRW2Z-AdkXnWuRKC40g==",
+        "authorization": "AWS4-HMAC-SHA256 Credential=ASIA2SDLU7J6UQUTWS4L/20190423/us-east-1/appsync/aws4_request, SignedHeaders=accept;content-encoding;content-length;content-type;host;x-amz-date;x-amz-security-token, Signature=454c341dbee659fbb1f6c370f4a49f47b9ed8289f0c20d3d85586208779c7d3b",
+        "content-length": "936",
+        "amz-sdk-retry": "0/0/500",
+        "x-forwarded-proto": "https",
+        "host": "2b43a4omh5cltcwu3skohujkdq.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "aws-internal/3 aws-sdk-java/1.11.465 Linux/4.9.137-0.1.ac.218.74.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.192-b12 java/1.8.0_192",
+        "cloudfront-is-desktop-viewer": "true",
+        "accept": "application/json, text/javascript",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "x-amz-date": "20190423T161035Z",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": null,
+    "prev": null,
+    "stash": {},
+    "outErrors": []
+  },
+  "type_name": "Query",
+  "field_name": "vertex"
+}
+

@@ -1,0 +1,75 @@
+{
+  "context": {
+    "arguments": {
+      "vertex": {
+        "internal_id": "1234568oiw29385fd",
+        "vertex_type": "AlgernonVertex",
+        "id_value": {
+          "property_name": "id_value",
+          "data_type": "N",
+          "property_value": "1001"
+        },
+        "identifier_stem": {
+          "property_name": "identifier_stem",
+          "data_type": "S",
+          "property_value": "#some_id_source#some_id_type#algernon#1001"
+        },
+        "vertex_properties": {
+          "local_properties": [
+            {
+              "property_name": "id_source",
+              "data_type": "S",
+              "property_value": "some_id_source"
+            }
+          ],
+          "sensitive_properties": [
+            {
+              "property_name": "secret_number",
+              "property_value": "666",
+              "data_type": "N",
+              "source_internal_id": "1234568oiw29385fd"
+            }
+          ],
+          "stored_properties": [
+            {
+              "property_name": "stored_html",
+              "storage_class": "S3",
+              "storage_uri": "s3://bucket_name/object_name",
+              "data_type": "HTML"
+            }
+          ]
+        }
+      }
+    },
+    "identity": "None",
+    "source": "None",
+    "result": "None",
+    "request": {
+      "headers": {
+        "x-forwarded-for": "64.132.184.18, 54.239.145.72",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "via": "1.1 b27a02320ae6ae78c5c25db5c9ccb9dc.cloudfront.net (CloudFront)",
+        "content-type": "application/json; charset\u003dUTF-8",
+        "x-api-key": "da2-zcvdidxqqjelni6jaouejuuusm",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Root\u003d1-5cc3152b-6960ea69adb462203224d1e2",
+        "x-amz-cf-id": "RBqpJW8d-h9vVnmJ1TSxaixQBSxBuozHnK_g02q1xBIanz9Li5Urxg\u003d\u003d",
+        "content-length": "1212",
+        "x-forwarded-proto": "https",
+        "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "Jakarta Commons-HttpClient/3.1",
+        "cloudfront-is-desktop-viewer": "true",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": "None",
+    "prev": "None",
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "add_vertex",
+  "type_name": "Mutation"
+}

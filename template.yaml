@@ -1,0 +1,363 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform:
+  - 'AWS::Serverless-2016-10-31'
+Parameters:
+  IsDev:
+    Type: String
+    Default: 'False'
+    AllowedValues:
+      - 'False'
+      - 'True'
+  LayerArn:
+    Type: String
+    Description: the lambda layer containing the common dependencies
+    Default: 'arn:aws:lambda:us-east-1:726075243133:layer:AlgernonLayer:4'
+  GqlApiName:
+    Type: String
+    Description: the name applied to the GQL API
+  IndexTableName:
+    Type: String
+    Description: name of the Dynamo table used to hold indexing data
+    Default: Indexes
+  SensitivesTableName:
+    Type: String
+    Description: name of the Dynamo table used to hold PHI
+    Default: Sensitives
+  SensitivesTableRegion:
+    Type: String
+    Description: name of the region holding the Dynamo table used to hold PHI
+    Default: ''
+  NeptuneClusterArn:
+    Type: String
+    Description: The ARN of the Neptune cluster to be used for this GQL api
+  NeptuneClusterEndpoint:
+    Type: String
+    Description: The endpoint of the graph database cluster
+  NeptuneClusterReadEndpoint:
+    Type: String
+    Description: The read only endpoint of the graph database cluster
+  SensitivesTableArn:
+    Type: String
+    Description: The ARN of the DynamoDB table housing the PHI or other sensitive data
+  IndexTableArn:
+    Type: String
+    Description: The ARN of the DynamoDB table used for indexing
+  NeptuneSecurityGroupIds:
+    Type: List<AWS::EC2::SecurityGroup::Id>
+    Description: A collection of Security Group IDs capable of interacting with the Neptune Cluster
+  NeptuneSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: A collection of Subnet IDs which can interact with the Neptune Cluster
+Globals:
+  Function:
+    Runtime: python3.6
+    Timeout: 300
+    Tracing: Active
+    Layers:
+      - !Ref LayerArn
+    Environment:
+      Variables:
+        INDEX_TABLE_NAME: !Ref IndexTableName
+        SENSITIVES_TABLE_NAME: !Ref SensitivesTableName
+        GRAPH_DB_ENDPOINT: !Ref NeptuneClusterEndpoint
+        GRAPH_DB_READER_ENDPOINT: !Ref NeptuneClusterReadEndpoint
+Conditions:
+  DefaultSensitivesTableRegion: !Equals [!Ref SensitivesTableRegion, '']
+  DevDeploy: !Equals [!Ref IsDev, 'True']
+  ProdDeploy: !Equals [!Ref IsDev, 'False']
+
+Resources:
+  GraphTask:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: toll_booth.tasks.ogm
+      Role: !GetAtt GraphWorker.Arn
+      VpcConfig:
+        SecurityGroupIds: !Ref NeptuneSecurityGroupIds
+        SubnetIds: !Ref NeptuneSubnetIds
+  GraphWorker:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub "${AWS::StackName}-graph-gql-role"
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - appsync.amazonaws.com
+                - events.amazonaws.com
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+  SensitivesWorker:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub "${AWS::StackName}-sensitives-role"
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - appsync.amazonaws.com
+                - events.amazonaws.com
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+  WorkGraphPolicy:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: !Sub "${AWS::StackName}-graph-worker-policy"
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 'neptune-db:*'
+            Resource: !Join
+              - '/'
+              - - !Ref NeptuneClusterArn
+                - '*'
+            Effect: Allow
+          - Action:
+              - 'ec2:CreateNetworkInterface'
+              - 'ec2:DescribeNetworkInterfaces'
+              - 'ec2:DeleteNetworkInterface'
+            Resource: '*'
+            Effect: Allow
+          - Action:
+              - 'lambda:InvokeFunction'
+            Resource: '*'
+            Effect: Allow
+          - Action:
+              - 'dynamodb:BatchGetItem'
+              - 'dynamodb:BatchWriteItem'
+              - 'dynamodb:ListGlobalTables'
+              - 'dynamodb:PutItem'
+              - 'dynamodb:ListTables'
+              - 'dynamodb:DescribeTable'
+              - 'dynamodb:ListBackups'
+              - 'dynamodb:GetItem'
+              - 'dynamodb:Scan'
+              - 'dynamodb:Query'
+              - 'dynamodb:UpdateItem'
+              - 'dynamodb:DescribeTimeToLive'
+            Resource:
+              - !Ref IndexTableArn
+              - !Join
+                - '/'
+                - - !Ref IndexTableArn
+                  - 'index/*'
+            Effect: Allow
+          - Effect: Allow
+            Resource: '*'
+            Action:
+              - 'logs:*'
+          - Effect: Allow
+            Action:
+              - 'xray:PutTraceSegments'
+              - 'xray:PutTelemetryRecords'
+              - 'xray:GetSamplingRules'
+              - 'xray:GetSamplingTargets'
+              - 'xray:GetSamplingStatisticSummaries'
+            Resource: '*'
+      Roles:
+        - !Ref GraphWorker
+  WorkSensitivesRole:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: !Sub "${AWS::StackName}-sensitives-worker-policy"
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 'dynamodb:BatchGetItem'
+              - 'dynamodb:BatchWriteItem'
+              - 'dynamodb:ListGlobalTables'
+              - 'dynamodb:PutItem'
+              - 'dynamodb:ListTables'
+              - 'dynamodb:DescribeTable'
+              - 'dynamodb:ListBackups'
+              - 'dynamodb:GetItem'
+              - 'dynamodb:Scan'
+              - 'dynamodb:Query'
+              - 'dynamodb:UpdateItem'
+              - 'dynamodb:DescribeTimeToLive'
+            Resource:
+              - !Ref  SensitivesTableArn
+              - !Join
+                - '/'
+                - - !Ref SensitivesTableArn
+                  - 'index/*'
+            Effect: Allow
+          - Action:
+              - 'lambda:InvokeFunction'
+            Resource: '*'
+            Effect: Allow
+          - Effect: Allow
+            Resource: '*'
+            Action:
+              - 'logs:*'
+          - Effect: Allow
+            Action:
+              - 'xray:PutTraceSegments'
+              - 'xray:PutTelemetryRecords'
+              - 'xray:GetSamplingRules'
+              - 'xray:GetSamplingTargets'
+              - 'xray:GetSamplingStatisticSummaries'
+            Resource: '*'
+      Roles:
+        - !Ref SensitivesWorker
+        - !Ref GraphWorker
+  DevApiKey:
+    Type: AWS::AppSync::ApiKey
+    Condition: DevDeploy
+    Properties:
+      ApiId: !GetAtt LeechApi.ApiId
+      Description: "the dev key, not for production use"
+      Expires: 1577883600
+  LeechApi:
+    Type: "AWS::AppSync::GraphQLApi"
+    Properties:
+      Name: !Ref GqlApiName
+      AuthenticationType: !If [DevDeploy, API_KEY, AWS_IAM]
+      LogConfig:
+        CloudWatchLogsRoleArn: !GetAtt GraphWorker.Arn
+        FieldLogLevel: ALL
+  GraphDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      Type: AWS_LAMBDA
+      Description: data source for the graph database
+      ServiceRoleArn: !GetAtt GraphWorker.Arn
+      LambdaConfig:
+        LambdaFunctionArn: !GetAtt GraphTask.Arn
+      ApiId: !GetAtt LeechApi.ApiId
+      Name: !Join
+        - "_"
+        - - !Ref GqlApiName
+          - datasource_graph
+  SensitivesDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      Type: AMAZON_DYNAMODB
+      Description: data source for the Dynamo table holding the PHI
+      ServiceRoleArn: !GetAtt SensitivesWorker.Arn
+      DynamoDBConfig:
+        TableName: !Ref SensitivesTableName
+        AwsRegion: !If [DefaultSensitivesTableRegion, !Ref "AWS::Region", !Ref SensitivesTableRegion]
+        UseCallerCredentials: true
+      ApiId: !GetAtt LeechApi.ApiId
+      Name: !Join
+        - "_"
+        - - !Ref GqlApiName
+          - datasource_sensitives
+  LeechSchema:
+    Type: "AWS::AppSync::GraphQLSchema"
+    Properties:
+      DefinitionS3Location: gql/schema.graphql
+      ApiId: !GetAtt LeechApi.ApiId
+  QueryEdgeResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/query_edge_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Query
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: edge
+      Kind: UNIT
+  QueryEdgesResolver:
+      Type: "AWS::AppSync::Resolver"
+      Properties:
+        RequestMappingTemplateS3Location: gql/resolvers/query_edges_request.vtl
+        ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+        TypeName: Query
+        DataSourceName: !GetAtt GraphDataSource.Name
+        ApiId: !GetAtt LeechApi.ApiId
+        FieldName: edges
+        Kind: UNIT
+  QueryFindVertexesResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/query_find_vertexes_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Query
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: find_vertexes
+      Kind: UNIT
+  QueryVertexResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/query_vertex_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Query
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: vertex
+      Kind: UNIT
+  VertexConnectedEdgesResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/vertex_connected_edges_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Vertex
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: connected_edges
+      Kind: UNIT
+  VertexVertexPropertiesResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/vertex_vertex_properties_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Vertex
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: vertex_properties
+      Kind: UNIT
+  MutationAddVertexResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/mutation_add_vertex_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Mutation
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: addVertex
+      Kind: UNIT
+  MutationDeleteVertexResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/mutation_delete_vertex_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Mutation
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: deleteVertex
+      Kind: UNIT
+  MutationAddEdgeResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/mutation_add_edge_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Mutation
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: addEdge
+      Kind: UNIT
+  MutationDeleteEdgeResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/mutation_add_vertex_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Mutation
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: deleteEdge
+      Kind: UNIT
+Outputs:
+  ApiKeyValue:
+    Condition: DevDeploy
+    Description: if dev mode is set, the API key generated for testing
+    Value: !GetAtt DevApiKey.ApiKey

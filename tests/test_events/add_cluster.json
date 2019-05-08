@@ -1,0 +1,82 @@
+{
+  "source_vertex": {
+        "internal_id": "1235fghjgjdj`213",
+        "vertex_type": "MockVertex",
+        "id_value": {
+          "property_name": "id_value",
+          "data_type": "Number",
+          "property_value": "1001"
+        },
+        "identifier_stem": "some_id_source#some_id_type",
+        "vertex_properties": {
+          "local_properties": [
+            {
+              "property_name": "id_source",
+              "data_type": "String",
+              "property_value": "Algernon"
+            },
+            {
+              "property_name": "id_type",
+              "data_type": "String",
+              "property_value": "Employees"
+            },
+            {
+              "property_name": "id_name",
+              "data_type": "String",
+              "property_value": "emp_id"
+            }
+          ],
+          "sensitive_properties": [
+            {
+              "property_name": "secret_number",
+              "source_internal_id": "1235fghjgjdj`213",
+              "property_value": "666",
+              "data_type": "Number"
+            }
+          ]
+        }
+},
+  "target_vertex": {
+        "internal_id": "1235fghjgjdj`2133256432gr34647",
+        "vertex_type": "MockVertex",
+        "id_value": {
+          "property_name": "id_value",
+          "data_type": "Number",
+          "property_value": "1002"
+        },
+        "identifier_stem": "some_id_source#some_id_type",
+        "vertex_properties": {
+          "local_properties": [
+            {
+              "property_name": "id_source",
+              "data_type": "String",
+              "property_value": "Algernon"
+            },
+            {
+              "property_name": "id_type",
+              "data_type": "String",
+              "property_value": "Employees"
+            },
+            {
+              "property_name": "id_name",
+              "data_type": "String",
+              "property_value": "emp_id"
+            }
+          ],
+          "sensitive_properties": [
+            {
+              "property_name": "secret_number",
+              "source_internal_id": "1235fghjgjdj`2133256432gr34647",
+              "property_value": "666",
+              "data_type": "Number"
+            }
+          ]
+        }
+  },
+  "edge": {
+    "internal_id": "dsgsgr23423sdfsd2",
+    "edge_label": "_fake_edge_",
+    "source_vertex_internal_id": "1235fghjgjdj`213",
+    "target_vertex_internal_id": "1235fghjgjdj`2133256432gr34647"
+  }
+}
