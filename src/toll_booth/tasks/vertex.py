@@ -1,13 +1,15 @@
 import logging
 from typing import Dict, List, Any
 
+import rapidjson
+
 from toll_booth.obj.graph.ogm import Ogm
 from toll_booth.obj.graph.trident.trident_obj.properties import TridentProperty
 
 from toll_booth.obj.troubles import InvalidGqlRequestException
 
 
-known_fields = ('vertex_properties')
+known_fields = ('vertex_properties', 'connected_edges')
 
 
 def compile_object_properties(trident_properties: Dict[str, List[TridentProperty]]):
@@ -21,29 +23,15 @@ def compile_object_properties(trident_properties: Dict[str, List[TridentProperty
 
 
 def _parse_property_value(property_attributes: List[Any]) -> Dict[str, Any]:
-    property_value = property_attributes[0]
-    property_data_type = property_attributes[1]
-    property_class = property_attributes[2]
-    if property_class == 'SensitivePropertyValue':
-        return {
-            '__typename': property_class,
-            'pointer': property_value,
-            'data_type': property_data_type,
-        }
-    if property_class == 'LocalPropertyValue':
-        return {
-            '__typename': property_class,
-            'property_value': property_value,
-            'data_type': property_data_type,
-        }
-    if property_class == 'StoredPropertyValue':
-        return {
-            '__typename': property_class,
-            'storage_uri': property_value,
-            'data_type': property_data_type,
-            'storage_class': property_attributes[3]
-        }
-    raise NotImplementedError(f'could not parse trident property for property_class: {property_class}')
+    if len(property_attributes) > 2:
+        raise RuntimeError(f'received property attributes: {property_attributes}, '
+                           f'but there are too many, should be two')
+    for property_attribute in property_attributes:
+        try:
+            return rapidjson.loads(property_attribute)
+        except (ValueError, TypeError):
+            continue
+    raise NotImplementedError(f'could not parse trident property for property_attributes: {property_attributes}')
 
 
 def parse_object_properties(property_name: str, object_properties: List[TridentProperty]) -> Dict[str, Any]:
@@ -58,7 +46,7 @@ def parse_object_properties(property_name: str, object_properties: List[TridentP
     return gql
 
 
-def handler(type_name, field_name, args, source, result, request):
+def handler(type_name, field_name, args, source, result, request, identity):
     ogm = Ogm()
     if type_name == 'Vertex':
         if field_name == 'vertex_properties':
@@ -75,3 +63,12 @@ def handler(type_name, field_name, args, source, result, request):
                 logging.info(f'completed an vertex_properties command, results: {gql_properties}')
                 return gql_properties
             return []
+        if field_name == 'connected_edges':
+            logging.info('request resolved to Vertex.connected_edges')
+            if identity in ('None', None):
+                identity = {}
+                logging.warning(f'processed request for Vertex.connected_edges, no identity provided,'
+                                f'this is ok for development, but should not occur in production')
+            username = identity.get('username', request['headers']['x-api-key'])
+            connected_edges = ogm.get_edge_connection(username, args, source)
+            return connected_edges

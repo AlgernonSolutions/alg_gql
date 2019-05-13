@@ -1,6 +1,9 @@
-from typing import List
+from typing import List, Dict, Tuple
 
-from toll_booth.obj.graph.gql_scalars import ObjectProperty, InputVertex, InputEdge
+from algernon import ajson
+
+from toll_booth.obj.graph.gql_scalars import ObjectProperty, InputVertex, InputEdge, SensitivePropertyValue, \
+    StoredPropertyValue, LocalPropertyValue
 
 
 def _derive_object_properties(object_properties: List[ObjectProperty]) -> str:
@@ -11,26 +14,62 @@ def _derive_object_properties(object_properties: List[ObjectProperty]) -> str:
 
 
 def _derive_property_value(object_property: ObjectProperty) -> str:
-    property_type = type(object_property.property_value).__name__
-    property_data_type = object_property.property_value.data_type
-    property_value = object_property.property_value
-    stored_property_value = property_value.property_value
     property_name = object_property.property_name
-    if property_type in ['SensitivePropertyValue', 'StoredPropertyValue']:
-        stored_property_value = f"'{stored_property_value}'"
-    if property_data_type == 'S':
-        stored_property_value = f"'{stored_property_value}'"
-    if property_data_type == 'DT':
-        stored_property_value = f"datetime('{stored_property_value}')"
+    stored_property_value, property_map = _derive_property_map(object_property)
     commands = [
         f"property('{property_name}', {stored_property_value})",
-        f"property('{property_name}', '{property_value.data_type}')",
-        f"property('{property_name}', '{property_type}')"
+        f"property('{property_name}', '{ajson.dumps(property_map)}')",
     ]
-    if property_type == 'StoredPropertyValue':
-        commands.append(f"property('{property_name}', '{property_value.storage_class}')")
     command = '.'.join(commands)
     return command
+
+
+def _derive_property_map(object_property: ObjectProperty) -> Tuple[str, Dict]:
+    property_value = object_property.property_value
+    property_type = type(property_value).__name__
+    if property_type == 'SensitivePropertyValue':
+        return _derive_sensitive_property_map(property_value)
+    if property_type == 'StoredPropertyValue':
+        return _derive_stored_property_map(property_value)
+    if property_type == 'LocalPropertyValue':
+        return _derive_local_property_map(property_value)
+    raise NotImplementedError(f'do not know how to parse object_property of type: {property_type}')
+
+
+def _derive_sensitive_property_map(object_property: SensitivePropertyValue) -> Tuple[str, Dict]:
+    property_map = {
+        '__typename': 'SensitivePropertyValue',
+        'data_type': object_property.data_type,
+        'pointer': object_property.property_value
+    }
+    property_value = f'"{object_property.property_value}"'
+    return property_value, property_map
+
+
+def _derive_stored_property_map(object_property: StoredPropertyValue) -> Tuple[str, Dict]:
+    property_map = {
+        '__type_name': 'StoredPropertyValue',
+        'data_type': object_property.data_type,
+        'storage_class': object_property.storage_class,
+        'storage_uri': object_property.storage_uri
+    }
+    property_value = f'"{object_property.property_value}"'
+    return property_value, property_map
+
+
+def _derive_local_property_map(object_property: LocalPropertyValue) -> Tuple[str, Dict]:
+    property_value = object_property.property_value
+    property_data_type = object_property.data_type
+    if property_data_type == 'S':
+        property_value = f"'{property_value}'"
+    if property_data_type == 'DT':
+        property_value = f"datetime('{property_value}')"
+    property_map = {
+        '__typename': 'LocalPropertyValue',
+        'data_type': property_data_type,
+        'property_value': object_property.property_value
+    }
+    return property_value, property_map
 
 
 def create_edge_command(edge_internal_id: str,

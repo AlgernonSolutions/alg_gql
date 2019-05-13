@@ -1,0 +1,42 @@
+{
+  "context": {
+    "arguments": {
+      "internal_id": "1235fghjgjdj`213"
+    },
+    "identity": "None",
+    "source": "None",
+    "result": "None",
+    "request": {
+      "headers": {
+        "x-forwarded-for": "3.214.237.91, 70.132.60.84",
+        "accept-encoding": "gzip, deflate, br",
+        "referer": "https://console.aws.amazon.com/appsync/home?region\u003dus-east-1",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "via": "2.0 6ec872fa8051a500a5a9ab5ec50a79ba.cloudfront.net (CloudFront)",
+        "origin": "https://console.aws.amazon.com",
+        "x-api-key": "da2-zcvdidxqqjelni6jaouejuuusm",
+        "content-type": "application/json",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Root\u003d1-5cd6dd2d-8ecb3b04d508063853c71e34",
+        "x-amz-cf-id": "T2NhcojJzPumrksuaFC-caYz_EqI6rTKF6ixeGZzwGMS_-yW7DxdpA\u003d\u003d",
+        "content-length": "2186",
+        "accept-language": "en-US,en;q\u003d0.5",
+        "x-forwarded-proto": "https",
+        "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0",
+        "cloudfront-is-desktop-viewer": "true",
+        "accept": "*/*",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": "None",
+    "prev": "None",
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "vertex",
+  "type_name": "Query"
+}

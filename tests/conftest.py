@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime
 from os import path
 from unittest.mock import patch
@@ -104,6 +105,19 @@ _mock_edge_data = {
         }
     ]
 }
+
+
+@pytest.fixture
+def integration_test_environment():
+    os.environ['GRAPH_DB_ENDPOINT'] = 'leech-cluster.cluster-cnd32dx4xing.us-east-1.neptune.amazonaws.com'
+    os.environ['GRAPH_DB_READER_ENDPOINT'] = 'leech-cluster.cluster-ro-cnd32dx4xing.us-east-1.neptune.amazonaws.com'
+    os.environ['SENSITIVES_TABLE_NAME'] = 'Secrets'
+    os.environ['INDEX_TABLE_NAME'] = 'Index'
+
+
+@pytest.fixture
+def test_event():
+    return _read_test_event
 
 
 @pytest.fixture

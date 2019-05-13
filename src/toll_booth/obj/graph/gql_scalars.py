@@ -207,7 +207,7 @@ class GraphScalar:
             'sid_value': str(id_value),
             'identifier_stem': str(identifier_stem),
             'internal_id': str(self._internal_id),
-            'id_value': id_value,
+            'id_value': self._id_value.for_index,
             'object_type': self._object_type,
             'object_class': self.object_class
         }

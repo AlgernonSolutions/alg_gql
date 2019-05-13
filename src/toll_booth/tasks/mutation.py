@@ -131,7 +131,7 @@ def _add_edge(edge_scalar: InputEdge):
 known_fields = ('delete_vertex', 'delete_edge', 'add_vertex', 'add_edge')
 
 
-def handler(type_name, field_name, args, source, result, request):
+def handler(type_name, field_name, args, source, result, request, identity):
     if type_name == 'Mutation':
         if field_name == 'delete_vertex':
             logging.info(f'request resolved to Mutation.deleteVertex')

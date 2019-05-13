@@ -1,16 +1,64 @@
 import logging
 import os
-from typing import Union, Dict
+from typing import Union, Dict, List
 
 import boto3
+import rapidjson
+from algernon.serializers import ExplosionJson
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 
-from algernon import ajson
+from multiprocessing.dummy import Pool as ThreadPool
 
-from toll_booth.obj.graph.gql_scalars import InputEdge, InputVertex
+
+from toll_booth.obj.graph.gql_scalars import InputEdge, InputVertex, ObjectProperty
 from toll_booth.obj.index.indexes import UniqueIndex
 from toll_booth.obj.index.troubles import MissingIndexedPropertyException, UniqueIndexViolationException
+
+
+def _generate_gql_property(record_entry):
+    record_property_value = record_entry['property_value']
+    property_value = {
+        '__typename': record_property_value['property_type']
+    }
+    for property_name, property_entry in record_property_value.items():
+        if property_name == 'property_type':
+            continue
+        property_value[property_name] = property_entry
+    return {
+        '__typename': 'ObjectProperty',
+        'property_name': record_entry['property_name'],
+        'property_value': property_value
+    }
+
+
+def _generate_gql_vertex(dynamo_record):
+    excluded_entries = (
+        'object_class', 'sid_value',
+        'internal_id', 'object_type', 'numeric_id_value')
+    vertex_dict = ExplosionJson.loads(rapidjson.dumps(dynamo_record))
+    potential_vertex = {
+        '__typename': 'Vertex',
+        'internal_id': vertex_dict['internal_id'],
+        'vertex_type': vertex_dict['object_type'],
+        'vertex_properties': []
+    }
+    for property_name, vertex_property in vertex_dict.items():
+        if property_name in excluded_entries:
+            continue
+        if property_name == 'id_value':
+            potential_vertex[property_name] = _generate_gql_property(vertex_property)
+            continue
+        if property_name == 'identifier_stem':
+            potential_vertex[property_name] = _generate_gql_property({
+                'property_name': 'identifier_stem',
+                'property_value': {
+                    'data_type': 'S', 'property_type': 'LocalPropertyValue', 'property_value': vertex_property
+                }
+            })
+            continue
+        potential_vertex['vertex_properties'].append(_generate_gql_property(vertex_property))
+    return potential_vertex
 
 
 class IndexManager:
@@ -58,26 +106,39 @@ class IndexManager:
                     raise MissingIndexedPropertyException(index.index_name, index.indexed_fields, missing_properties)
         return self._index_object(scalar_object)
 
-    def find_potential_vertexes(self, object_type: str, vertex_properties: Dict) -> [Dict]:
+    def find_potential_vertexes(self,
+                                object_type: str,
+                                vertex_properties: List[ObjectProperty]) -> [Dict]:
         """checks the index for objects that match on the given object type and vertex properties
 
         Args:
             object_type: the type of the object
-            vertex_properties: a dictionary containing the properties to check for in the index
+            vertex_properties: a list containing the properties to check for in the index
 
         Returns:
             a list of all the potential vertexes that were found in the index
 
         """
-        potential_vertexes, token = self._scan_vertexes(object_type, vertex_properties)
-        while token:
-            more_vertexes, token = self._scan_vertexes(object_type, vertex_properties, token)
-            potential_vertexes.extend(more_vertexes)
+        potential_vertexes = []
+        num_scanners = range(os.getenv('num_index_scanners', 10))
+        scanner_args = [
+            {'object_type': object_type,
+             'vertex_properties': vertex_properties,
+             'segment': x,
+             'total_segments': len(num_scanners)} for x in num_scanners]
+        scan_pool = ThreadPool(len(num_scanners))
+        scan_results = scan_pool.map(self._scan_vertexes, scanner_args)
+        scan_pool.close()
+        scan_pool.join()
         logging.info('completed a scan of the data space to find potential vertexes with properties: %s '
                      'returned the raw values of: %s' % (vertex_properties, potential_vertexes))
-        return [x for x in potential_vertexes]
+        for entry in scan_results:
+            for vertex_data in entry:
+                potential_vertex = _generate_gql_vertex(vertex_data)
+                potential_vertexes.append(potential_vertex)
+        return potential_vertexes
 
-    def get_object(self, internal_id: str):
+    def get_object_key(self, internal_id: str):
         response = self._table.query(
             IndexName=self._internal_id_index.index_name,
             KeyConditionExpression=Key('internal_id').eq(internal_id)
@@ -86,14 +147,12 @@ class IndexManager:
             raise RuntimeError(f'internal_id value: {internal_id} has some how been indexed multiple times, '
                                f'big problem: {response["Items"]}')
         for entry in response['Items']:
-            return entry['object_value']
+            return {'identifier_stem': entry['identifier_stem'], 'sid_value': entry['sid_value']}
 
     def delete_object(self, internal_id: str):
-        existing_object = self.get_object(internal_id)
-        if existing_object:
-            indexed_object = ajson.loads(self.get_object(internal_id))
-            identifier_stem, sid_value = indexed_object['identifier_stem'], indexed_object['sid_value']
-            self._table.delete_item(Key={'sid_value': sid_value, 'identifier_stem': identifier_stem})
+        existing_object_key = self.get_object_key(internal_id)
+        if existing_object_key:
+            self._table.delete_item(Key=existing_object_key)
 
     def _index_object(self, scalar_object: Union[InputVertex, InputEdge]):
         """Adds an object to the index per the schema
@@ -139,37 +198,53 @@ class IndexManager:
                 raise e
             raise UniqueIndexViolationException(', '.join(unique_index_names), item)
 
-    def _scan_vertexes(self, object_type: str, vertex_properties: dict, token: str = None) -> (list, Union[str, None]):
+    def _scan_vertexes(self, scan_args: Dict) -> List[Dict]:
         """conducts a single paginated scan of the index space
 
         Args:
-            object_type: the type of the object being scanned for
-            vertex_properties: a dict containing the vertex properties to check for
-            token: if running a subsequent scan, the token from the last scan
+            scan_args: a dict keyed
+                object_type: the type of the object being scanned for
+                vertex_properties: a list containing the vertex properties to check for
+                segment: the assigned segment for the scanner
+                total_segments: the total number of scanners running
 
         Returns:
-            a tuple containing a list of the items found in the index, and the pagination token if present
+            a list of the items found in the index for the assigned segment
         """
-        filter_properties = [f'(begins_with(identifier_stem, :is) OR begins_with(identifier_stem, :stub))']
+        found_vertexes = []
+        object_type, vertex_properties = scan_args['object_type'], scan_args['vertex_properties']
+        segment, total_segments = scan_args['segment'], scan_args['total_segments']
+        paginator = boto3.client('dynamodb').get_paginator('scan')
+        filter_properties = [f'(object_type = :ot OR begins_with(identifier_stem, :stub))']
         expression_names = {}
         expression_values = {
-            ':is': f'#vertex#{object_type}#',
-            ':stub': '#vertex#stub#',
+            ':ot': {'S': f'{object_type}'},
+            ':stub': {'S': '#vertex#stub#'},
         }
-        pointer = 1
-        for property_name, vertex_property in vertex_properties.items():
-            if hasattr(vertex_property, 'is_missing'):
-                continue
-            filter_properties.append(f'object_properties.#{pointer} = :property{pointer}')
-            expression_names[f'#{pointer}'] = property_name
-            expression_values[f':property{pointer}'] = vertex_property
-            pointer += 1
+        for pointer, vertex_property in enumerate(vertex_properties):
+            filter_properties.append(f'#{pointer} = :property{pointer}')
+            expression_names[f'#{pointer}'] = vertex_property.property_name
+            expression_values[f':property{pointer}'] = {
+                'M': {
+                    'property_name': {'S': vertex_property.property_name},
+                    'property_value': {
+                        'M': {
+                            'data_type': {'S': vertex_property.property_value.data_type},
+                            'property_value': {'S': vertex_property.property_value.property_value},
+                            'property_type': {'S': 'LocalPropertyValue'}
+                        }
+                    }
+                }
+            }
         scan_kwargs = {
+            'TableName': self._table_name,
             'FilterExpression': ' AND '.join(filter_properties),
             'ExpressionAttributeNames': expression_names,
-            'ExpressionAttributeValues': expression_values
+            'ExpressionAttributeValues': expression_values,
+            'Segment': segment,
+            'TotalSegments': total_segments
         }
-        if token:
-            scan_kwargs['ExclusiveStartKey'] = token
-        results = self._table.scan(**scan_kwargs)
-        return results['Items'], results.get('LastEvaluatedKey', None)
+        iterator = paginator.paginate(**scan_kwargs)
+        for entry in iterator:
+            found_vertexes.extend(entry.get('Items', []))
+        return found_vertexes

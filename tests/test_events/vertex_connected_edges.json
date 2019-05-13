@@ -1,0 +1,108 @@
+{
+  "context": {
+    "arguments": {},
+    "identity": "None",
+    "source": {
+      "internal_id": "1235fghjgjdj`213",
+      "vertex_type": "MockVertex",
+      "__typename": "Vertex",
+      "identifier_stem": {
+        "__typename": "ObjectProperty",
+        "property_name": "identifier_stem",
+        "property_value": {
+          "__typename": "LocalPropertyValue",
+          "data_type": "S",
+          "property_value": "some_id_source#some_id_type"
+        }
+      },
+      "id_value": {
+        "__typename": "ObjectProperty",
+        "property_name": "id_value",
+        "property_value": {
+          "__typename": "LocalPropertyValue",
+          "data_type": "N",
+          "property_value": {
+            "_alg_class": "decimal",
+            "value": "1001"
+          }
+        }
+      },
+      "vertex_properties": [
+        {
+          "__typename": "ObjectProperty",
+          "property_name": "secret_number",
+          "property_value": {
+            "__typename": "SensitivePropertyValue",
+            "data_type": "N",
+            "pointer": {
+              "_alg_class": "set",
+              "value": [
+                "660aec4998f2aeee59e1612d0c1afc3c0c672be11fb10dc6ef971fcd187c13f9f0bccbc4e0a5f98c547ca7e37a53f93d363a33a1a966a65c4bf7d2147ef98637"
+              ]
+            }
+          }
+        },
+        {
+          "__typename": "ObjectProperty",
+          "property_name": "id_source",
+          "property_value": {
+            "__typename": "LocalPropertyValue",
+            "data_type": "S",
+            "property_value": "Algernon"
+          }
+        },
+        {
+          "__typename": "ObjectProperty",
+          "property_name": "id_type",
+          "property_value": {
+            "__typename": "LocalPropertyValue",
+            "data_type": "S",
+            "property_value": "Employees"
+          }
+        },
+        {
+          "__typename": "ObjectProperty",
+          "property_name": "id_name",
+          "property_value": {
+            "__typename": "LocalPropertyValue",
+            "data_type": "S",
+            "property_value": "emp_id"
+          }
+        }
+      ]
+    },
+    "result": "None",
+    "request": {
+      "headers": {
+        "x-forwarded-for": "3.214.237.91, 70.132.32.68",
+        "accept-encoding": "gzip, deflate, br",
+        "referer": "https://console.aws.amazon.com/appsync/home?region\u003dus-east-1",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "via": "2.0 837618b47e5c2bb0a75ec63765498425.cloudfront.net (CloudFront)",
+        "origin": "https://console.aws.amazon.com",
+        "x-api-key": "da2-zcvdidxqqjelni6jaouejuuusm",
+        "content-type": "application/json",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Root\u003d1-5cd6e625-0d1b6b819082985cb250e671",
+        "x-amz-cf-id": "rluUEaz3xunWjuGFH3qEAhMvYzYV759XtmZHOgGf6Mq1J5AnOfZt3w\u003d\u003d",
+        "content-length": "2489",
+        "accept-language": "en-US,en;q\u003d0.5",
+        "x-forwarded-proto": "https",
+        "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0",
+        "cloudfront-is-desktop-viewer": "true",
+        "accept": "*/*",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": "None",
+    "prev": "None",
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "connected_edges",
+  "type_name": "Vertex"
+}

@@ -86,6 +86,8 @@ class Ogm:
                              internal_id: str,
                              pagination_token: PaginationToken,
                              edge_labels: List[str] = None) -> Tuple[Dict[str, List[TridentEdge]], bool]:
+        if edge_labels is None:
+            edge_labels = []
         edge_filter = ', '.join([f"'{x}'" for x in edge_labels])
         inclusive_start = pagination_token.inclusive_start
         exclusive_end = pagination_token.exclusive_end

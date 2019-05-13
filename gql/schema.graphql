@@ -80,8 +80,7 @@ input InputLocalProperty {
 input InputProperties{
 	# a list of object properties stored locally in the graph
 	local_properties: [InputLocalProperty!]
-	# a list of sensitive object properties, to be stored elsewhere and
-	# referenced by pointer
+	# a list of sensitive object properties, to be stored elsewhere and referenced by pointer
 	sensitive_properties: [InputSensitiveProperty!]
 	# a list of stored object properties, which have already been stored elsewhere
 	stored_properties: [InputStoredProperty!]
@@ -107,6 +106,7 @@ input InputStoredProperty{
 	data_type: String!
 }
 
+# the write operations for the data space
 type Mutation {
 	# adds a vertex to the graph and index
 	addVertex(vertex: InputVertex!): String
@@ -152,7 +152,7 @@ type StoredPropertyValue{
 	data_type: String!
 }
 
-#  information regarding a single returned page of a pagination
+# information regarding a single returned page of a pagination
 type PageInfo {
 	#  are there more pages after this one
 	more: Boolean!
@@ -160,6 +160,7 @@ type PageInfo {
 	token: ID!
 }
 
+# the read operations for the data space
 type Query {
 	#  retrieves an edge by internal_id
 	edge(internal_id: ID!): Edge
@@ -167,16 +168,17 @@ type Query {
 	edges(internal_id: ID!, token: ID): EdgeConnection
 	#  retrieves a vertex determined by it's internal_id
 	vertex(internal_id: ID!, token: ID): Vertex
+	#  checks the data space for vertexes based on object properties
+	find_vertexes(object_type: String!, object_properties: [InputLocalProperty]!): [Vertex]
 }
 
-#  any object stored in the graph
+# any object stored in the graph
 type Vertex {
 	#  the unique internal identifier of the vertex
 	internal_id: ID!
 	#  the type of object represented by the vertex
 	vertex_type: String!
-	# the object identifier, which combines with the the id_value to generate
-	# a unique reference to an object in a remote source
+	# the object identifier, which combines with the the id_value to generate a unique reference to an object in a remote source
 	identifier_stem: ObjectProperty!
 	# the unique pointer which identifies an object from the other peer objects in a remote system
 	id_value: ObjectProperty!

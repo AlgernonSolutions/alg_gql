@@ -38,3 +38,9 @@ class TestGqlDecoder:
         vertex_string = ajson.dumps(vertex)
         gql = rapidjson.loads(vertex_string, object_hook=GqlDecoder.object_hook)
         assert gql
+
+    def test_get_connected_edge_response(self, test_event):
+        event = test_event('connected_edges')
+        strung_response = ajson.dumps(event)
+        rebuilt_response = rapidjson.loads(strung_response, object_hook=GqlDecoder.object_hook)
+        assert rebuilt_response

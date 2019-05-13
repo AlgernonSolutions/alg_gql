@@ -4,25 +4,29 @@
         "vertex_type": "MockVertex",
         "id_value": {
           "property_name": "id_value",
-          "data_type": "Number",
+          "data_type": "N",
           "property_value": "1001"
         },
-        "identifier_stem": "some_id_source#some_id_type",
+        "identifier_stem": {
+          "property_name": "identifier_stem",
+          "property_value": "some_id_source#some_id_type",
+          "data_type": "S"
+        },
         "vertex_properties": {
           "local_properties": [
             {
               "property_name": "id_source",
-              "data_type": "String",
+              "data_type": "S",
               "property_value": "Algernon"
             },
             {
               "property_name": "id_type",
-              "data_type": "String",
+              "data_type": "S",
               "property_value": "Employees"
             },
             {
               "property_name": "id_name",
-              "data_type": "String",
+              "data_type": "S",
               "property_value": "emp_id"
             }
           ],
@@ -31,7 +35,7 @@
               "property_name": "secret_number",
               "source_internal_id": "1235fghjgjdj`213",
               "property_value": "666",
-              "data_type": "Number"
+              "data_type": "N"
             }
           ]
         }
@@ -41,25 +45,29 @@
         "vertex_type": "MockVertex",
         "id_value": {
           "property_name": "id_value",
-          "data_type": "Number",
+          "data_type": "S",
           "property_value": "1002"
         },
-        "identifier_stem": "some_id_source#some_id_type",
+        "identifier_stem": {
+          "property_name": "identifier_stem",
+          "property_value": "some_id_source#some_id_type",
+          "data_type": "S"
+        },
         "vertex_properties": {
           "local_properties": [
             {
               "property_name": "id_source",
-              "data_type": "String",
+              "data_type": "S",
               "property_value": "Algernon"
             },
             {
               "property_name": "id_type",
-              "data_type": "String",
+              "data_type": "S",
               "property_value": "Employees"
             },
             {
               "property_name": "id_name",
-              "data_type": "String",
+              "data_type": "S",
               "property_value": "emp_id"
             }
           ],
@@ -68,7 +76,7 @@
               "property_name": "secret_number",
               "source_internal_id": "1235fghjgjdj`2133256432gr34647",
               "property_value": "666",
-              "data_type": "Number"
+              "data_type": "N"
             }
           ]
         }

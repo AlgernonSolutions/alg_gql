@@ -1,8 +1,6 @@
 from typing import Dict, Any
 
-import rapidjson
-
-from algernon import AlgObject
+from algernon import AlgObject, ajson
 from algernon.aws.squirrel import SneakyKipper
 
 
@@ -39,7 +37,7 @@ class PaginationToken(AlgObject):
             if not token:
                 return cls(username, source, context, exclusive_end=json_dict['page_size'])
             json_string = SneakyKipper('pagination').decrypt(token, {'username': username})
-            obj_dict = rapidjson.loads(json_string)
+            obj_dict = ajson.loads(json_string)
             return cls(username, obj_dict['source'], obj_dict['context'], pagination_id=obj_dict['id'],
                        inclusive_start=obj_dict['start'], exclusive_end=obj_dict['end'])
 
@@ -70,7 +68,7 @@ class PaginationToken(AlgObject):
         self._exclusive_end += step_value
 
     def package(self) -> str:
-        unencrypted_text = rapidjson.dumps({
+        unencrypted_text = ajson.dumps({
             'id': self._pagination_id,
             'source': self._source,
             'context': self._context,

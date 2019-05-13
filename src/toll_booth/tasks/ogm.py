@@ -8,8 +8,8 @@ from toll_booth.obj.graph.serializers import GqlDecoder
 from toll_booth.tasks import mutation, query, vertex
 
 
-def _decision_tree(type_name, field_name, args, source, result, request):
-    decision_args = (type_name, field_name, args, source, result, request)
+def _decision_tree(type_name, field_name, args, source, result, request, identity):
+    decision_args = (type_name, field_name, args, source, result, request, identity)
     if type_name == 'Vertex':
         if field_name in vertex.known_fields:
             return vertex.handler(*decision_args)
@@ -32,6 +32,12 @@ def handler(event, context):
     source = gql_context['source']
     result = gql_context['result']
     request = gql_context['request']
+    identity = gql_context['identity']
 
-    results = _decision_tree(type_name, field_name, args, source, result, request)
-    return rapidjson.loads(ajson.dumps(results), object_hook=GqlDecoder.object_hook)
+    results = _decision_tree(type_name, field_name, args, source, result, request, identity)
+    logging.info(f'results after the decision tree: {result}')
+    strung_results = ajson.dumps(results)
+    logging.info(f'results after first round of json encoding: {strung_results}')
+    encoded_results = rapidjson.loads(strung_results, object_hook=GqlDecoder.object_hook)
+    logging.info(f'results after GQL encoding: {encoded_results}')
+    return encoded_results

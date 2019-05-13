@@ -1,0 +1,225 @@
+{
+  "_alg_class": "TridentEdgeConnection",
+  "_alg_module": "toll_booth.obj.graph.trident.trident_obj.edge",
+  "value": {
+    "_edges": {
+      "inbound": [
+        {
+          "_alg_class": "TridentEdge",
+          "_alg_module": "toll_booth.obj.graph.trident.trident_obj.edge",
+          "value": {
+            "_internal_id": "dsgsgr23423sdfsd2",
+            "_label": "_fake_edge_",
+            "_from_vertex": {
+              "_alg_class": "TridentVertex",
+              "_alg_module": "toll_booth.obj.graph.trident.trident_obj.vertex",
+              "value": {
+                "_vertex_id": "1235fghjgjdj`2133256432gr34647",
+                "_vertex_label": "MockVertex",
+                "_vertex_properties": {}
+              }
+            },
+            "_to_vertex": {
+              "_alg_class": "TridentVertex",
+              "_alg_module": "toll_booth.obj.graph.trident.trident_obj.vertex",
+              "value": {
+                "_vertex_id": "1235fghjgjdj`213",
+                "_vertex_label": "MockVertex",
+                "_vertex_properties": {}
+              }
+            },
+            "_edge_properties": {}
+          }
+        }
+      ],
+      "outbound": [],
+      "all": [
+        {
+          "_alg_class": "TridentEdge",
+          "_alg_module": "toll_booth.obj.graph.trident.trident_obj.edge",
+          "value": {
+            "_internal_id": "dsgsgr23423sdfsd2",
+            "_label": "_fake_edge_",
+            "_from_vertex": {
+              "_alg_class": "TridentVertex",
+              "_alg_module": "toll_booth.obj.graph.trident.trident_obj.vertex",
+              "value": {
+                "_vertex_id": "1235fghjgjdj`2133256432gr34647",
+                "_vertex_label": "MockVertex",
+                "_vertex_properties": {}
+              }
+            },
+            "_to_vertex": {
+              "_alg_class": "TridentVertex",
+              "_alg_module": "toll_booth.obj.graph.trident.trident_obj.vertex",
+              "value": {
+                "_vertex_id": "1235fghjgjdj`213",
+                "_vertex_label": "MockVertex",
+                "_vertex_properties": {}
+              }
+            },
+            "_edge_properties": {}
+          }
+        }
+      ]
+    },
+    "_token": {
+      "_alg_class": "PaginationToken",
+      "_alg_module": "toll_booth.obj.graph.trident.trident_obj.pages",
+      "value": {
+        "_username": "da2-zcvdidxqqjelni6jaouejuuusm",
+        "_source": {
+          "internal_id": "1235fghjgjdj`213",
+          "vertex_type": "MockVertex",
+          "__typename": "Vertex",
+          "identifier_stem": {
+            "__typename": "ObjectProperty",
+            "property_name": "identifier_stem",
+            "property_value": {
+              "__typename": "LocalPropertyValue",
+              "data_type": "S",
+              "property_value": "some_id_source#some_id_type"
+            }
+          },
+          "id_value": {
+            "__typename": "ObjectProperty",
+            "property_name": "id_value",
+            "property_value": {
+              "__typename": "LocalPropertyValue",
+              "data_type": "N",
+              "property_value": {
+                "_alg_class": "decimal",
+                "value": "1001"
+              }
+            }
+          },
+          "vertex_properties": [
+            {
+              "__typename": "ObjectProperty",
+              "property_name": "secret_number",
+              "property_value": {
+                "__typename": "SensitivePropertyValue",
+                "data_type": "N",
+                "pointer": "660aec4998f2aeee59e1612d0c1afc3c0c672be11fb10dc6ef971fcd187c13f9f0bccbc4e0a5f98c547ca7e37a53f93d363a33a1a966a65c4bf7d2147ef98637"
+              }
+            },
+            {
+              "__typename": "ObjectProperty",
+              "property_name": "id_source",
+              "property_value": {
+                "__typename": "LocalPropertyValue",
+                "data_type": "S",
+                "property_value": "Algernon"
+              }
+            },
+            {
+              "__typename": "ObjectProperty",
+              "property_name": "id_type",
+              "property_value": {
+                "__typename": "LocalPropertyValue",
+                "data_type": "S",
+                "property_value": "Employees"
+              }
+            },
+            {
+              "__typename": "ObjectProperty",
+              "property_name": "id_name",
+              "property_value": {
+                "__typename": "LocalPropertyValue",
+                "data_type": "S",
+                "property_value": "emp_id"
+              }
+            }
+          ]
+        },
+        "_context": {},
+        "_inclusive_start": 10,
+        "_exclusive_end": 20,
+        "_pagination_id": "640d577cdca145f899dc40c806b2883a"
+      }
+    },
+    "_more": false,
+    "_page_info": {
+      "_alg_class": "TridentPageInfo",
+      "_alg_module": "toll_booth.obj.graph.trident.trident_obj.edge",
+      "value": {
+        "_token": {
+          "_alg_class": "PaginationToken",
+          "_alg_module": "toll_booth.obj.graph.trident.trident_obj.pages",
+          "value": {
+            "_username": "da2-zcvdidxqqjelni6jaouejuuusm",
+            "_source": {
+              "internal_id": "1235fghjgjdj`213",
+              "vertex_type": "MockVertex",
+              "__typename": "Vertex",
+              "identifier_stem": {
+                "__typename": "ObjectProperty",
+                "property_name": "identifier_stem",
+                "property_value": {
+                  "__typename": "LocalPropertyValue",
+                  "data_type": "S",
+                  "property_value": "some_id_source#some_id_type"
+                }
+              },
+              "id_value": {
+                "__typename": "ObjectProperty",
+                "property_name": "id_value",
+                "property_value": {
+                  "__typename": "LocalPropertyValue",
+                  "data_type": "N",
+                  "property_value": {
+                    "_alg_class": "decimal",
+                    "value": "1001"
+                  }
+                }
+              },
+              "vertex_properties": [
+                {
+                  "__typename": "ObjectProperty",
+                  "property_name": "secret_number",
+                  "property_value": {
+                    "__typename": "SensitivePropertyValue",
+                    "data_type": "N",
+                    "pointer": "660aec4998f2aeee59e1612d0c1afc3c0c672be11fb10dc6ef971fcd187c13f9f0bccbc4e0a5f98c547ca7e37a53f93d363a33a1a966a65c4bf7d2147ef98637"
+                  }
+                },
+                {
+                  "__typename": "ObjectProperty",
+                  "property_name": "id_source",
+                  "property_value": {
+                    "__typename": "LocalPropertyValue",
+                    "data_type": "S",
+                    "property_value": "Algernon"
+                  }
+                },
+                {
+                  "__typename": "ObjectProperty",
+                  "property_name": "id_type",
+                  "property_value": {
+                    "__typename": "LocalPropertyValue",
+                    "data_type": "S",
+                    "property_value": "Employees"
+                  }
+                },
+                {
+                  "__typename": "ObjectProperty",
+                  "property_name": "id_name",
+                  "property_value": {
+                    "__typename": "LocalPropertyValue",
+                    "data_type": "S",
+                    "property_value": "emp_id"
+                  }
+                }
+              ]
+            },
+            "_context": {},
+            "_inclusive_start": 10,
+            "_exclusive_end": 20,
+            "_pagination_id": "640d577cdca145f899dc40c806b2883a"
+          }
+        },
+        "_more": false
+      }
+    }
+  }
+}
