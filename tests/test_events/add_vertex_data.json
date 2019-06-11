@@ -1,0 +1,61 @@
+{
+  "internal_id": "6ce8b33f8e615e481108d00d2f1e340f",
+  "vertex_type": "Encounter",
+  "id_value": {
+    "property_name": "id_value",
+    "data_type": "N",
+    "property_value": "1118857"
+  },
+  "identifier_stem": {
+    "property_name": "identifier_stem",
+    "data_type": "S",
+    "property_value": "#vertex#Encounter#{\"id_source\": \"PSI\"}#"
+  },
+  "vertex_properties": {
+    "local_properties": [
+      {
+        "property_name": "encounter_id",
+        "data_type": "N",
+        "property_value": "1118857"
+      },
+      {
+        "property_name": "provider_id",
+        "data_type": "N",
+        "property_value": "6855"
+      },
+      {
+        "property_name": "patient_id",
+        "data_type": "N",
+        "property_value": "1000272"
+      },
+      {
+        "property_name": "encounter_type",
+        "data_type": "S",
+        "property_value": "Rehab Day Encounter"
+      },
+      {
+        "property_name": "encounter_datetime_in",
+        "data_type": "DT",
+        "property_value": "2016-04-18T08:15:00+0000"
+      },
+      {
+        "property_name": "encounter_datetime_out",
+        "data_type": "DT",
+        "property_value": "2016-04-18T11:30:00+0000"
+      },
+      {
+        "property_name": "id_source",
+        "data_type": "S",
+        "property_value": "PSI"
+      }
+    ],
+    "stored_properties": [
+      {
+        "property_name": "documentation",
+        "storage_class": "s3",
+        "storage_uri": "s3://algernonsolutions-encounters-dev/84e1051042c827adfb698dc523626b89.documentation",
+        "data_type": "S"
+      }
+    ]
+  }
+}

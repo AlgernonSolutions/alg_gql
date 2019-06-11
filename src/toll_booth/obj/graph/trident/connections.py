@@ -8,15 +8,14 @@ import urllib.parse
 from decimal import Decimal
 from typing import Dict, Any
 
-import dateutil
 import rapidjson
 import requests
 from algernon.aws.squirrel import Opossum
 
-from toll_booth.obj.graph.trident.trident_obj.vertex import TridentVertex
 from toll_booth.obj.graph.trident.trident_obj.edge import TridentEdge
-from toll_booth.obj.graph.trident.trident_obj.properties import TridentProperty
 from toll_booth.obj.graph.trident.trident_obj.path import TridentPath
+from toll_booth.obj.graph.trident.trident_obj.properties import TridentProperty
+from toll_booth.obj.graph.trident.trident_obj.vertex import TridentVertex
 
 
 class TridentDecoder(json.JSONDecoder):
@@ -43,7 +42,7 @@ class TridentDecoder(json.JSONDecoder):
         if obj_type == 'g:Set':
             return set(obj_value)
         if obj_type == 'g:Date':
-            return dateutil.parser.parse(obj_value)
+            return datetime.datetime.fromtimestamp(obj_value/1000)
         if obj_type == 'g:Map':
             created_map = {}
             i = 0
@@ -55,8 +54,8 @@ class TridentDecoder(json.JSONDecoder):
             trident_vertex = TridentVertex(obj_value['id'], obj_value['label'], obj_value.get('properties'))
             return trident_vertex
         if obj_type == 'g:Edge':
-            from_vertex = TridentVertex(obj_value['inV'], obj_value['inVLabel'])
-            to_vertex = TridentVertex(obj_value['outV'], obj_value['outVLabel'])
+            to_vertex = TridentVertex(obj_value['inV'], obj_value['inVLabel'])
+            from_vertex = TridentVertex(obj_value['outV'], obj_value['outVLabel'])
             return TridentEdge(obj_value['id'], obj_value['label'], from_vertex, to_vertex)
         if obj_type == 'g:VertexProperty':
             return TridentProperty(obj_value['label'], obj_value['value'])

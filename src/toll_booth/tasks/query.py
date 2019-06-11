@@ -1,12 +1,10 @@
+import logging
 from typing import Dict, Any
 
-from toll_booth.obj.graph.gql_scalars import ObjectProperty, LocalPropertyValue
 from toll_booth.obj.graph.ogm import Ogm
-from toll_booth.obj.index.index_manager import IndexManager
 from toll_booth.obj.troubles import InvalidGqlRequestException
 
-
-known_fields = ('vertex', 'find_vertexes')
+known_fields = ('edges')
 
 
 def handler(type_name: str,
@@ -18,18 +16,17 @@ def handler(type_name: str,
             identity: Dict[str, Any]) -> Any:
     if type_name == 'Query':
         ogm = Ogm()
-        index_manager = IndexManager()
-        if field_name == 'vertex':
-            internal_id = args.get('internal_id', None)
+        if field_name == 'edges':
+            logging.info('request resolved to Query.edges')
+            internal_id = args.get('internal_id')
             if internal_id is None:
                 raise InvalidGqlRequestException(type_name, field_name, ['internal_id'])
-            vertex = ogm.query_vertex(internal_id)
-            return vertex
-        if field_name == 'find_vertexes':
-            object_type = args.get('object_type')
-            search_properties = args.get('object_properties')
-            if object_type is None or search_properties is None:
-                raise InvalidGqlRequestException(type_name, field_name, ['object_type', 'object_properties'])
-            local_properties = [
-                ObjectProperty(x['property_name'], LocalPropertyValue.parse_json(x)) for x in search_properties]
-            return index_manager.find_potential_vertexes(object_type, local_properties)
+            if identity in ('None', None):
+                identity = {}
+                logging.warning(f'processed request for Vertex.connected_edges, no identity provided,'
+                                f'this is ok for development, but should not occur in production')
+            username = identity.get('username')
+            if not username:
+                username = request['headers']['x-api-key']
+            connected_edges = ogm.get_edge_connection(username, args, source)
+            return connected_edges

@@ -1,0 +1,118 @@
+{
+  "context": {
+    "arguments": {
+      "edge_labels": [
+        "_provided_"
+      ],
+      "token": "None"
+    },
+    "identity": {
+      "accountId": "726075243133",
+      "cognitoIdentityPoolId": "None",
+      "cognitoIdentityId": "None",
+      "sourceIp": [
+        "72.21.217.191"
+      ],
+      "username": "AROA2SDLU7J62MMDYWKJB:jcubeta",
+      "userArn": "arn:aws:sts::726075243133:assumed-role/OrganizationAccountAccessRole/jcubeta",
+      "cognitoIdentityAuthType": "None",
+      "cognitoIdentityAuthProvider": "None"
+    },
+    "source": {
+      "vertex_properties": [
+        {
+          "property_value": {
+            "pointer": "248adbc2e31aa2d0fa94c8e55038428ae47916900e6392ce9448a9c8cd0b61ca4dd54210100c91ede5ed8346639b15a342cf7f3d6863519a2d4e6e3f83c6a758",
+            "__typename": "SensitivePropertyValue",
+            "data_type": "DT"
+          },
+          "property_name": "dob"
+        },
+        {
+          "property_value": {
+            "__typename": "LocalPropertyValue",
+            "data_type": "N",
+            "property_value": 1000272
+          },
+          "property_name": "patient_id"
+        },
+        {
+          "property_value": {
+            "__typename": "LocalPropertyValue",
+            "data_type": "S",
+            "property_value": "PSI"
+          },
+          "property_name": "id_source"
+        },
+        {
+          "property_value": {
+            "pointer": "5ad7ff2855d67ae200f6f239493de019efb6ac6ddf90baa3b3bb69120b2424db80e9de1ed7228a22a1801c5a3123b7db43b9d92bd90746a31c118510ffe471ba",
+            "__typename": "SensitivePropertyValue",
+            "data_type": "S"
+          },
+          "property_name": "last_name"
+        },
+        {
+          "property_value": {
+            "pointer": "645022898cf681509cc746e26e405a9f4a612ca77b0c3519121853853dc414f81ec83481599ef804b27d1504259779c6d6005cdd8f46555440d1b831a26152e6",
+            "__typename": "SensitivePropertyValue",
+            "data_type": "S"
+          },
+          "property_name": "first_name"
+        }
+      ],
+      "identifier_stem": {
+        "property_name": "identifier_stem",
+        "property_value": {
+          "__typename": "LocalPropertyValue",
+          "data_type": "S",
+          "property_value": "#vertex#Patient#{\"id_source\": \"PSI\"}#"
+        }
+      },
+      "id_value": {
+        "property_name": "id_value",
+        "property_value": {
+          "__typename": "LocalPropertyValue",
+          "data_type": "N",
+          "property_value": "1000272"
+        }
+      },
+      "internal_id": "6b61f3ec1c69eeb1e3e5133c1cfae706",
+      "vertex_type": "Patient"
+    },
+    "result": "None",
+    "request": {
+      "headers": {
+        "content-encoding": "amz-1.0",
+        "x-forwarded-for": "72.21.217.191, 70.132.60.89",
+        "amz-sdk-invocation-id": "24a806f3-48f4-0ac4-73dc-f37910b535f0",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "x-amz-security-token": "AgoGb3JpZ2luEFkaCXVzLWVhc3QtMSKAApuh44PWfLFzNB+2VgG76mnboBa61Y+PiV6IYF5oZknWFGLzuTkqt5QL/H8JUj3VdEq8c1dfnmzkMLSavAQb+feluijKRgkjMVhY8relh3hYkJnc6JOit6MT5SDoXKephYAJ0R72hsw4DaSJvyHvVH6KQ3VZ9pcmRliUY/7EAkDi50+Swzi/Q2EcQZ5tiY+cwI7dHFM4S9fn8+nmsrLj9vf8TmeKIaIrk0e5UZG0gqGN6atvpLi+9gkXaTMtlcxhfaYBI9gM4k0R/LG1Vmu+TRAHcDGmw9FKcVE3ST9vTkOrGU3i/dKSNNhy4nQin+JhSrJuTGKl85/Gwv8duTnAEXwq1gMILhAAGgw3MjYwNzUyNDMxMzMiDJelnhee5j+QRJuO5SqzAxcdLQDOBf+atD3D3xWDXQ9IspOGbngMb67TEkBiHQZEiQP38tPDPmxIGf4PLQqmvwX+2SDaCcbhmJn1D3n2DWXTUw22Q/uh/IYe7A9VPFzIRgjSw9bdbeBhdJk6DEliDUl7Wwlzog2MXWyJwcaBXovHd1+NGJVd9SwTx4fCIS9XcOEoxP6hEH69jcTmCkk6iKAaHP2UB4PIIJN7Cz860B5PI/ht3gRmeD387UDO5zsVZJFO/FF408RmQbY5bfCFmMvp2xL/St7h0nWtnjFwOFkvZUBLeD1HIWZ8l0j2bQWeQwDPV4YAO8biNeRjtwOqljEHF07HwUOArvUjK2QVh37cQfhYxpP0VTkPRsRBHCrtOdGFAS8ucfXRZFJAPH5Xk5sKtCt8fCize5qEvex7Gt2CaffNIDXONP5SCrZkOhwVMenWWXBQXy9lL9sTCpZIAxlt3OfS4a3XBgKIrkum2MFLWXs1huw00QxSVzAvznAdx4lPe+aopbL2+fVBWQm8I2yThXMWWYmruIFfTekL51RNYN+xQgrXSeEuLf2kSu5IGMk0WAaRABWc4M0i/VY6yFVLUTCFoeTnBQ\u003d\u003d",
+        "via": "1.1 6d4ee90b03b8194eed74421e603ee2a8.cloudfront.net (CloudFront)",
+        "content-type": "application/json",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Root\u003d1-5cf91a30-346ecf7f07966b510686483b",
+        "x-amz-cf-id": "AtKDhpYbm1BOCI98Z7JQRuSOg_dYXEPuntGjLkCQ_eJ5NaN50Oaobw\u003d\u003d",
+        "authorization": "AWS4-HMAC-SHA256 Credential\u003dASIA2SDLU7J6TXVKNZ4N/20190606/us-east-1/appsync/aws4_request, SignedHeaders\u003daccept;content-encoding;content-length;content-type;host;x-amz-date;x-amz-security-token, Signature\u003d6fbb4b6f09d2414586a9e7d9b4efe37b305d18064be6b698724f1f58ebdc96f9",
+        "content-length": "2654",
+        "amz-sdk-retry": "0/0/500",
+        "x-forwarded-proto": "https",
+        "host": "jlgmowxwofe33pdekndakyzx4i.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "aws-internal/3 aws-sdk-java/1.11.519 Linux/4.9.137-0.1.ac.218.74.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.202-b08 java/1.8.0_202 vendor/Oracle_Corporation",
+        "cloudfront-is-desktop-viewer": "true",
+        "accept": "application/json, text/javascript",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "x-amz-date": "20190606T135040Z",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": "None",
+    "prev": "None",
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "connected_edges",
+  "type_name": "Vertex"
+}

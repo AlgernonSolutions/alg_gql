@@ -1,0 +1,58 @@
+g
+    .V('6ce8b33f8e615e481108d00d2f1e340f')
+    .fold()
+    .coalesce(
+        unfold(),
+        addV('Encounter')
+            .property(id, '6ce8b33f8e615e481108d00d2f1e340f')
+            .property('encounter_id', 1118857)
+            .property(
+                'encounter_id',
+                '{"__typename":"LocalPropertyValue","data_type":"N","property_value":{"_alg_class":"decimal","value":"1118857"}}'
+            )
+            .property('provider_id', 6855)
+            .property(
+                'provider_id',
+                '{"__typename":"LocalPropertyValue","data_type":"N","property_value":{"_alg_class":"decimal","value":"6855"}}'
+            )
+            .property('patient_id', 1000272)
+            .property(
+                'patient_id',
+                '{"__typename":"LocalPropertyValue","data_type":"N","property_value":{"_alg_class":"decimal","value":"1000272"}}'
+            )
+            .property('encounter_type', 'Rehab Day Encounter')
+            .property(
+                'encounter_type',
+                '{"__typename":"LocalPropertyValue","data_type":"S","property_value":"Rehab Day Encounter"}'
+            )
+            .property('encounter_datetime_in', datetime('2016-04-18T08:15:00+00:00'))
+            .property(
+                'encounter_datetime_in',
+                '{"__typename":"LocalPropertyValue","data_type":"DT","property_value":"2016-04-18T08:15:00+00:00"}'
+            )
+            .property('encounter_datetime_out', datetime('2016-04-18T11:30:00+00:00'))
+            .property(
+                'encounter_datetime_out',
+                '{"__typename":"LocalPropertyValue","data_type":"DT","property_value":"2016-04-18T11:30:00+00:00"}'
+            )
+            .property('id_source', 'PSI')
+            .property(
+                'id_source',
+                '{"__typename":"LocalPropertyValue","data_type":"S","property_value":"PSI"}'
+            )
+            .property('documentation', "s3://algernonsolutions-encounters-dev/84e1051042c827adfb698dc523626b89.documentation")
+            .property(
+                'documentation',
+                '{"__type_name":"StoredPropertyValue","data_type":"S","storage_class":"s3","storage_uri":"s3://algernonsolutions-encounters-dev/84e1051042c827adfb698dc523626b89.documentation"}'
+            )
+            .property('id_value', 1118857)
+            .property(
+                'id_value',
+                '{"__typename":"LocalPropertyValue","data_type":"N","property_value":{"_alg_class":"decimal","value":"1118857"}}'
+            )
+            .property('identifier_stem', '#vertex#Encounter#{"id_source": "PSI"}#')
+            .property(
+                'identifier_stem',
+                '{"__typename":"LocalPropertyValue","data_type":"S","property_value":"#vertex#Encounter#{\"id_source\": \"PSI\"}#"}'
+            )
+    )

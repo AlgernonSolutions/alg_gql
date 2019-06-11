@@ -27,6 +27,10 @@ Parameters:
     Type: String
     Description: name of the region holding the Dynamo table used to hold PHI
     Default: ''
+  IndexTableRegion:
+    Type: String
+    Description: name of the region holding the Dynamo table used to hold indexes
+    Default: ''
   NeptuneClusterArn:
     Type: String
     Description: The ARN of the Neptune cluster to be used for this GQL api
@@ -63,6 +67,7 @@ Globals:
         GRAPH_DB_READER_ENDPOINT: !Ref NeptuneClusterReadEndpoint
 Conditions:
   DefaultSensitivesTableRegion: !Equals [!Ref SensitivesTableRegion, '']
+  DefaultIndexTableRegion: !Equals [!Ref IndexTableRegion, '']
   DevDeploy: !Equals [!Ref IsDev, 'True']
   ProdDeploy: !Equals [!Ref IsDev, 'False']
 
@@ -71,7 +76,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src
-      Handler: toll_booth.tasks.ogm
+      Handler: toll_booth.handler
       Role: !GetAtt GraphWorker.Arn
       VpcConfig:
         SecurityGroupIds: !Ref NeptuneSecurityGroupIds
@@ -238,6 +243,31 @@ Resources:
         - "_"
         - - !Ref GqlApiName
           - datasource_graph
+  IndexDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      Type: AMAZON_DYNAMODB
+      Description: data source for the index of the data space
+      ServiceRoleArn: !GetAtt GraphWorker.Arn
+      DynamoDBConfig:
+        TableName: !Ref IndexTableName
+        AwsRegion: !If [DefaultIndexTableRegion, !Ref "AWS::Region", !Ref IndexTableRegion]
+        UseCallerCredentials: true
+      ApiId: !GetAtt LeechApi.ApiId
+      Name: !Join
+        - "_"
+        - - !Ref GqlApiName
+          - datasource_index
+  EmptyDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      Type: NONE
+      Description: convenience data_source for filtering
+      ApiId: !GetAtt LeechApi.ApiId
+      Name: !Join
+        - "_"
+        - - !Ref GqlApiName
+          - datasource_none
   SensitivesDataSource:
     Type: "AWS::AppSync::DataSource"
     Properties:
@@ -282,9 +312,9 @@ Resources:
     Type: "AWS::AppSync::Resolver"
     Properties:
       RequestMappingTemplateS3Location: gql/resolvers/query_find_vertexes_request.vtl
-      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/query_find_vertexes_response.vtl
       TypeName: Query
-      DataSourceName: !GetAtt GraphDataSource.Name
+      DataSourceName: !GetAtt IndexDataSource.Name
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: find_vertexes
       Kind: UNIT
@@ -292,11 +322,21 @@ Resources:
     Type: "AWS::AppSync::Resolver"
     Properties:
       RequestMappingTemplateS3Location: gql/resolvers/query_vertex_request.vtl
-      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/query_vertex_response.vtl
       TypeName: Query
-      DataSourceName: !GetAtt GraphDataSource.Name
+      DataSourceName: !GetAtt IndexDataSource.Name
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: vertex
+      Kind: UNIT
+  ListVertexesResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/query_vertex_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/query_vertex_response.vtl
+      TypeName: Query
+      DataSourceName: !GetAtt IndexDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: list_vertexes
       Kind: UNIT
   VertexConnectedEdgesResolver:
     Type: "AWS::AppSync::Resolver"
@@ -312,9 +352,9 @@ Resources:
     Type: "AWS::AppSync::Resolver"
     Properties:
       RequestMappingTemplateS3Location: gql/resolvers/vertex_vertex_properties_request.vtl
-      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/vertex_vertex_properties_response.vtl
       TypeName: Vertex
-      DataSourceName: !GetAtt GraphDataSource.Name
+      DataSourceName: !GetAtt EmptyDataSource.Name
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: vertex_properties
       Kind: UNIT

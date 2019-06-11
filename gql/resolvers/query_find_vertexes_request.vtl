@@ -1,10 +1,25 @@
-#set( $myMap = {
-  "context" : $context,
-  "field_name": "find_vertexes",
-  "type_name": "Query"
+#set( $object_type = $context.args.object_type )
+#set( $expression = "object_type=:object_type" )
+#set( $values = {
+	":object_type": {"S": $object_type}
 } )
+#set( $object_properties = $context.args.object_properties )
+#foreach( $item in $object_properties )
+	#set( $expression = "${expression} and ${item.property_name}=:${item.property_name}")
+    $util.qr($values.put(":${item.property_name}", {${item.data_type}: ${item.property_value}}))
+#end
 {
-    "version" : "2017-02-28",
-    "operation": "Invoke",
-    "payload": $util.toJson($myMap)
+  "version": "2017-02-28",
+  "operation": "Scan",
+  "filter": {
+    "expression" : "${expression}",
+    "expressionValues" : $util.toJson($values),
+  },
+  "nextToken": $util.toJson($util.defaultIfNullOrEmpty($ctx.args.nextToken, null)),
+  #if( $context.args.segment )
+  	"segment": $context.args.segment
+  #end
+  #if ($context.args.totel_segments)
+  	"totalSegments": $context.args.total_segments
+  #end
 }

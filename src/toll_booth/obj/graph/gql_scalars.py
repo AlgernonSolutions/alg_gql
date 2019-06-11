@@ -43,7 +43,7 @@ class StoredPropertyValue(AlgObject):
             'data_type': self._data_type,
             'storage_uri': self._storage_uri,
             'storage_class': self._storage_class,
-            'property_type': type(self).__name__
+            '__typename': type(self).__name__
         }
 
 
@@ -102,7 +102,7 @@ class SensitivePropertyValue(AlgObject):
         return {
             'data_type': self._data_type,
             'pointer': property_value,
-            'property_type': type(self).__name__
+            '__typename': type(self).__name__
         }
 
     @property
@@ -125,6 +125,10 @@ class LocalPropertyValue(AlgObject):
         return property_value
 
     @property
+    def search_property_value(self):
+        return self._property_value
+
+    @property
     def data_type(self):
         return self._data_type
 
@@ -133,7 +137,7 @@ class LocalPropertyValue(AlgObject):
         return {
             'data_type': self._data_type,
             'property_value': self.property_value,
-            'property_type': type(self).__name__
+            '__typename': type(self).__name__
         }
 
 

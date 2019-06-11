@@ -3,8 +3,11 @@ import os
 from datetime import datetime
 from os import path
 from unittest.mock import patch
+from tests.test_setup import mock_objs
 
 import pytest
+
+from toll_booth.obj.graph.gql_scalars import InputVertex, InputEdge
 
 _mock_vertex_data = {
     'internal_id': '12443kdkg23345912493sfdsfs',
@@ -108,11 +111,75 @@ _mock_edge_data = {
 
 
 @pytest.fixture
+def mocks(request):
+    patches = []
+    mocks = {}
+    indicated_patches = {}
+    test_name = request.node.originalname
+    if test_name in [
+        'test_graph_cluster',
+        'test_graph_object',
+        'test_query_edges_filtered'
+    ]:
+        indicated_patches = {
+            's3': mock_objs.mock_s3_stored_data,
+            'gql': mock_objs.gql_client_notary,
+            'dynamo': mock_objs.mock_dynamo
+        }
+    if test_name in [
+        'test_graph_cluster_i',
+        'test_query_vertex_i',
+        'test_query_vertex_properties_i',
+        'test_query_vertex_connected_edges_i',
+    ]:
+        indicated_patches = {
+            's3': mock_objs.mock_s3_stored_data,
+            'gql': mock_objs.gql_client_notary,
+            'dynamo': mock_objs.mock_dynamo
+        }
+    if test_name in [
+        'test_retrieve_s3_stored_property'
+    ]:
+        indicated_patches = {
+            's3': mock_objs.prod_s3_stored_data
+        }
+    for mock_name, mock_generator in indicated_patches.items():
+        mock_obj, patch_obj = mock_generator()
+        mocks[mock_name] = mock_obj
+        patches.append(patch_obj)
+    yield mocks
+    for patch_obj in patches:
+        patch_obj.stop()
+
+
+@pytest.fixture
+def mock_input_vertex():
+    test_data = _read_test_event('add_vertex_data')
+    input_vertex = InputVertex.from_arguments(test_data)
+    return input_vertex
+
+
+@pytest.fixture
+def mock_input_edge():
+    test_data = _read_test_event('add_edge_data')
+    input_edge = InputEdge.from_arguments(test_data)
+    return input_edge
+
+
+@pytest.fixture
 def integration_test_environment():
     os.environ['GRAPH_DB_ENDPOINT'] = 'leech-cluster.cluster-cnd32dx4xing.us-east-1.neptune.amazonaws.com'
     os.environ['GRAPH_DB_READER_ENDPOINT'] = 'leech-cluster.cluster-ro-cnd32dx4xing.us-east-1.neptune.amazonaws.com'
-    os.environ['SENSITIVES_TABLE_NAME'] = 'Secrets'
-    os.environ['INDEX_TABLE_NAME'] = 'Index'
+    os.environ['SENSITIVES_TABLE_NAME'] = 'Sensitives'
+    os.environ['INDEX_TABLE_NAME'] = 'Indexes'
+
+
+@pytest.fixture
+def unit_test_environment():
+    os.environ['GRAPH_DB_ENDPOINT'] = 'some_writer_endpoint'
+    os.environ['GRAPH_DB_READER_ENDPOINT'] = 'some_reader_endpoint'
+    os.environ['SENSITIVES_TABLE_NAME'] = 'some_table_name'
+    os.environ['INDEX_TABLE_NAME'] = 'some_other_table_name'
 
 
 @pytest.fixture
@@ -148,6 +215,11 @@ def mock_edge_data():
 @pytest.fixture
 def graph_vertex_event():
     return _read_test_event
+
+
+@pytest.fixture
+def graph_cluster_event():
+    return _read_test_event('add_cluster_event')
 
 
 @pytest.fixture(autouse=True)

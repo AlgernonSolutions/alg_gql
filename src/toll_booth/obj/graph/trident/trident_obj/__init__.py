@@ -9,7 +9,9 @@ def _parse_property_value(property_attributes: List[Any]) -> Dict[str, Any]:
                            f'but there are too many, should be two')
     for property_attribute in property_attributes:
         try:
-            return rapidjson.loads(property_attribute)
+            test_property = rapidjson.loads(property_attribute)
+            if '__typename' in test_property:
+                return test_property
         except (ValueError, TypeError):
             continue
     raise NotImplementedError(f'could not parse trident property for property_attributes: {property_attributes}')

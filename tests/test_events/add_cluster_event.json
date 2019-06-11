@@ -1,0 +1,114 @@
+{
+  "context": {
+    "arguments": {
+      "vertex": {
+        "internal_id": "6ce8b33f8e615e481108d00d2f1e340f",
+        "vertex_type": "Encounter",
+        "id_value": {
+          "property_name": "id_value",
+          "data_type": "N",
+          "property_value": "1118857"
+        },
+        "identifier_stem": {
+          "property_name": "identifier_stem",
+          "data_type": "S",
+          "property_value": "#vertex#Encounter#{\"id_source\": \"PSI\"}#"
+        },
+        "vertex_properties": {
+          "local_properties": [
+            {
+              "property_name": "encounter_id",
+              "data_type": "N",
+              "property_value": "1118857"
+            },
+            {
+              "property_name": "provider_id",
+              "data_type": "N",
+              "property_value": "6855"
+            },
+            {
+              "property_name": "patient_id",
+              "data_type": "N",
+              "property_value": "1000272"
+            },
+            {
+              "property_name": "encounter_type",
+              "data_type": "S",
+              "property_value": "Rehab Day Encounter"
+            },
+            {
+              "property_name": "encounter_datetime_in",
+              "data_type": "DT",
+              "property_value": "2016-04-18T08:15:00+0000"
+            },
+            {
+              "property_name": "encounter_datetime_out",
+              "data_type": "DT",
+              "property_value": "2016-04-18T11:30:00+0000"
+            },
+            {
+              "property_name": "id_source",
+              "data_type": "S",
+              "property_value": "PSI"
+            }
+          ],
+          "stored_properties": [
+            {
+              "property_name": "documentation",
+              "storage_class": "s3",
+              "storage_uri": "s3://algernonsolutions-encounters-dev/84e1051042c827adfb698dc523626b89.documentation",
+              "data_type": "S"
+            }
+          ]
+        }
+      }
+    },
+    "identity": {
+      "accountId": "726075243133",
+      "cognitoIdentityPoolId": "None",
+      "cognitoIdentityId": "None",
+      "sourceIp": [
+        "72.21.217.23"
+      ],
+      "username": "AROA2SDLU7J62MMDYWKJB:jcubeta",
+      "userArn": "arn:aws:sts::726075243133:assumed-role/OrganizationAccountAccessRole/jcubeta",
+      "cognitoIdentityAuthType": "None",
+      "cognitoIdentityAuthProvider": "None"
+    },
+    "source": "None",
+    "result": "None",
+    "request": {
+      "headers": {
+        "content-encoding": "amz-1.0",
+        "x-forwarded-for": "72.21.217.23, 70.132.33.72",
+        "amz-sdk-invocation-id": "30cea248-50d2-304f-edbe-4bcce5be18e0",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "x-amz-security-token": "AgoGb3JpZ2luEDEaCXVzLWVhc3QtMSKAAo/bPhpINLd70nWhUYLUp658zyeeXKo+2Xpg39fqb1fCYLFtsv/SMWcH4GQ5QFC2E31CQwBTKXCc5iP7pEaRbfPR6UcIuDaOA80ddySTGiHMMbYkL1y0UQqZtZuP54TFgSYIzHcK9Z9sn42XFO62OiR9yM4t9SF81HTzQobZI3brLDr5+V7vxW2MYbPSq8wkCGYit57GzB4NquBT96jpfZnxAuXyMGwwFRlkGaBKNZUFlRtea4/ui80BxZbes5qbYL8WR0Sj9GdYKnYN36s05qE1HIBxqDFN6MTr4ASHYdfxLJT+QPmV0j5KIoLnrkGrhxuOkeGE5uJ7pUxCv58GkFkq3wMI9v//////////ARAAGgw3MjYwNzUyNDMxMzMiDGhxdJw2mftsMa6dSCqzA73JHKN/HXu56um3AKRQTemb5kv0HlP0arsDlHvij6OeSqDX0tF6Ne/9+gBDyZWmAMRSh0PdFjE2aWDCwoLu2K6egdG8S8JagjuHSmbPiX82Ej9Fm3eFl2wvlXvIsokGw9CQbPEDy9sxhCiMS8FNrv9RO00KVCgAN4FQiMXBNj5d1fMcj7SznkedsCZSmgeqpJsm7q9C4ojTBflxIbyQ+MwMR3HeFuFFHFeEQexBf5WLzu60Ec6HaKNIfeB1Y3CSsXHADTd3MNkOrEJU4uvwjQWXE3jnWo1lAL0Ck05ljeG6SIaa6h3v/tT19zogFamyVcAiaDoBSJXgr3Ii5BxNe9U5uFHISjOLQhJTImGVAoQURXOBdjRfc8E7+BVlevSnurIWRzTFbt4pijyWbi3Ko4sq/JE46IjaNztTNVtPmHUdNtUZ3WoFGzNms4dtoA/InpORKmuSTmTSl+RKUqgkEl0aYldhUOEzkl/8tz2wix7Qt1egOdzDr1LLWbgJkFJ/hpdR8OmQQaybJoMg3ECB5sywRzYVpR9cav4g/3e/lUntpztBMHICXGxwnoBxo/flXMi8EDDKuNvnBQ\u003d\u003d",
+        "via": "1.1 1448f69604d5be1f9c9f0c64cfa90595.cloudfront.net (CloudFront)",
+        "content-type": "application/json",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Root\u003d1-5cf6e1a5-f4928a9f00d7ffd76762bf17",
+        "x-amz-cf-id": "8eirVcTNK3vFfidbkEFA8Bv6vM01SUlgxAim5b0PNCLtcf9eiJmxiA\u003d\u003d",
+        "authorization": "AWS4-HMAC-SHA256 Credential\u003dASIA2SDLU7J6R5YQV6WO/20190604/us-east-1/appsync/aws4_request, SignedHeaders\u003daccept;content-encoding;content-length;content-type;host;x-amz-date;x-amz-security-token, Signature\u003d7ac942f6c35a41c78445cfe0c978d78df852c925a6cc298d4b82629af900f2e0",
+        "content-length": "3152",
+        "amz-sdk-retry": "0/0/500",
+        "x-forwarded-proto": "https",
+        "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "aws-internal/3 aws-sdk-java/1.11.519 Linux/4.9.137-0.1.ac.218.74.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.202-b08 java/1.8.0_202 vendor/Oracle_Corporation",
+        "cloudfront-is-desktop-viewer": "true",
+        "accept": "application/json, text/javascript",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "x-amz-date": "20190604T212453Z",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": "None",
+    "prev": "None",
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "add_vertex",
+  "type_name": "Mutation"
+}

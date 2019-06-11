@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Dict, Any
 
 from algernon import AlgObject, ajson
@@ -8,7 +9,7 @@ class PaginationToken(AlgObject):
     def __init__(self,
                  username: str,
                  source: Dict,
-                 context: Dict,
+                 args: Dict,
                  inclusive_start: int = 0,
                  exclusive_end: int = 10,
                  pagination_id: str = None):
@@ -17,7 +18,7 @@ class PaginationToken(AlgObject):
             pagination_id = uuid.uuid4().hex
         self._username = username
         self._source = source
-        self._context = context
+        self._args = args
         self._inclusive_start = inclusive_start
         self._exclusive_end = exclusive_end
         self._pagination_id = pagination_id
@@ -26,19 +27,19 @@ class PaginationToken(AlgObject):
     def parse_json(cls, json_dict: Dict[str, Any]):
         try:
             return cls(
-                json_dict['username'], json_dict['source'], json_dict['context'],
+                json_dict['username'], json_dict['source'], json_dict['args'],
                 json_dict['inclusive_start'], json_dict['exclusive_end'], json_dict['pagination_id']
             )
         except KeyError:
             token = json_dict['token']
             username = json_dict['username']
             source = json_dict['source']
-            context = json_dict['context']
+            args = json_dict['args']
             if not token:
-                return cls(username, source, context, exclusive_end=json_dict['page_size'])
+                return cls(username, source, args, exclusive_end=json_dict['page_size'])
             json_string = SneakyKipper('pagination').decrypt(token, {'username': username})
             obj_dict = ajson.loads(json_string)
-            return cls(username, obj_dict['source'], obj_dict['context'], pagination_id=obj_dict['id'],
+            return cls(username, obj_dict['source'], obj_dict['args'], pagination_id=obj_dict['id'],
                        inclusive_start=obj_dict['start'], exclusive_end=obj_dict['end'])
 
     @property
@@ -51,8 +52,8 @@ class PaginationToken(AlgObject):
         return self._source
 
     @property
-    def context(self):
-        return self._context
+    def args(self):
+        return self._args
 
     @property
     def inclusive_start(self):
@@ -68,10 +69,13 @@ class PaginationToken(AlgObject):
         self._exclusive_end += step_value
 
     def package(self) -> str:
+        args = deepcopy(self._args)
+        if 'token' in args:
+            del(args['token'])
         unencrypted_text = ajson.dumps({
             'id': self._pagination_id,
             'source': self._source,
-            'context': self._context,
+            'args': args,
             'start': self._inclusive_start,
             'end': self._exclusive_end
         })

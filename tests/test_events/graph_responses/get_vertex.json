@@ -2,21 +2,24 @@
   "@type": "g:List",
   "@value": [
     {
-      "@type": "g:Vertex",
-      "@value": {
-        "id": "1235fghjgjdj`213",
-        "label": "MockVertex",
-        "properties": {
-          "secret_number": [
+      "@type": "g:Map",
+      "@value": [
+        "patient_id",
+        {
+          "@type": "g:List",
+          "@value": [
             {
               "@type": "g:VertexProperty",
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 5458800
+                  "@value": -280653926
                 },
-                "value": "660aec4998f2aeee59e1612d0c1afc3c0c672be11fb10dc6ef971fcd187c13f9f0bccbc4e0a5f98c547ca7e37a53f93d363a33a1a966a65c4bf7d2147ef98637",
-                "label": "secret_number"
+                "value": {
+                  "@type": "g:Int32",
+                  "@value": 1005157
+                },
+                "label": "patient_id"
               }
             },
             {
@@ -24,34 +27,27 @@
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 1089527660
+                  "@value": -896234068
                 },
-                "value": "N",
-                "label": "secret_number"
-              }
-            },
-            {
-              "@type": "g:VertexProperty",
-              "@value": {
-                "id": {
-                  "@type": "g:Int32",
-                  "@value": 553614580
-                },
-                "value": "SensitivePropertyValue",
-                "label": "secret_number"
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"N\",\"property_value\":{\"_alg_class\":\"decimal\",\"value\":\"1005157\"}}",
+                "label": "patient_id"
               }
             }
-          ],
-          "id_value": [
+          ]
+        },
+        "encounter_datetime_in",
+        {
+          "@type": "g:List",
+          "@value": [
             {
               "@type": "g:VertexProperty",
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 5458800
+                  "@value": -470443803
                 },
-                "value": "1001",
-                "label": "id_value"
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"DT\",\"property_value\":\"2016-03-01T08:15:00+00:00\"}",
+                "label": "encounter_datetime_in"
               }
             },
             {
@@ -59,34 +55,30 @@
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 1089527660
+                  "@value": 1071100308
                 },
-                "value": "N",
-                "label": "id_value"
-              }
-            },
-            {
-              "@type": "g:VertexProperty",
-              "@value": {
-                "id": {
-                  "@type": "g:Int32",
-                  "@value": 553614580
+                "value": {
+                  "@type": "g:Date",
+                  "@value": 1456820100000
                 },
-                "value": "LocalPropertyValue",
-                "label": "id_value"
+                "label": "encounter_datetime_in"
               }
             }
-          ],
-          "identifier_stem": [
+          ]
+        },
+        "documentation",
+        {
+          "@type": "g:List",
+          "@value": [
             {
               "@type": "g:VertexProperty",
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 5458800
+                  "@value": 2124259895
                 },
-                "value": "#some_id_source#some_id_type#",
-                "label": "identifier_stem"
+                "value": "s3://algernonsolutions-encounters-dev/278a120980ee2c3e4470e1ab47f23479.documentation",
+                "label": "documentation"
               }
             },
             {
@@ -94,33 +86,26 @@
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 1089527660
+                  "@value": -265010376
                 },
-                "value": "S",
-                "label": "identifier_stem"
-              }
-            },
-            {
-              "@type": "g:VertexProperty",
-              "@value": {
-                "id": {
-                  "@type": "g:Int32",
-                  "@value": 553614580
-                },
-                "value": "LocalPropertyValue",
-                "label": "identifier_stem"
+                "value": "{\"__type_name\":\"StoredPropertyValue\",\"data_type\":\"S\",\"storage_class\":\"s3\",\"storage_uri\":\"s3://algernonsolutions-encounters-dev/278a120980ee2c3e4470e1ab47f23479.documentation\"}",
+                "label": "documentation"
               }
             }
-          ],
-          "id_source": [
+          ]
+        },
+        "id_source",
+        {
+          "@type": "g:List",
+          "@value": [
             {
               "@type": "g:VertexProperty",
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 2020626877
+                  "@value": 229514275
                 },
-                "value": "Algernon",
+                "value": "PSI",
                 "label": "id_source"
               }
             },
@@ -129,34 +114,27 @@
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 77318734
+                  "@value": 218803714
                 },
-                "value": "S",
-                "label": "id_source"
-              }
-            },
-            {
-              "@type": "g:VertexProperty",
-              "@value": {
-                "id": {
-                  "@type": "g:Int32",
-                  "@value": 961367888
-                },
-                "value": "LocalPropertyValue",
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"S\",\"property_value\":\"PSI\"}",
                 "label": "id_source"
               }
             }
-          ],
-          "id_type": [
+          ]
+        },
+        "identifier_stem",
+        {
+          "@type": "g:List",
+          "@value": [
             {
               "@type": "g:VertexProperty",
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 1807667675
+                  "@value": -1720726431
                 },
-                "value": "Employees",
-                "label": "id_type"
+                "value": "#vertex#Encounter#{\"id_source\": \"PSI\"}#",
+                "label": "identifier_stem"
               }
             },
             {
@@ -164,34 +142,30 @@
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": -353829203
+                  "@value": 1406187968
                 },
-                "value": "S",
-                "label": "id_type"
-              }
-            },
-            {
-              "@type": "g:VertexProperty",
-              "@value": {
-                "id": {
-                  "@type": "g:Int32",
-                  "@value": 530219951
-                },
-                "value": "LocalPropertyValue",
-                "label": "id_type"
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"S\",\"property_value\":\"#vertex#Encounter#{\"id_source\": \"PSI\"}#\"}",
+                "label": "identifier_stem"
               }
             }
-          ],
-          "id_name": [
+          ]
+        },
+        "provider_id",
+        {
+          "@type": "g:List",
+          "@value": [
             {
               "@type": "g:VertexProperty",
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 2122643967
+                  "@value": 466956114
                 },
-                "value": "emp_id",
-                "label": "id_name"
+                "value": {
+                  "@type": "g:Int32",
+                  "@value": 6849
+                },
+                "label": "provider_id"
               }
             },
             {
@@ -199,10 +173,27 @@
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": -547857986
+                  "@value": -1748897512
                 },
-                "value": "S",
-                "label": "id_name"
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"N\",\"property_value\":{\"_alg_class\":\"decimal\",\"value\":\"6849\"}}",
+                "label": "provider_id"
+              }
+            }
+          ]
+        },
+        "encounter_datetime_out",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -868324609
+                },
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"DT\",\"property_value\":\"2016-03-01T11:30:00+00:00\"}",
+                "label": "encounter_datetime_out"
               }
             },
             {
@@ -210,15 +201,108 @@
               "@value": {
                 "id": {
                   "@type": "g:Int32",
-                  "@value": 336191168
+                  "@value": -52048019
                 },
-                "value": "LocalPropertyValue",
-                "label": "id_name"
+                "value": {
+                  "@type": "g:Date",
+                  "@value": 1456831800000
+                },
+                "label": "encounter_datetime_out"
+              }
+            }
+          ]
+        },
+        "encounter_id",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1490850239
+                },
+                "value": {
+                  "@type": "g:Int32",
+                  "@value": 1000562
+                },
+                "label": "encounter_id"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 30354433
+                },
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"N\",\"property_value\":{\"_alg_class\":\"decimal\",\"value\":\"1000562\"}}",
+                "label": "encounter_id"
+              }
+            }
+          ]
+        },
+        "id_value",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -627004955
+                },
+                "value": {
+                  "@type": "g:Int32",
+                  "@value": 1000562
+                },
+                "label": "id_value"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -2087500761
+                },
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"N\",\"property_value\":{\"_alg_class\":\"decimal\",\"value\":\"1000562\"}}",
+                "label": "id_value"
+              }
+            }
+          ]
+        },
+        "encounter_type",
+        {
+          "@type": "g:List",
+          "@value": [
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": 1263638987
+                },
+                "value": "Rehab Day Encounter",
+                "label": "encounter_type"
+              }
+            },
+            {
+              "@type": "g:VertexProperty",
+              "@value": {
+                "id": {
+                  "@type": "g:Int32",
+                  "@value": -1950276758
+                },
+                "value": "{\"__typename\":\"LocalPropertyValue\",\"data_type\":\"S\",\"property_value\":\"Rehab Day Encounter\"}",
+                "label": "encounter_type"
               }
             }
           ]
         }
-      }
+      ]
     }
   ]
 }

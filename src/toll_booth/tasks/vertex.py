@@ -6,9 +6,6 @@ import rapidjson
 from toll_booth.obj.graph.ogm import Ogm
 from toll_booth.obj.graph.trident.trident_obj.properties import TridentProperty
 
-from toll_booth.obj.troubles import InvalidGqlRequestException
-
-
 known_fields = ('vertex_properties', 'connected_edges')
 
 
@@ -49,26 +46,14 @@ def parse_object_properties(property_name: str, object_properties: List[TridentP
 def handler(type_name, field_name, args, source, result, request, identity):
     ogm = Ogm()
     if type_name == 'Vertex':
-        if field_name == 'vertex_properties':
-            logging.info(f'request resolved to Vertex.vertex_properties')
-            internal_id = source.get('internal_id', None)
-            if internal_id is None:
-                raise InvalidGqlRequestException(type_name, field_name, ['internal_id'])
-            vertex_properties = ogm.query_vertex_properties(internal_id)
-            if len(vertex_properties) > 1:
-                raise RuntimeError(f'queried vertex properties, '
-                                   f'got more responses than we should have: {vertex_properties}')
-            for entry in vertex_properties:
-                gql_properties = compile_object_properties(entry)
-                logging.info(f'completed an vertex_properties command, results: {gql_properties}')
-                return gql_properties
-            return []
         if field_name == 'connected_edges':
             logging.info('request resolved to Vertex.connected_edges')
             if identity in ('None', None):
                 identity = {}
                 logging.warning(f'processed request for Vertex.connected_edges, no identity provided,'
                                 f'this is ok for development, but should not occur in production')
-            username = identity.get('username', request['headers']['x-api-key'])
+            username = identity.get('username')
+            if not username:
+                username = request['headers']['x-api-key']
             connected_edges = ogm.get_edge_connection(username, args, source)
             return connected_edges

@@ -1,0 +1,44 @@
+#set( $vertexes = [] )
+#set ($response = $context.result.items)
+#set ($non_property_fields = {
+	"internal_id": "",
+    "id_value": "",
+    "identifier_stem": "",
+    "object_type": "",
+    "numeric_id_value": "",
+    "object_class": "",
+    "sid_value": ""
+})
+#foreach($i in $response)
+	#set ($vertex = {"vertex_properties": []})
+ 	#foreach ($property in $i.entrySet())
+      #if(! $non_property_fields.get($property.key))
+          #set( $typename = $property.value.property_value.property_type )
+          $util.qr($property.value.property_value.remove("property_type"))
+          $util.qr($property.value.property_value.put("__typename", $typename))
+          $util.qr($vertex.vertex_properties.add($property.value))
+      #end
+    #end
+    #set ($identifier_stem = {
+      "property_name": "identifier_stem",
+      "property_value": {
+          "__typename": "LocalPropertyValue",
+          "data_type": "S",
+          "property_value": $i["identifier_stem"]
+      }
+     })
+     #set( $id_value = {
+      "property_name": "id_value",
+      "property_value": {
+          "__typename": $i["id_value"]["property_value"]["property_type"],
+          "data_type": $i["id_value"]["property_value"]["data_type"],
+          "property_value": $i['id_value']['property_value']['property_value'].toString()
+      }
+     })
+   $util.qr($vertex.put("identifier_stem", $identifier_stem))
+   $util.qr($vertex.put("id_value", $id_value))
+   $util.qr($vertex.put("internal_id", $i.internal_id))
+   $util.qr($vertex.put("vertex_type", $i.object_type))
+   $util.qr($vertexes.add($vertex))
+#end
+$util.toJson({"vertexes": $vertexes, "token": $context.result.nextToken})

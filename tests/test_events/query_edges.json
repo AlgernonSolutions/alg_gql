@@ -1,0 +1,54 @@
+{
+  "context": {
+    "arguments": {
+      "internal_id": "278a120980ee2c3e4470e1ab47f23479"
+    },
+    "identity": {
+      "accountId": "726075243133",
+      "cognitoIdentityPoolId": "None",
+      "cognitoIdentityId": "None",
+      "sourceIp": [
+        "72.21.217.119"
+      ],
+      "username": "AROA2SDLU7J62MMDYWKJB:jcubeta",
+      "userArn": "arn:aws:sts::726075243133:assumed-role/OrganizationAccountAccessRole/jcubeta",
+      "cognitoIdentityAuthType": "None",
+      "cognitoIdentityAuthProvider": "None"
+    },
+    "source": "None",
+    "result": "None",
+    "request": {
+      "headers": {
+        "content-encoding": "amz-1.0",
+        "x-forwarded-for": "72.21.217.119, 70.132.60.75",
+        "amz-sdk-invocation-id": "65919ba8-1641-9190-0c2d-6db25bdc2a98",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "x-amz-security-token": "AgoGb3JpZ2luECsaCXVzLWVhc3QtMSKAAmuHkbp7TPL1InMphF6WzjId6BxFWwC1cFIDxIoVAqUdNFuse1kKf7WvqDzAZ5DbAnIu0u44z2atbh6jssir/1+wTRKL83TDLGGV0lULY0CTvReDnyo1Xad+dQ7E2L32NThMztmS6T2z+UeGPg7gJFeeWVcq3ylvNbmOQB+N1TnT6FHjdzgqpDaqKBvZGSTJLJ+hg+LaAPyeiuGBDJyODShVG30JOgiVJiVTODNmI3fkNUVCbR1qIVGDTpFSpruWSB0m/zFc47pd/T00gfTOAKZCogQOLIHO0cHjJVOUeRLitkH6Bcs55F0KhR0ZX1scdULsVqN6F0GgCUqmvA7mco0q3wMI8P//////////ARAAGgw3MjYwNzUyNDMxMzMiDINs9StF+aWQXGI8KSqzA/r8x5KKRtBMe4TMYq/iTmyoa1h+cGewLZtAAeYnip0QeLen9gFK7twyqdFwf0LD+iHhUBU5fOIRGbJgdRaGmN/5V8puDOeg4zupVs5hvC6joyMYGENUl3jtamSnHUnk8ZPfjxOeBidl4fMAQWLkAacypzF5AvCULh2GSQIAdfxxDVFjimS8N0Z5uEDxusprfbQFsrkk/+GuGkRJlGckoAn2YHdZ8zzq04pbBDugP2U8eKuset59z00/+2BRQfhueb6/Vfh/YMNC2kEmje1uzjTbGUUFJvH1LW9JtMajXHSosO5/JiXRqDtT4VGQ+CZH7SL3DpYhss6F+J+wEevj2QGNVDq/c5jpeWlexLEqTxXy5wK1m+SvS3NG6oxhlr9F620vSlc+OPb6jn8SENo+PS273tIYB5EkaimYYpihtXtLP5JkCJYKzXqAUy+zio41Mqo7iPaulwQ1QgnABbbnmTm2jivGhTnOiAVOjpQOnrX2LJpfKPuAx1zDifiZEhMXRMuKT/qljQFNTlxQrtZ262V8T9QPBfyt9FwNL5hxnBoxisxsQHzff3uVh3cKAlRfapy2OzDllNrnBQ\u003d\u003d",
+        "via": "1.1 8ad5a9cbb864898c238f716c1a12623d.cloudfront.net (CloudFront)",
+        "content-type": "application/json",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Root\u003d1-5cf68f38-374f26a0c5b54dc01aed8aa0",
+        "x-amz-cf-id": "MS7ZEavW5e5Z1RvE74gkR8MFme4iNBPYNmmMZVtB94ltzDAO9vfC8g\u003d\u003d",
+        "authorization": "AWS4-HMAC-SHA256 Credential\u003dASIA2SDLU7J6UHJYOA3M/20190604/us-east-1/appsync/aws4_request, SignedHeaders\u003daccept;content-encoding;content-length;content-type;host;x-amz-date;x-amz-security-token, Signature\u003d2d2637d0939fb4aa26c2b1a7981b51c78cf3144e340127a6de344164a3d7646e",
+        "content-length": "2441",
+        "amz-sdk-retry": "0/0/500",
+        "x-forwarded-proto": "https",
+        "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "aws-internal/3 aws-sdk-java/1.11.519 Linux/4.9.137-0.1.ac.218.74.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.202-b08 java/1.8.0_202 vendor/Oracle_Corporation",
+        "cloudfront-is-desktop-viewer": "true",
+        "accept": "application/json, text/javascript",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "x-amz-date": "20190604T153312Z",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": "None",
+    "prev": "None",
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "edges",
+  "type_name": "Query"
+}

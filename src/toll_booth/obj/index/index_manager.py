@@ -230,7 +230,7 @@ class IndexManager:
                     'property_value': {
                         'M': {
                             'data_type': {'S': vertex_property.property_value.data_type},
-                            'property_value': {'S': vertex_property.property_value.property_value},
+                            'property_value': {'S': vertex_property.property_value.search_property_value},
                             'property_type': {'S': 'LocalPropertyValue'}
                         }
                     }

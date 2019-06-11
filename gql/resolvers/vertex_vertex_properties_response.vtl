@@ -1,0 +1,36 @@
+#set( $property_names = {} )
+
+#foreach( $item in $context.arguments.property_names )
+	$util.qr($property_names.put($item, ""))
+#end
+
+#set ($vertex_properties = [])
+#set ($response = $context.result.items)
+#set ($non_property_fields = {
+	"internal_id": "",
+    "id_value": "",
+    "identifier_stem": "",
+    "object_type": "",
+    "numeric_id_value": "",
+    "object_class": "",
+    "sid_value": ""
+})
+#foreach($i in $response)
+ 	#foreach ($property in $i.entrySet())
+      #if(! $non_property_fields.get($property.key))
+      	  #set( $typename = $property.value.property_value.property_type )
+          #if( $typename )
+            $util.qr($property.value.property_value.remove("property_type"))
+            $util.qr($property.value.property_value.put("__typename", $typename))
+          #end
+          #if( $property_names )
+          	#if ($property_names.get($property.key))
+            	$util.qr($vertex_properties.add($property.value))
+            #end
+          #else
+          	$util.qr($vertex_properties.add($property.value))
+          #end
+      #end
+    #end
+#end
+$util.toJson($vertex_properties)

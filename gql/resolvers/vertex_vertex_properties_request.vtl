@@ -1,10 +1,22 @@
-#set( $myMap = {
-  "context" : $context,
-  "field_name": "vertex_properties",
-  "type_name": "Vertex"
-} )
+#if( $context.arguments.internal_id )
+	#set( $internal_id = $context.arguments.internal_id )
+#elseif( $context.source.internal_id )
+	#set( $internal_id = $context.source.internal_id)
+#end
 {
-    "version" : "2017-02-28",
-    "operation": "Invoke",
-    "payload": $util.toJson($myMap)
+    "version" : "2018-05-29",
+    "operation" : "Query",
+    "index": "internal_id_index",
+    "query" : {
+      "expression": "internal_id = :internal_id",
+        "expressionValues" : {
+          ":internal_id" : { "S" : "${internal_id}" }
+        }
+    }
+    #if( ${context.arguments.count} )
+        ,"limit": ${context.arguments.count}
+    #end
+    #if( ${context.arguments.nextToken} )
+        ,"nextToken": "${context.arguments.nextToken}"
+    #end
 }

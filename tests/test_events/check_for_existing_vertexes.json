@@ -1,0 +1,64 @@
+{
+  "context": {
+    "arguments": {
+      "object_type": "Patient",
+      "object_properties": [
+        {
+          "property_name": "patient_id",
+          "data_type": "N",
+          "property_value": "1000272"
+        },
+        {
+          "property_name": "id_source",
+          "data_type": "S",
+          "property_value": "PSI"
+        }
+      ]
+    },
+    "identity": {
+      "accountId": "726075243133",
+      "cognitoIdentityPoolId": "None",
+      "cognitoIdentityId": "None",
+      "sourceIp": [
+        "54.88.29.107"
+      ],
+      "username": "AROA2SDLU7J657B66PHBX:leech-dev-2-Task-P03BXGLPLV6C",
+      "userArn": "arn:aws:sts::726075243133:assumed-role/worker/leech-dev-2-Task-P03BXGLPLV6C",
+      "cognitoIdentityAuthType": "None",
+      "cognitoIdentityAuthProvider": "None"
+    },
+    "source": "None",
+    "result": "None",
+    "request": {
+      "headers": {
+        "x-forwarded-for": "54.88.29.107, 54.182.230.82",
+        "accept-encoding": "gzip, deflate",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "x-amz-security-token": "AgoJb3JpZ2luX2VjEMP//////////wEaCXVzLWVhc3QtMSJHMEUCIQDEEsA6oHsEL+GqfxYNTAnN+yoLNfbJaqKv6KxEFqachgIgH2G7njIuxV9G63GGHpBbp6nLavIrhEor4Ydi9SROVn4qogII3P//////////ARAAGgw3MjYwNzUyNDMxMzMiDB+VX1IypwcEtyhIkCr2AUIyT4uO8bXckfgaGlhHvIMvr7GDHDMweKsQ1szuKLXO2dT5iCbWUJESB7J+yOT45/xYHI6wkbbn1iS5IEt9aBMTyZ8+bZkJ1YztG7fvLpWUAChQSe8YMA4UMVA+WIHyAfKX7/Ark0pS5FjQR1UGvpNnc9YSA6u6Aw3G4MinXrX+KfhKSR/RHDXXAaBOxLbkIPqA+DiyMRmXqZJNWXVKyU/BLHOgGSTh1Q8CQJzG+0fmZb4lkf0xxcZyA/fHmyn3zmJn/pF6+3V270CMkic2QqScnxV6z0lnMWS7XYHsjdG/N8yMx2M68HTh4F9jRo68CHTIiWU53TDQ19XnBTq0AfcWs4Iq5OjnIEvAGATKtQ2LKSsLvvNsJs/OfsgEMfVZyWBVaIGWmdmzDVUwZ3SjV/KvmaScNLcJj0jD0kKklnEQfDmaJ8+DStK5EOoEtnooWeLoLZYkAb1NxVzTrP170/ri6MjulbPRtf214MGQlRmuk9+fRJSCMjdjYLP+oi85xykhIM/4DxkygoANG5ihGCsSDnTwg4l+HYmdo/8LCk6Dnr/gJDafogXDkRu0C7JROn++PA\u003d\u003d",
+        "via": "1.1 3bf6d1ce86527891472e08bb57b7abe0.cloudfront.net (CloudFront)",
+        "content-type": "application/graphql",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Self\u003d1-5cf57efc-f60027dc0f6d45fcdbd94518;Root\u003d1-5cf57eda-a7ad1e54ed0b2b50640636e4;Parent\u003de7aaedc7a761a55f;Sampled\u003d1",
+        "x-amz-cf-id": "ssz_QCNWmQrmhKEcjFjw4WbNZEib0bhx-OezXtyPkSU960gtYJ50pg\u003d\u003d",
+        "authorization": "AWS4-HMAC-SHA256 Credential\u003dASIA2SDLU7J6U2XMS5GI/20190603/us-east-1/appsync/aws4_request, SignedHeaders\u003dhost;x-amz-date, Signature\u003df96af2f8e8526f94fbd0a94bd8d0e1651de5bfec6351d5295166ab2ea1fcbb5c",
+        "content-length": "3113",
+        "x-forwarded-proto": "https",
+        "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "python-requests/2.22.0",
+        "cloudfront-is-desktop-viewer": "true",
+        "accept": "*/*",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "x-amz-date": "20190603T201140Z",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": "None",
+    "prev": "None",
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "find_vertexes",
+  "type_name": "Query"
+}

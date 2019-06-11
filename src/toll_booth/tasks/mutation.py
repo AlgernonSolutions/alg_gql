@@ -8,6 +8,9 @@ from toll_booth.obj.index.index_manager import IndexManager
 from toll_booth.obj.index.troubles import UniqueIndexViolationException
 
 
+known_fields = ('delete_vertex', 'delete_edge', 'add_vertex', 'add_edge')
+
+
 def _graph_vertex(vertex_scalar: InputVertex):
     logging.info(f'started the graph vertex operation for: {vertex_scalar}')
     ogm = Ogm()
@@ -126,9 +129,6 @@ def _add_edge(edge_scalar: InputEdge):
         results.update(entry)
     logging.info(f'the results from the two components of the add_edge operation are: {results}')
     return results
-
-
-known_fields = ('delete_vertex', 'delete_edge', 'add_vertex', 'add_edge')
 
 
 def handler(type_name, field_name, args, source, result, request, identity):

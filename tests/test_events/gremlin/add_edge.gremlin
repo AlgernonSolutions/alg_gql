@@ -1,0 +1,21 @@
+g
+    .E('b52e3b7543dc981300eda471eeaa8d3b')
+    .fold()
+    .coalesce(
+        unfold(),
+        addE('_received_')
+        .from(
+            g.V('6ce8b33f8e615e481108d00d2f1e340f')
+        ).to(
+            g.V('6b61f3ec1c69eeb1e3e5133c1cfae706')
+        )
+        .property(id, 'b52e3b7543dc981300eda471eeaa8d3b')
+        .property('encounter_type', "Rehab Day Encounter")
+        .property('encounter_type', '{"__typename":"LocalPropertyValue","data_type":"S","property_value":"Rehab Day Encounter"}')
+        .property('encounter_datetime_in', datetime('2016-04-18T08:15:00+00:00'))
+        .property('encounter_datetime_in', '{"__typename":"LocalPropertyValue","data_type":"DT","property_value":"2016-04-18T08:15:00+00:00"}')
+        .property('id_value', "b52e3b7543dc981300eda471eeaa8d3b")
+        .property('id_value', '{"__typename":"LocalPropertyValue","data_type":"S","property_value":"b52e3b7543dc981300eda471eeaa8d3b"}')
+        .property('identifier_stem', "#edge#_received_")
+        .property('identifier_stem', '{"__typename":"LocalPropertyValue","data_type":"S","property_value":"#edge#_received_"}')
+    )

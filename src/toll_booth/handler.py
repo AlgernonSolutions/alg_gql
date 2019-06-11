@@ -25,6 +25,12 @@ def _decision_tree(type_name, field_name, args, source, result, request, identit
 @lambda_logged
 def handler(event, context):
     logging.info(f'received a call to run a graph_object command: event/context: {event}/{context}')
+    if isinstance(event, list):
+        results = []
+        for entry in event:
+            result = handler(entry, context)
+            results.append(result)
+        return results
     gql_context = event['context']
     field_name = event['field_name']
     type_name = event['type_name']

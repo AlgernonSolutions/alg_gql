@@ -1,3 +1,4 @@
+import json
 from typing import List, Dict, Tuple
 
 from algernon import ajson
@@ -61,7 +62,7 @@ def _derive_local_property_map(object_property: LocalPropertyValue) -> Tuple[str
     property_value = object_property.property_value
     property_data_type = object_property.data_type
     if property_data_type == 'S':
-        property_value = f"'{property_value}'"
+        property_value = json.dumps(property_value)
     if property_data_type == 'DT':
         property_value = f"datetime('{property_value}')"
     property_map = {

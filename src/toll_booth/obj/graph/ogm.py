@@ -65,33 +65,38 @@ class Ogm:
 
     def get_edge_connection(self,
                             username: str,
-                            context: Dict,
+                            args: Dict,
                             source: Dict,
                             token: str = None,
                             page_size: int = 10) -> TridentEdgeConnection:
+        if not token:
+            token = args.get('token')
         token_json = {
             'username': username,
             'token': token,
-            'context': context,
+            'args': args,
             'source': source,
             'page_size': page_size
         }
-        pagination_token = context.get('pagination_token', PaginationToken.from_json(token_json))
-        internal_id = pagination_token.source.get('internal_id', pagination_token.context.get('internal_id'))
+        pagination_token = PaginationToken.from_json(token_json)
+        internal_id = pagination_token.source.get('internal_id')
+        if internal_id is None:
+            internal_id = pagination_token.args.get('internal_id')
         edges, more = self._get_connected_edges(internal_id, pagination_token)
         pagination_token.increment()
         return TridentEdgeConnection(edges, pagination_token, more)
 
     def _get_connected_edges(self,
                              internal_id: str,
-                             pagination_token: PaginationToken,
-                             edge_labels: List[str] = None) -> Tuple[Dict[str, List[TridentEdge]], bool]:
-        if edge_labels is None:
-            edge_labels = []
+                             pagination_token: PaginationToken) -> Tuple[Dict[str, List[TridentEdge]], bool]:
+        edge_labels = pagination_token.args.get('edge_labels', [])
         edge_filter = ', '.join([f"'{x}'" for x in edge_labels])
+        filter_statement = ''
+        if edge_filter:
+            filter_statement = f'.hasLabel({edge_filter})'
         inclusive_start = pagination_token.inclusive_start
         exclusive_end = pagination_token.exclusive_end
-        query = f"g.V('{internal_id}').bothE({edge_filter}).range({inclusive_start}, {exclusive_end + 1})"
+        query = f"g.V('{internal_id}').bothE(){filter_statement}.range({inclusive_start}, {exclusive_end + 1})"
         edges = self._trident_driver.execute(query, read_only=True)
         returned_edges = edges[0:(exclusive_end - inclusive_start)]
         more = len(edges) > len(returned_edges)

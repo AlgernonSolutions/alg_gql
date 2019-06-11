@@ -1,0 +1,91 @@
+{
+  "context": {
+    "arguments": {
+      "token": "AQICAHgDLy2vu7pZJmkGf9PD0LB8WlCJxS+Zdn7Y0N8dWmBKqgEnVB1MOFhC+6Tzksg8TiLMAAADgTCCA30GCSqGSIb3DQEHBqCCA24wggNqAgEAMIIDYwYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAyifpiDmv9lAm6LsG0CARCAggM01CUzK1o79MtGSIc/fVKWlGa0QcQynSKFNUykPY0DzCFTGWZ1bs/HtXu4cUUIF7L5CQmniBbmTsgurMnAUzU1ov9QepaYoDCrEgtB4dM/LSqyRptzUTdXIs4FXPOv4uW3PZEw5FrOAk+rQkeJNO/rm9kbSCqB7Z/kFq1bl0mit+HVpiqpPiDaMCxx2fgQnPo12y95GxOahgmpCUYGB518xQa6z/aFvTbeYrAOZakZRlSoTqKMgdQ+mW+A6AYYt4qViM1nR/0vtDCfEHjj/oQ1p9Me2NHhvsa0jXZX9fHcres67h5QD2O3RKdjfaM9BWNpMurjAxi+Ra02vKGTKKigOwU8R9Zdn7VB/YjkmEzvRE/EvE7UL6YKFlByc/AtiLi16Y6fGZgQKqfFR5p3vL69/JrQL1LuRYTD8m+Ng3PZFosq5ibZNdQFfGgVL5fO0VonCp3c5eusqZlBWCnRTr4+RDZ0AqUKtx9fjGPURS25VpBWzAsD9iZE5b8jnUV3MKiVjEJeOKZDy0+xA/tk0/wv/5FmJa3Kv1QWLLpujU8Or3A/ymbXzYN9GnhSXuJ/20f2dyL7ZvSGr9Yt49ioioguaD/izndwasNTwmaaJJLos0p/OEHRgEjm2j8DnhMBlw0Utr977BawXtClNsreCw0e5n/a4hOC7hbPcd0nnKD904mpjVz8iCq5dJx5J4ChaDP7h+1hIRbQUmV0p8wAjsuT2gb2FGTwgKx939VtEOy6AFkkPnFemmhHjTCQXAr1bbfXDvNZFTBytsYqxoIwkdc2dUOWq6CLttVSac82vr9WF9C8kOZxy5sq8rk25mgBe830MqtjJD3Wlnmq77VgZ5PbafIl9kdHkSa8AAFAa8IkdnPur+gZdBW9dUdZbucJoscoIWMINkLwRX7GxRsMyjCBmSkBVFObLml2BCkjLrqq+N5JstvLpsa10jp8HzTo7Sb6pU+BPPVa5B8LE2B5ubK9Uet6w5PeU6C5bgs6W1kLbFBWS2nj1wA9z9sLs3tp7pC0+9WLLmdWab7g1+vy/JAfq7UDEynOAkFprDK3cMx4vL77pRY3jhnsEM55e1tKS5JCPjXA6g\u003d\u003d"
+    },
+    "identity": {
+      "accountId": "726075243133",
+      "cognitoIdentityPoolId": "None",
+      "cognitoIdentityId": "None",
+      "sourceIp": [
+        "72.21.217.138"
+      ],
+      "username": "AROA2SDLU7J62MMDYWKJB:jcubeta",
+      "userArn": "arn:aws:sts::726075243133:assumed-role/OrganizationAccountAccessRole/jcubeta",
+      "cognitoIdentityAuthType": "None",
+      "cognitoIdentityAuthProvider": "None"
+    },
+    "source": {
+      "vertex_properties": [
+        {
+          "property_value": {
+            "__typename": "None",
+            "data_type": "S",
+            "property_value": "PSI"
+          },
+          "property_name": "id_source"
+        },
+        {
+          "property_value": {
+            "__typename": "None",
+            "data_type": "N",
+            "property_value": 7332
+          },
+          "property_name": "provider_id"
+        }
+      ],
+      "identifier_stem": {
+        "property_name": "identifier_stem",
+        "property_value": {
+          "__typename": "LocalPropertyValue",
+          "data_type": "S",
+          "property_value": "#vertex#Provider#{\"id_source\": \"PSI\"}#"
+        }
+      },
+      "id_value": {
+        "property_name": "id_value",
+        "property_value": {
+          "__typename": "None",
+          "data_type": "N",
+          "property_value": "7332"
+        }
+      },
+      "internal_id": "f60e2f5b135b26f1767dd1d9f8ca04d9",
+      "vertex_type": "Provider"
+    },
+    "result": "None",
+    "request": {
+      "headers": {
+        "content-encoding": "amz-1.0",
+        "x-forwarded-for": "72.21.217.138, 70.132.60.136",
+        "amz-sdk-invocation-id": "6db782b6-4120-9597-8496-801f28f32bd6",
+        "cloudfront-viewer-country": "US",
+        "cloudfront-is-tablet-viewer": "false",
+        "x-amz-security-token": "AgoGb3JpZ2luEGAaCXVzLWVhc3QtMSKAAoeYP+xl3WY6H+lRupT+qfVtW9MnE21JXt52T3zItyRB43GTfSycCpecUjnCB3HcRiOWWPtsYRifG98erZdAEYRjLa3Xc6bzEww53gjVNXBA+ezujcbis9gr23rmEWQu3msOZ8+3RaKqw84fMJoE5J4Kdd4rYLnOWnvGiOv3Gqfgt5PGrpCmyXqjGxXyMJiKglZ58MZKAL3dm+2rMbtH9uUToOqLE6WN1vZ1d8ktXVfYkPb2lrFN2SACU6KWul2atP4UMMP/pCVVYOuHHgE51+a3/ZsrKQ9AK3Iku7KmegmCznaQABkRZh60tJeaA1VOUp75MeCRhRjWufBdhv3LvXwq1gMINRAAGgw3MjYwNzUyNDMxMzMiDD8ihIRFSdGtBBMtvSqzA1zkLfD6elGj1R5gP0rB9QYVxBHTMoIKMXUwwwqQllVsmAkxnTV8XeQfhSr9R3MhTm8lqO5nLV/qUN2cCEiSB1iAWiXUVnolG5bsU/zPIMOSy9ZJHCcbrcivY4u9rYDe8HUX9JGDZSUM2DLpVrd/3oK6PPK/7sMLZFRg1AiCKaRnj0EgiQUhm4RoMq9zhnH178lRoM0mxvAP4MQjLD8LxSz7sC6sBZIozSck9/q5fVd04kFtQsuLGbtBfiuJTixMZRWpaeT5iXp0irbyRQhTkxDcW99RmpcT0x/2dk5YqEmVGkmAYDwgIEXwx5sI6LN6aaILWV0dKJDRdMBQ0A104NzZvHIoymNjssiaofeLtdJJevH7nvcbmqWmnSLiJ3IhWVW16NqMicAOBXD5U3fjax5WjIAHE4d6JWyS/W2itRwMpSXrY7A4NrcFwgxLFAFOnjUyVj1dT72WJlINzsKoly4Htnqcj7SpEcDTDboLdCmZo/+QYWcXF9nEfTVjFfu2kgz5vWc1y/2v+X4sj3t66VbtvR77sis9D5mQIjYNDNX81nY0zXy5AgJVgpykPFrLRFiGzzCI6uXnBQ\u003d\u003d",
+        "via": "1.1 443f1433224715dbc774145b9ac2efe4.cloudfront.net (CloudFront)",
+        "content-type": "application/json",
+        "cloudfront-forwarded-proto": "https",
+        "x-amzn-trace-id": "Root\u003d1-5cf98005-dfd6876a50722025a6f38127",
+        "x-amz-cf-id": "LMELP4DdFT7P0dR8bWiZR7GZJHq-m5auA_qOQ_QojlOj8vkls0kQdg\u003d\u003d",
+        "authorization": "AWS4-HMAC-SHA256 Credential\u003dASIA2SDLU7J6X6U4CQUU/20190606/us-east-1/appsync/aws4_request, SignedHeaders\u003daccept;content-encoding;content-length;content-type;host;x-amz-date;x-amz-security-token, Signature\u003dd0d3064dea3d1a9df76e2d67938a12d3096a0cb4230886aef8fc115c72f234c9",
+        "content-length": "6206",
+        "amz-sdk-retry": "0/0/500",
+        "x-forwarded-proto": "https",
+        "host": "jlgmowxwofe33pdekndakyzx4i.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "aws-internal/3 aws-sdk-java/1.11.519 Linux/4.9.137-0.1.ac.218.74.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.202-b08 java/1.8.0_202 vendor/Oracle_Corporation",
+        "cloudfront-is-desktop-viewer": "true",
+        "accept": "application/json, text/javascript",
+        "cloudfront-is-mobile-viewer": "false",
+        "x-forwarded-port": "443",
+        "x-amz-date": "20190606T210509Z",
+        "cloudfront-is-smarttv-viewer": "false"
+      }
+    },
+    "error": "None",
+    "prev": "None",
+    "stash": {},
+    "outErrors": []
+  },
+  "field_name": "connected_edges",
+  "type_name": "Vertex"
+}

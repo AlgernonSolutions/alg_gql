@@ -1,11 +1,4 @@
-﻿enum DataTypes{
-	S
-	DT
-	B
-	N
-}
-
-#  all the edges originating from or terminating at a vertex
+﻿#  all the edges originating from or terminating at a vertex
 type ConnectedEdges {
 	#  all the edges connected to the vertex
 	all: [Edge]!
@@ -13,6 +6,13 @@ type ConnectedEdges {
 	inbound: [Edge]!
 	#  only the edges originating at the vertex
 	outbound: [Edge]!
+}
+
+enum DataTypes {
+	S
+	DT
+	B
+	N
 }
 
 #  designates a relationship between two vertexes
@@ -54,6 +54,26 @@ input InputEdge {
 	edge_properties: InputProperties
 }
 
+# input type for properties stored directly onto the graph
+input InputLocalProperty {
+	# the name of hte property
+	property_name: String!
+	#  one of String, Integer, DateTime
+	data_type: DataTypes!
+	#  value of the property, expressed as a string
+	property_value: String!
+}
+
+# the collected inputs for declaring properties in the graph
+input InputProperties {
+	# a list of object properties stored locally in the graph
+	local_properties: [InputLocalProperty!]
+	# a list of sensitive object properties, to be stored elsewhere and referenced by pointer
+	sensitive_properties: [InputSensitiveProperty!]
+	# a list of stored object properties, which have already been stored elsewhere
+	stored_properties: [InputStoredProperty!]
+}
+
 # input type used for properties that are PHI or HIPAA sensitive
 input InputSensitiveProperty {
 	# name of the object property
@@ -66,24 +86,12 @@ input InputSensitiveProperty {
 	source_internal_id: String!
 }
 
-# input type for properties stored directly onto the graph
-input InputLocalProperty {
-	# the name of hte property
+# input type for declaring properties stored elsewhere
+input InputStoredProperty {
 	property_name: String!
-	#  one of String, Integer, DateTime
-	data_type: DataTypes!
-	#  value of the property, expressed as a string
-	property_value: String!
-}
-
-# the collected inputs for declaring properties in the graph
-input InputProperties{
-	# a list of object properties stored locally in the graph
-	local_properties: [InputLocalProperty!]
-	# a list of sensitive object properties, to be stored elsewhere and referenced by pointer
-	sensitive_properties: [InputSensitiveProperty!]
-	# a list of stored object properties, which have already been stored elsewhere
-	stored_properties: [InputStoredProperty!]
+	storage_class: String!
+	storage_uri: String!
+	data_type: String!
 }
 
 # input type allowing complex vertexes to be inserted
@@ -98,12 +106,12 @@ input InputVertex {
 	vertex_properties: InputProperties
 }
 
-# input type for declaring properties stored elsewhere
-input InputStoredProperty{
-	property_name: String!
-	storage_class: String!
-	storage_uri: String!
+# for vertex properties stored directly into the graph
+type LocalPropertyValue {
+	#  one of String, Integer, DateTime
 	data_type: String!
+	#  value of the property, expressed as a string
+	property_value: String!
 }
 
 # the write operations for the data space
@@ -125,33 +133,6 @@ type ObjectProperty {
 # the various ways of storing data into the graph as properties of a vertex
 union ObjectPropertyValue = LocalPropertyValue | SensitivePropertyValue | StoredPropertyValue
 
-# for vertex properties stored directly into the graph
-type LocalPropertyValue {
-	#  one of String, Integer, DateTime
-	data_type: String!
-	#  value of the property, expressed as a string
-	property_value: String!
-}
-
-# a vertex property which contains PHI or HIPAA relevant information, the actual vertex property holds an opaque pointer to a seperate storage location
-type SensitivePropertyValue{
-	# accepted values to store into the graph
-	data_type: DataTypes!
-	# the uniquely identifying pointer for the sensitive data
-	pointer: String!
-}
-
-# a vertex property which contains a large amount of information, or information not agreable to being strung and stored in the graph, instead archived elsewhere
-type StoredPropertyValue{
-	# how the object is stored, currently S3 is supported
-	storage_class: String!
-	# a URI to find and retrieve the object,
-	# for S3 this is the object ARN
-	storage_uri: String!
-	# a descsriptor of the data as it is stored remotely
-	data_type: String!
-}
-
 # information regarding a single returned page of a pagination
 type PageInfo {
 	#  are there more pages after this one
@@ -169,7 +150,32 @@ type Query {
 	#  retrieves a vertex determined by it's internal_id
 	vertex(internal_id: ID!, token: ID): Vertex
 	#  checks the data space for vertexes based on object properties
-	find_vertexes(object_type: String!, object_properties: [InputLocalProperty]!): [Vertex]
+	find_vertexes(object_type: String!, object_properties: [InputLocalProperty]!, token: ID): VertexConnection
+	list_vertexes(
+		identifier_stem: String!,
+		object_type: String!,
+		object_properties: [InputLocalProperty]!,
+		token: ID
+	): VertexConnection
+}
+
+# a vertex property which contains PHI or HIPAA relevant information, the actual vertex property holds an opaque pointer to a seperate storage location
+type SensitivePropertyValue {
+	# accepted values to store into the graph
+	data_type: DataTypes!
+	# the uniquely identifying pointer for the sensitive data
+	pointer: String!
+}
+
+# a vertex property which contains a large amount of information, or information not agreable to being strung and stored in the graph, instead archived elsewhere
+type StoredPropertyValue {
+	# how the object is stored, currently S3 is supported
+	storage_class: String!
+	# a URI to find and retrieve the object,
+	#### for S3 this is the object ARN
+	storage_uri: String!
+	# a descsriptor of the data as it is stored remotely
+	data_type: String!
 }
 
 # any object stored in the graph
@@ -186,6 +192,11 @@ type Vertex {
 	vertex_properties(property_names: [String]): [ObjectProperty]!
 	#  the connection object used to paginate and inspect the edges connected to the vertex
 	connected_edges(page_size: Int, token: ID): EdgeConnection
+}
+
+type VertexConnection {
+	vertexes: [Vertex]!
+	token: ID
 }
 
 schema {

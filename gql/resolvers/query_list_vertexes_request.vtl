@@ -1,0 +1,59 @@
+#set( $filter_expression_pieces = [] )
+#set( $filter_expression = "" )
+#set( $filter_names= {} )
+#set( $filter_values = {} )
+#set( $number_type = "N" )
+#set( $string_type = "S" )
+#set($pointer = 1)
+#foreach( $property in $context.arguments.object_properties)
+	#set( $property_name = $property.property_name )
+    #set( $data_type = $property.data_type )
+    #set( $tmp_name = "tmp${pointer}" )
+    #set( $pointer = $pointer + 1 )
+    #if( $data_type.equals(${number_type}) )
+    	#set($tmp = 0)
+    	#set( $value = $tmp.parseInt($property.property_value ) )
+        $util.qr($filter_expression_pieces.add( "#${tmp_name}.property_value.property_value = :${tmp_name} "))
+    	$util.qr($filter_names.put("#${tmp_name}", $property_name ))
+        $util.qr($filter_values.put(":${tmp_name}", $util.dynamodb.toDynamoDB($value) ))
+    #elseif( $data_type.equals(${string_type}) )
+    	$util.qr($filter_expression_pieces.add( "#${tmp_name}.property_value.property_value = :${tmp_name} "))
+    	$util.qr($filter_names.put("#${tmp_name}", $property_name ))
+        $util.qr($filter_values.put(":${tmp_name}", $util.dynamodb.toDynamoDB($property.property_value) ))
+    #end
+#end
+#set( $first = true )
+#foreach( $entry in $filter_expression_pieces )
+    #if( $first )
+        #set( $filter_expression = $entry)
+        #set( $first = false )
+    #else
+        #set( $filter_expression = $filter_expression + " AND ${entry}")
+    #end
+#end
+#set( $filter =  $util.toJson({
+  "expression" : $filter_expression,
+  "expressionNames" : $filter_names,
+  "expressionValues": $filter_values
+}) )
+#set( $identifier_stem = $util.dynamodb.toDynamoDB($context.arguments.identifier_stem) )
+{
+    "version" : "2018-05-29",
+    "operation" : "Query",
+    "query" : {
+      "expression": "identifier_stem = :identifier_stem",
+        "expressionValues" : {
+          ":identifier_stem" : ${util.toJson($identifier_stem)}
+        }
+    }
+    #if( $filter )
+      ,
+      "filter": ${filter}
+    #end
+    #if( ${context.arguments.limit} )
+        ,"limit": ${context.arguments.limit}
+    #end
+    #if( ${context.arguments.token} )
+        ,"nextToken": "${context.arguments.token}"
+    #end
+}
