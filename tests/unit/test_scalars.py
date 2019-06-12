@@ -1,4 +1,4 @@
-from toll_booth.obj.graph.gql_scalars import InputVertex, InputEdge
+from toll_booth.obj.graph.gql_scalars.inputs import InputVertex, InputEdge
 
 
 class TestVertex:

@@ -124,8 +124,8 @@ class TridentNotary:
         payload = json.dumps({'gremlin': command})
         canonical_headers = f'host:{self._host}\nx-amz-date:{amz_date}\n'
         payload_hash = hashlib.sha256(payload.encode('utf-8')).hexdigest()
-        canonical_request = f"{self._method}\n{self._uri}\n\n{canonical_headers}\n{self._signed_headers}\n{payload_hash}"
-        return canonical_request, payload
+        canon_request = f"{self._method}\n{self._uri}\n\n{canonical_headers}\n{self._signed_headers}\n{payload_hash}"
+        return canon_request, payload
 
     def _generate_string_to_sign(self, canonical_request, amz_date, scope):
         hash_request = hashlib.sha256(canonical_request.encode('utf-8')).hexdigest()

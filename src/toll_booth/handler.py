@@ -5,7 +5,7 @@ from algernon import ajson
 from algernon.aws import lambda_logged
 
 from toll_booth.obj.graph.serializers import GqlDecoder
-from toll_booth.tasks import mutation, query, vertex
+from toll_booth.tasks import mutation, vertex, edge_connection
 
 
 def _decision_tree(type_name, field_name, args, source, result, request, identity):
@@ -13,12 +13,12 @@ def _decision_tree(type_name, field_name, args, source, result, request, identit
     if type_name == 'Vertex':
         if field_name in vertex.known_fields:
             return vertex.handler(*decision_args)
-    if type_name == 'Query':
-        if field_name in query.known_fields:
-            return query.handler(*decision_args)
     if type_name == 'Mutation':
         if field_name in mutation.known_fields:
             return mutation.handler(*decision_args)
+    if type_name == 'EdgeConnection':
+        if field_name in edge_connection.known_fields:
+            return edge_connection.handler(*decision_args)
     raise RuntimeError(f'could not resolve how to deal with {type_name}.{field_name}')
 
 

@@ -3,8 +3,9 @@ from typing import List, Dict, Tuple
 
 from algernon import ajson
 
-from toll_booth.obj.graph.gql_scalars import ObjectProperty, InputVertex, InputEdge, SensitivePropertyValue, \
+from toll_booth.obj.graph.gql_scalars.object_properties import ObjectProperty, SensitivePropertyValue, \
     StoredPropertyValue, LocalPropertyValue
+from toll_booth.obj.graph.gql_scalars.inputs import InputVertex, InputEdge
 
 
 def _derive_object_properties(object_properties: List[ObjectProperty]) -> str:

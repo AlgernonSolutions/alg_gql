@@ -1,4 +1,4 @@
-from typing import Dict, List, Any
+from typing import Dict, List
 
 from algernon import AlgObject
 
@@ -84,49 +84,4 @@ class TridentPageInfo(AlgObject):
             'token': self._token,
             'more': self._more,
             '__typename': 'PageInfo'
-        }
-
-
-class TridentEdgeConnection(AlgObject):
-    def __init__(self,
-                 edges: Dict[str, List[TridentEdge]],
-                 token: PaginationToken,
-                 more: bool,
-                 page_info: TridentPageInfo = None):
-        if not page_info:
-            page_info = TridentPageInfo(token, more)
-        self._edges = edges
-        self._token = token
-        self._more = more
-        self._page_info = page_info
-
-    @classmethod
-    def parse_json(cls, json_dict: Dict[str, Any]):
-        return cls(json_dict['edges'], json_dict['token'], json_dict['more'], json_dict.get('page_info'))
-
-    @property
-    def page_info(self) -> TridentPageInfo:
-        return self._page_info
-
-    @property
-    def in_count(self) -> int:
-        return len(self._edges['inbound'])
-
-    @property
-    def out_count(self) -> int:
-        return len(self._edges['outbound'])
-
-    @property
-    def total_count(self) -> int:
-        return len(self._edges['all'])
-
-    @property
-    def to_gql(self) -> Dict[str, Any]:
-        return {
-            '__typename': 'EdgeConnection',
-            'edges': self._edges,
-            'page_info': self._page_info,
-            'total_count': self.total_count,
-            'in_count': self.in_count,
-            'out_count': self.out_count
         }

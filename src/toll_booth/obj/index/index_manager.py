@@ -11,7 +11,8 @@ from botocore.exceptions import ClientError
 from multiprocessing.dummy import Pool as ThreadPool
 
 
-from toll_booth.obj.graph.gql_scalars import InputEdge, InputVertex, ObjectProperty
+from toll_booth.obj.graph.gql_scalars.object_properties import ObjectProperty
+from toll_booth.obj.graph.gql_scalars.inputs import InputVertex, InputEdge
 from toll_booth.obj.index.indexes import UniqueIndex
 from toll_booth.obj.index.troubles import MissingIndexedPropertyException, UniqueIndexViolationException
 

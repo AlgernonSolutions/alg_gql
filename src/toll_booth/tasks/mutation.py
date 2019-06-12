@@ -3,7 +3,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 from typing import Union
 
 from toll_booth.obj.graph.ogm import Ogm
-from toll_booth.obj.graph.gql_scalars import InputVertex, InputEdge
+from toll_booth.obj.graph.gql_scalars.inputs import InputVertex, InputEdge
 from toll_booth.obj.index.index_manager import IndexManager
 from toll_booth.obj.index.troubles import UniqueIndexViolationException
 

@@ -7,7 +7,7 @@ from tests.test_setup import mock_objs
 
 import pytest
 
-from toll_booth.obj.graph.gql_scalars import InputVertex, InputEdge
+from toll_booth.obj.graph.gql_scalars.inputs import InputVertex, InputEdge
 
 _mock_vertex_data = {
     'internal_id': '12443kdkg23345912493sfdsfs',
