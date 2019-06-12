@@ -41,7 +41,7 @@ def handler(event, context):
     identity = gql_context['identity']
 
     results = _decision_tree(type_name, field_name, args, source, result, request, identity)
-    logging.info(f'results after the decision tree: {result}')
+    logging.info(f'results after the decision tree: {results}')
     strung_results = ajson.dumps(results)
     logging.info(f'results after first round of json encoding: {strung_results}')
     encoded_results = rapidjson.loads(strung_results, object_hook=GqlDecoder.object_hook)

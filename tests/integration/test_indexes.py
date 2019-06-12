@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from toll_booth.obj.graph.gql_scalars import ObjectProperty, LocalPropertyValue
+from toll_booth.obj.graph.gql_scalars.object_properties import ObjectProperty, LocalPropertyValue
 from toll_booth.obj.index.index_manager import IndexManager
 
 

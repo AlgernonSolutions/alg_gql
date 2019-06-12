@@ -13,7 +13,7 @@ def handler(type_name: str,
             result: Dict[str, Any],
             request: Dict[str, Any],
             identity: Dict[str, Any]) -> Any:
-    if type_name == 'ConnectedEdges':
+    if type_name == 'EdgeConnection':
         ogm = Ogm()
         if field_name == 'edges':
             logging.info('request resolved to EdgeConnection.edges')
@@ -24,7 +24,7 @@ def handler(type_name: str,
             username = identity.get('username')
             if not username:
                 username = request['headers']['x-api-key']
-            internal_id = source.get('internal_id')
+            internal_id = source.get('source_internal_id')
             edge_label = source.get('edge_label')
             page_size = args.get('page_size')
             next_token = args.get('after')

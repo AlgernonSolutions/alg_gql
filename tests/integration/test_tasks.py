@@ -3,17 +3,12 @@ import os
 import pytest
 
 from toll_booth import tasks
-from toll_booth.tasks import mutation, aws_tasks
+from toll_booth.tasks import mutation
 
 
 @pytest.mark.integration_tasks
 @pytest.mark.usefixtures('integration_test_environment')
 class TestTasks:
-    def test_retrieve_s3_stored_property(self):
-        storage_uri = 's3://algernonsolutions-encounters-dev/ac2891b6540962b44830ed953ba2d2f0.documentation'
-        stored_property = aws_tasks.retrieve_s3_property(storage_uri)
-        assert stored_property
-
     def test_graph_edge_graph_i(self, mock_input_edge, mocks):
         results = mutation._graph_edge(mock_input_edge)
         assert results

@@ -60,7 +60,7 @@ class Ogm:
         exclusive_end = inclusive_start + page_size
         query = f"g.V('{internal_id}').bothE().hasLabel('{edge_label}').range({inclusive_start}, {exclusive_end + 1})"
         queried_edges = self._trident_driver.execute(query, read_only=True)
-        edges = queried_edges[::len(queried_edges) - 1]
+        edges = queried_edges[:-1]
         more = len(queried_edges) > len(edges)
         pagination_token.increment()
         connected_edges = [ConnectedEdge.from_raw_edge(x, internal_id) for x in edges]
@@ -77,4 +77,10 @@ class Ogm:
         query = f"g.V('{internal_id}').bothE(){filter_statement}.group().by(label).by(count())"
         results = self._trident_driver.execute(query, read_only=True)
         for result in results:
-            return [{'edge_label': x, 'total_count': y, '__typename': 'EdgeConnection'} for x, y in result.items()]
+            return [
+                {
+                    'edge_label': x,
+                    'total_count': y,
+                    '__typename': 'EdgeConnection',
+                    'source_internal_id': internal_id
+                } for x, y in result.items()]
