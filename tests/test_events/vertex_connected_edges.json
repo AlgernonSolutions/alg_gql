@@ -1,12 +1,15 @@
 {
   "context": {
-    "arguments": {},
+    "arguments": {
+      "token": "AQICAHgDLy2vu7pZJmkGf9PD0LB8WlCJxS+Zdn7Y0N8dWmBKqgFwHOebVW3TuitPaH+Lrs6YAAAAxDCBwQYJKoZIhvcNAQcGoIGzMIGwAgEAMIGqBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDN0cUH+3bIzG9I2BLgIBEIB96aZZKeqJsF8HldmluYkXQyPZUDIaSvAiuahPgf+cF8M/JhMtzC8JjVcT/UyTRGQba46IL5T7d36rn8Mhte/9W6fCtR27b4MjCB04SVy1gjvEEBaSV6D/MuuZc9DGuUSdyVut0N85v7LBDcYrZJA7ly6lTuMbsOMFDBwCbbU\u003d",
+      "page_size": 25
+    },
     "identity": {
       "accountId": "726075243133",
       "cognitoIdentityPoolId": "None",
       "cognitoIdentityId": "None",
       "sourceIp": [
-        "72.21.217.154"
+        "72.21.217.50"
       ],
       "username": "AROA2SDLU7J62MMDYWKJB:jcubeta",
       "userArn": "arn:aws:sts::726075243133:assumed-role/OrganizationAccountAccessRole/jcubeta",
@@ -14,117 +17,36 @@
       "cognitoIdentityAuthProvider": "None"
     },
     "source": {
-      "vertex_properties": [
-        {
-          "property_value": {
-            "__typename": "LocalPropertyValue",
-            "data_type": "DT",
-            "property_value": "2016-03-01T08:15:00+00:00"
-          },
-          "property_name": "encounter_datetime_in"
-        },
-        {
-          "property_value": {
-            "storage_class": "s3",
-            "__typename": "StoredPropertyValue",
-            "data_type": "S",
-            "storage_uri": "s3://algernonsolutions-encounters-dev/278a120980ee2c3e4470e1ab47f23479.documentation"
-          },
-          "property_name": "documentation"
-        },
-        {
-          "property_value": {
-            "__typename": "LocalPropertyValue",
-            "data_type": "N",
-            "property_value": 1005157
-          },
-          "property_name": "patient_id"
-        },
-        {
-          "property_value": {
-            "__typename": "LocalPropertyValue",
-            "data_type": "S",
-            "property_value": "PSI"
-          },
-          "property_name": "id_source"
-        },
-        {
-          "property_value": {
-            "__typename": "LocalPropertyValue",
-            "data_type": "N",
-            "property_value": 6849
-          },
-          "property_name": "provider_id"
-        },
-        {
-          "property_value": {
-            "__typename": "LocalPropertyValue",
-            "data_type": "DT",
-            "property_value": "2016-03-01T11:30:00+00:00"
-          },
-          "property_name": "encounter_datetime_out"
-        },
-        {
-          "property_value": {
-            "__typename": "LocalPropertyValue",
-            "data_type": "N",
-            "property_value": 1000562
-          },
-          "property_name": "encounter_id"
-        },
-        {
-          "property_value": {
-            "__typename": "LocalPropertyValue",
-            "data_type": "S",
-            "property_value": "Rehab Day Encounter"
-          },
-          "property_name": "encounter_type"
-        }
-      ],
-      "identifier_stem": {
-        "property_name": "identifier_stem",
-        "property_value": {
-          "__typename": "LocalPropertyValue",
-          "data_type": "S",
-          "property_value": "#vertex#Encounter#{\"id_source\": \"PSI\"}#"
-        }
-      },
-      "id_value": {
-        "property_name": "id_value",
-        "property_value": {
-          "__typename": "LocalPropertyValue",
-          "data_type": "N",
-          "property_value": "1000562"
-        }
-      },
-      "internal_id": "278a120980ee2c3e4470e1ab47f23479",
-      "vertex_type": "Encounter"
+      "edge_label": "_provided_",
+      "total_count": 87.0,
+      "__typename": "EdgeConnection",
+      "source_internal_id": "b56dd044d469a2aede4566b2ea0a1a68"
     },
     "result": "None",
     "request": {
       "headers": {
         "content-encoding": "amz-1.0",
-        "x-forwarded-for": "72.21.217.154, 70.132.32.68",
-        "amz-sdk-invocation-id": "07ba97bd-e8be-4fc3-1179-339a181825a7",
+        "x-forwarded-for": "72.21.217.50, 70.132.59.74",
+        "amz-sdk-invocation-id": "f211f47b-e867-8a4f-6494-145c81e1bc12",
         "cloudfront-viewer-country": "US",
         "cloudfront-is-tablet-viewer": "false",
-        "x-amz-security-token": "AgoGb3JpZ2luECsaCXVzLWVhc3QtMSKAAmuHkbp7TPL1InMphF6WzjId6BxFWwC1cFIDxIoVAqUdNFuse1kKf7WvqDzAZ5DbAnIu0u44z2atbh6jssir/1+wTRKL83TDLGGV0lULY0CTvReDnyo1Xad+dQ7E2L32NThMztmS6T2z+UeGPg7gJFeeWVcq3ylvNbmOQB+N1TnT6FHjdzgqpDaqKBvZGSTJLJ+hg+LaAPyeiuGBDJyODShVG30JOgiVJiVTODNmI3fkNUVCbR1qIVGDTpFSpruWSB0m/zFc47pd/T00gfTOAKZCogQOLIHO0cHjJVOUeRLitkH6Bcs55F0KhR0ZX1scdULsVqN6F0GgCUqmvA7mco0q3wMI8P//////////ARAAGgw3MjYwNzUyNDMxMzMiDINs9StF+aWQXGI8KSqzA/r8x5KKRtBMe4TMYq/iTmyoa1h+cGewLZtAAeYnip0QeLen9gFK7twyqdFwf0LD+iHhUBU5fOIRGbJgdRaGmN/5V8puDOeg4zupVs5hvC6joyMYGENUl3jtamSnHUnk8ZPfjxOeBidl4fMAQWLkAacypzF5AvCULh2GSQIAdfxxDVFjimS8N0Z5uEDxusprfbQFsrkk/+GuGkRJlGckoAn2YHdZ8zzq04pbBDugP2U8eKuset59z00/+2BRQfhueb6/Vfh/YMNC2kEmje1uzjTbGUUFJvH1LW9JtMajXHSosO5/JiXRqDtT4VGQ+CZH7SL3DpYhss6F+J+wEevj2QGNVDq/c5jpeWlexLEqTxXy5wK1m+SvS3NG6oxhlr9F620vSlc+OPb6jn8SENo+PS273tIYB5EkaimYYpihtXtLP5JkCJYKzXqAUy+zio41Mqo7iPaulwQ1QgnABbbnmTm2jivGhTnOiAVOjpQOnrX2LJpfKPuAx1zDifiZEhMXRMuKT/qljQFNTlxQrtZ262V8T9QPBfyt9FwNL5hxnBoxisxsQHzff3uVh3cKAlRfapy2OzDllNrnBQ\u003d\u003d",
-        "via": "1.1 f082203290ecd8aea497e1bd9f2f6ebc.cloudfront.net (CloudFront)",
+        "x-amz-security-token": "AgoGb3JpZ2luEK3//////////wEaCXVzLWVhc3QtMSKAAimI8q3wBtCUNbtc3gwBFWfB30wMucG3KU2gFcLHSjCdwxUZ4s5uwgYzOJgnMlwKvoqZ60M/61/nPHNGMD0jVOsd7qCrp1ClQT72qgYzkIKKB4np15Z1S0DXsCfvV+Yz0wRA1iQbSKgxRIkbaZE3qYuPJ3WrgTnwklNQtXCUYFiQmDLd8F4jLD5EWGWwSWHIahtS8lB3hC2kAzXLZ8SWKJmUTf0wBzEstMx9leZBuHMiMK6pB75KTxiA9TuxUFVMJOn0ueP5GBrMjyablIV7FEnJ+GkVYNDbTEonYHGMfmnjmhgSOy4inLYHpXNx4W0NOWzcsiRkj+zmcVKZQawSlpYq3wMIkv//////////ARAAGgw3MjYwNzUyNDMxMzMiDPRnhqbQTkseY4dihiqzAxEg61vOpbG01qngV/ys5Ly6xQ8p7P4onVl6V3WAG2y59dttVMXb8sxW/LNgASkufLBlay+u+/b0AMJAPuQTvC3kfCy7nWdoaeSW6qPVG1vHzhujOJD3uMa4urqXfrlbmC/wUkrboxfvNSA53FZtQoGzSH6GvZ97KymRzi8vxqhrON+giTjsZa/b3pXYZhfObBqorDcgWFlZJR7x8DP+E8y28HWzMVm14TEl+LxIVaR9FtoEDbaR/CRUOl0Y6TLZIb6xiqFTfpd8bxo3yJ816kis18G0TCaHABvaJDrt/Vxz5DWazmMZ9ky1RNG/xMmEJ4qO3iOsYPV5pCDlKVMgxxokikeGjeyIjzJ6yH0KqOaZuOXo8k7zKGgHtc+Ik84o0B6YfQ6CITxbmZOhL1MWRXi+LD4W2ZX+a5AnDwF6JpdZjgqY8S0UPlnpLFMquTQn18MMBAFUQ9eQGuOvjS11Nc0JdCv+z+iTsIyYpP77GaG7ik89L2N1IpHhXcxD5ndleT2bgW93esyDCVuvkIYsfAy971oBP7TQPdbSNf0R8cEAfKwkAhs/Shun7J8xH8ZZadtTIDD/7a7oBQ\u003d\u003d",
+        "via": "1.1 5fcb74309ceeeea8dbabd801cecfed4f.cloudfront.net (CloudFront)",
         "content-type": "application/json",
         "cloudfront-forwarded-proto": "https",
-        "x-amzn-trace-id": "Root\u003d1-5cf68c72-edf97e425df3dca1ba7f234b",
-        "x-amz-cf-id": "pAsx5VasbS-NgBhc0D0T7pPdtRtEg_KP4FWRVOcoTKnegRbj3nZ1rw\u003d\u003d",
-        "authorization": "AWS4-HMAC-SHA256 Credential\u003dASIA2SDLU7J6UHJYOA3M/20190604/us-east-1/appsync/aws4_request, SignedHeaders\u003daccept;content-encoding;content-length;content-type;host;x-amz-date;x-amz-security-token, Signature\u003d36f3a3d6e3f7efdb41448497470166f0e6124a1840af2575b8c7128e420f530e",
-        "content-length": "2233",
+        "x-amzn-trace-id": "Root\u003d1-5d0bb9b3-c921e02c8ec5a1d4b9e96dab",
+        "x-amz-cf-id": "fJk7jrNB0qD6Tm2C24HTEq0JAwoyWFRKGO_sbPoeuSFtDU-ZBmjgGg\u003d\u003d",
+        "authorization": "AWS4-HMAC-SHA256 Credential\u003dASIA2SDLU7J67DF52M5H/20190620/us-east-1/appsync/aws4_request, SignedHeaders\u003daccept;content-encoding;content-length;content-type;host;x-amz-date;x-amz-security-token, Signature\u003d383264a5dfdd14e78a392026168b5a545c787836e085e4a6c611f801f0ce85e2",
+        "content-length": "3382",
         "amz-sdk-retry": "0/0/500",
         "x-forwarded-proto": "https",
-        "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com",
+        "host": "jlgmowxwofe33pdekndakyzx4i.appsync-api.us-east-1.amazonaws.com",
         "user-agent": "aws-internal/3 aws-sdk-java/1.11.519 Linux/4.9.137-0.1.ac.218.74.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.202-b08 java/1.8.0_202 vendor/Oracle_Corporation",
         "cloudfront-is-desktop-viewer": "true",
         "accept": "application/json, text/javascript",
         "cloudfront-is-mobile-viewer": "false",
         "x-forwarded-port": "443",
-        "x-amz-date": "20190604T152122Z",
+        "x-amz-date": "20190620T165203Z",
         "cloudfront-is-smarttv-viewer": "false"
       }
     },
@@ -133,6 +55,6 @@
     "stash": {},
     "outErrors": []
   },
-  "field_name": "connected_edges",
-  "type_name": "Vertex"
+  "field_name": "edges",
+  "type_name": "EdgeConnection"
 }

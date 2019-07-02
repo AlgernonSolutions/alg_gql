@@ -63,7 +63,10 @@ class ConnectedEdge(AlgObject):
             '__typename': 'ConnectedEdge',
             'internal_id': self._internal_id,
             'edge_label': self._edge_label,
-            'vertex': self._vertex
+            'vertex': {
+                '__typename': 'Vertex',
+                'internal_id': self._vertex
+            }
         }
 
 

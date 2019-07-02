@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from typing import List, Dict, Tuple
 
 from algernon import ajson
@@ -65,7 +66,9 @@ def _derive_local_property_map(object_property: LocalPropertyValue) -> Tuple[str
     if property_data_type == 'S':
         property_value = json.dumps(property_value)
     if property_data_type == 'DT':
-        property_value = f"datetime('{property_value}')"
+        date_time_value = datetime.utcfromtimestamp(property_value)
+        graphed_datetime_value = date_time_value.isoformat()
+        property_value = f"datetime('{graphed_datetime_value}')"
     property_map = {
         '__typename': 'LocalPropertyValue',
         'data_type': property_data_type,

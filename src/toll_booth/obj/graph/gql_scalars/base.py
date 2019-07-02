@@ -1,4 +1,4 @@
-from _pydecimal import Decimal
+from decimal import Decimal
 from typing import List
 
 from toll_booth.obj.graph.gql_scalars.object_properties import ObjectProperty

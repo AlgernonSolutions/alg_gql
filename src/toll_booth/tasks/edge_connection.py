@@ -1,11 +1,14 @@
 import logging
 from typing import Dict, Any
 
+from aws_xray_sdk.core import xray_recorder
+
 from toll_booth.obj.graph.ogm import Ogm
 
 known_fields = ('edges',)
 
 
+@xray_recorder.capture('edge_connection')
 def handler(type_name: str,
             field_name: str,
             args: Dict[str, Any],
@@ -16,7 +19,7 @@ def handler(type_name: str,
     if type_name == 'EdgeConnection':
         ogm = Ogm()
         if field_name == 'edges':
-            logging.info('request resolved to EdgeConnection.edges')
+            logging.debug('request resolved to EdgeConnection.edges')
             if identity in ('None', None):
                 identity = {}
                 logging.warning(f'processed request for EdgeConnection.edges, no identity provided,'
@@ -27,6 +30,6 @@ def handler(type_name: str,
             internal_id = source.get('source_internal_id')
             edge_label = source.get('edge_label')
             page_size = args.get('page_size')
-            next_token = args.get('after')
+            next_token = args.get('token')
             connected_edges = ogm.get_connected_edge_page(username, internal_id, edge_label, page_size, next_token)
             return connected_edges

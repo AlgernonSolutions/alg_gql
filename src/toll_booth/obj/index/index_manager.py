@@ -5,6 +5,7 @@ from typing import Union, Dict, List
 import boto3
 import rapidjson
 from algernon.serializers import ExplosionJson
+from aws_xray_sdk.core import xray_recorder
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 
@@ -86,6 +87,7 @@ class IndexManager:
         self._table = boto3.resource('dynamodb').Table(self._table_name)
         self._indexes = indexes
 
+    @xray_recorder.capture()
     def index_object(self, scalar_object: Union[InputEdge, InputVertex]):
         """
 
@@ -107,6 +109,7 @@ class IndexManager:
                     raise MissingIndexedPropertyException(index.index_name, index.indexed_fields, missing_properties)
         return self._index_object(scalar_object)
 
+    @xray_recorder.capture()
     def find_potential_vertexes(self,
                                 object_type: str,
                                 vertex_properties: List[ObjectProperty]) -> [Dict]:
@@ -150,6 +153,7 @@ class IndexManager:
         for entry in response['Items']:
             return {'identifier_stem': entry['identifier_stem'], 'sid_value': entry['sid_value']}
 
+    @xray_recorder.capture()
     def delete_object(self, internal_id: str):
         existing_object_key = self.get_object_key(internal_id)
         if existing_object_key:

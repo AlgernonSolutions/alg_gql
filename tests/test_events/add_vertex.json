@@ -2,66 +2,85 @@
   "context": {
     "arguments": {
       "vertex": {
-        "internal_id": "1234568oiw29385fd",
-        "vertex_type": "AlgernonVertex",
+        "internal_id": "6da661de58df4cc7c101cfbf6ebe0fe9",
+        "vertex_type": "DocumentationEntry",
         "id_value": {
           "property_name": "id_value",
           "data_type": "N",
-          "property_value": "1001"
+          "property_value": "1003531"
         },
         "identifier_stem": {
           "property_name": "identifier_stem",
           "data_type": "S",
-          "property_value": "#some_id_source#some_id_type#algernon#1001"
+          "property_value": "#vertex#DocumentationEntry#{\"id_source\": \"PSI\", \"encounter_id\": \"1003531\", \"parser_id\": \"credible_parser.v1\"}#"
         },
         "vertex_properties": {
           "local_properties": [
             {
+              "property_name": "encounter_id",
+              "data_type": "N",
+              "property_value": "1003531"
+            },
+            {
               "property_name": "id_source",
               "data_type": "S",
-              "property_value": "some_id_source"
-            }
-          ],
-          "sensitive_properties": [
+              "property_value": "PSI"
+            },
             {
-              "property_name": "secret_number",
-              "property_value": "666",
-              "data_type": "N",
-              "source_internal_id": "1234568oiw29385fd"
-            }
-          ],
-          "stored_properties": [
+              "property_name": "parser_id",
+              "data_type": "S",
+              "property_value": "credible_parser.v1"
+            },
             {
-              "property_name": "stored_html",
-              "storage_class": "S3",
-              "storage_uri": "s3://bucket_name/object_name",
-              "data_type": "HTML"
+              "property_name": "field_name",
+              "data_type": "S",
+              "property_value": "patient_response"
+            },
+            {
+              "property_name": "field_documentation",
+              "data_type": "S",
+              "property_value": "Consumer was engaged in the session. Consumer was update and receptive. Consumer is extremely worried about his benefits from SSA and his appeal to need a representative payee."
             }
           ]
         }
       }
     },
-    "identity": "None",
+    "identity": {
+      "accountId": "726075243133",
+      "cognitoIdentityPoolId": "None",
+      "cognitoIdentityId": "None",
+      "sourceIp": [
+        "3.216.133.188"
+      ],
+      "username": "AROA2SDLU7J657B66PHBX:leech-dev-2-Task-P03BXGLPLV6C",
+      "userArn": "arn:aws:sts::726075243133:assumed-role/worker/leech-dev-2-Task-P03BXGLPLV6C",
+      "cognitoIdentityAuthType": "None",
+      "cognitoIdentityAuthProvider": "None"
+    },
     "source": "None",
     "result": "None",
     "request": {
       "headers": {
-        "x-forwarded-for": "64.132.184.18, 54.239.145.72",
+        "x-forwarded-for": "3.216.133.188, 70.132.60.73",
+        "accept-encoding": "gzip, deflate",
         "cloudfront-viewer-country": "US",
         "cloudfront-is-tablet-viewer": "false",
-        "via": "1.1 b27a02320ae6ae78c5c25db5c9ccb9dc.cloudfront.net (CloudFront)",
-        "content-type": "application/json; charset\u003dUTF-8",
-        "x-api-key": "da2-zcvdidxqqjelni6jaouejuuusm",
+        "x-amz-security-token": "AgoJb3JpZ2luX2VjECwaCXVzLWVhc3QtMSJHMEUCIFbum3eWxcFjq04rSo38/75BJ9Ko6I4ywCoeahppaCnyAiEAxAg+3NcA4m8jVyrEDRZfZ95RnMqpQCOnAbPwM5c7CGEqmQIIZRAAGgw3MjYwNzUyNDMxMzMiDE6JvNfq2jQQMXYCQyr2AZLiBHzmyZ0GY718/h+qyDXy0O+W/7AbbjWQdDSC89yqe785pZTKGcxWjWisdQl3koh95LQiavIKYHov0rB4orQLLInCvaSrhEtvb3EfLES1Va07LyBCEulfarZWUTZclC5QcaCeV+hq3l/e/L9vDTcpZP4RaenOYqdq0USprgyZXfO1Hi4XAtMFnk0R1/OFfyGCpMVC+JeJHFXsZP5HJSvRd4l9mdG+/E2IHpi+z61KKGBU+9KRICNetUGanzL1CN46/5DG3KRkmR0uMkXS0VSjbCIt/VQ9pVN3h6j0VI1RH95ku2Y9c8DC5W/hw5iVDBYT+hN2pzDH+KToBTq0ASRmp2sOmT7dvoBLY1Q1AzPitSob2SsUFLEGIKNNeHwc1Ov9TujdG5cjB0yKp3ITtODD4Zb3AE8KGdTLjs1BXWhoZjlf1XC6QraP2g3Qi1qMrqTKMc3ZrvVXoywF7vO8fSW9AriKGm/58nqM1NnjOBg0YcXHk9ucNbaZHK3J5Jlcva/IDd7EFm4bpVYvVZ+fCCgHhfGyu+BjeN+z89edB1UorhcRimcEwXmIBBTnqAYfI7kt+A\u003d\u003d",
+        "via": "1.1 c242c974a465288488c7876cabca7752.cloudfront.net (CloudFront)",
+        "content-type": "application/graphql",
         "cloudfront-forwarded-proto": "https",
-        "x-amzn-trace-id": "Root\u003d1-5cc3152b-6960ea69adb462203224d1e2",
-        "x-amz-cf-id": "RBqpJW8d-h9vVnmJ1TSxaixQBSxBuozHnK_g02q1xBIanz9Li5Urxg\u003d\u003d",
-        "content-length": "1212",
+        "x-amzn-trace-id": "Self\u003d1-5d093c49-4c8eef97ad99c5e5b48942bb;Root\u003d1-5d093c47-de10a5bf22c5ffb7e6d834a2;Parent\u003db2931163a771727b;Sampled\u003d1",
+        "x-amz-cf-id": "_Ii6IE9JypWn0jHbiPuXIw2yvq7zQPBdhoIqLuJy8S9fV1dC6bCWhg\u003d\u003d",
+        "authorization": "AWS4-HMAC-SHA256 Credential\u003dASIA2SDLU7J647JBFRNK/20190618/us-east-1/appsync/aws4_request, SignedHeaders\u003dhost;x-amz-date, Signature\u003d07ff41e3b9035e0fc25ee5a0ab30396473d0ef54b19ea025057603767fe4cb29",
+        "content-length": "1190",
         "x-forwarded-proto": "https",
-        "host": "yiawofjaffgrvlzyg2f6xnjzty.appsync-api.us-east-1.amazonaws.com",
-        "user-agent": "Jakarta Commons-HttpClient/3.1",
+        "host": "jlgmowxwofe33pdekndakyzx4i.appsync-api.us-east-1.amazonaws.com",
+        "user-agent": "python-requests/2.22.0",
         "cloudfront-is-desktop-viewer": "true",
+        "accept": "*/*",
         "cloudfront-is-mobile-viewer": "false",
         "x-forwarded-port": "443",
+        "x-amz-date": "20190618T193225Z",
         "cloudfront-is-smarttv-viewer": "false"
       }
     },

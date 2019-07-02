@@ -23,7 +23,8 @@
             $util.qr($property.value.property_value.remove("property_type"))
             $util.qr($property.value.property_value.put("__typename", $typename))
           #end
-          #if( $property_names )
+          #if( $property_names.size() > 0 )
+          	filter
           	#if ($property_names.get($property.key))
             	$util.qr($vertex_properties.add($property.value))
             #end

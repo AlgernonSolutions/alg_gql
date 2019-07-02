@@ -3,9 +3,10 @@ import logging
 import rapidjson
 from algernon import ajson
 from algernon.aws import lambda_logged
+from aws_xray_sdk.core import xray_recorder
 
 from toll_booth.obj.graph.serializers import GqlDecoder
-from toll_booth.tasks import mutation, vertex, edge_connection
+from toll_booth.tasks import mutation, vertex, edge_connection, query
 
 
 def _decision_tree(type_name, field_name, args, source, result, request, identity):
@@ -19,10 +20,13 @@ def _decision_tree(type_name, field_name, args, source, result, request, identit
     if type_name == 'EdgeConnection':
         if field_name in edge_connection.known_fields:
             return edge_connection.handler(*decision_args)
+    if type_name == 'Query':
+        return query.handler(*decision_args)
     raise RuntimeError(f'could not resolve how to deal with {type_name}.{field_name}')
 
 
 @lambda_logged
+@xray_recorder.capture('alg_gql')
 def handler(event, context):
     logging.info(f'received a call to run a graph_object command: event/context: {event}/{context}')
     if isinstance(event, list):
@@ -41,9 +45,9 @@ def handler(event, context):
     identity = gql_context['identity']
 
     results = _decision_tree(type_name, field_name, args, source, result, request, identity)
-    logging.info(f'results after the decision tree: {results}')
+    logging.debug(f'results after the decision tree: {results}')
     strung_results = ajson.dumps(results)
-    logging.info(f'results after first round of json encoding: {strung_results}')
+    logging.debug(f'results after first round of json encoding: {strung_results}')
     encoded_results = rapidjson.loads(strung_results, object_hook=GqlDecoder.object_hook)
     logging.info(f'results after GQL encoding: {encoded_results}')
     return encoded_results

@@ -5,19 +5,21 @@ $util.qr($ctx.stash.put("executionId", $util.autoId()))
     "field_name": "add_vertex",
     "type_name": "Mutation"
 } )
-
+#set( $object_name = $context.args.object_name)
 {
   "version": "2018-05-29",
   "method": "POST",
-  "resourcePath": "/",
+  "resourcePath": "/${object_name}?select&select-type=2",
   "params": {
     "headers": {
       "content-type": "application/x-amz-json-1.0",
-      "x-amz-target":"AWSStepFunctions.StartExecution"
+      "x-amz-target":"AWSS3.SelectObject"
     },
     "body": {
-      "stateMachineArn": "arn:aws:states:us-east-1:726075243133:stateMachine:graph",
-      "input": $util.toJson($util.toJson($input))
+      "Expression": ${context.args.expression},
+      "ExpressionType": "SQL",
+      "InputSerialization": {"CSV": {"FileHeaderInfo": "Use"}},
+      "OutputSerialization": {"CSV": {}}
     }
   }
 }

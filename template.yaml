@@ -81,6 +81,18 @@ Resources:
       VpcConfig:
         SecurityGroupIds: !Ref NeptuneSecurityGroupIds
         SubnetIds: !Ref NeptuneSubnetIds
+  IndexTask:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: toll_booth.handler
+      Role: !GetAtt GraphWorker.Arn
+  QueryS3Csv:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: toll_booth.query_handler
+      Role: !GetAtt GraphWorker.Arn
   GraphWorker:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -215,6 +227,45 @@ Resources:
       Roles:
         - !Ref SensitivesWorker
         - !Ref GraphWorker
+  AppSyncRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub "${AWS::StackName}-appsyncToAws-role"
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - appsync.amazonaws.com
+            Action: sts:AssumeRole
+  AppSyncToSfnPolicy:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: !Sub "${AWS::StackName}-appsync-sfn-policy"
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 'states:StartExecution'
+            Resource: '*'
+            Effect: Allow
+      Roles:
+        - !Ref AppSyncRole
+  AppSyncToS3Policy:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: !Sub "${AWS::StackName}-appsync-s3-policy"
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 's3:PutObject'
+              - 's3:GetObject'
+            Resource: '*'
+            Effect: Allow
+      Roles:
+        - !Ref AppSyncRole
   DevApiKey:
     Type: AWS::AppSync::ApiKey
     Condition: DevDeploy
@@ -243,6 +294,37 @@ Resources:
         - "_"
         - - !Ref GqlApiName
           - datasource_graph
+  WriteGraphDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      Type: HTTP
+      Description: data source for writing to the graph database
+      ServiceRoleArn: !GetAtt AppSyncRole.Arn
+      HttpConfig:
+        Endpoint: !Sub https://states.${AWS::Region}.amazonaws.com/
+        AuthorizationConfig:
+          AuthorizationType: AWS_IAM
+          AwsIamConfig:
+            SigningRegion: !Ref AWS::Region
+            SigningServiceName: states
+      ApiId: !GetAtt LeechApi.ApiId
+      Name: !Join
+        - "_"
+        - - !Ref GqlApiName
+          - datasource_write_graph
+  S3DataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      Type: AWS_LAMBDA
+      Description: data source for reading and writing to an S3 bucket
+      ServiceRoleArn: !GetAtt AppSyncRole.Arn
+      LambdaConfig:
+        LambdaFunctionArn: !GetAtt QueryS3Csv.Arn
+      ApiId: !GetAtt LeechApi.ApiId
+      Name: !Join
+        - "_"
+        - - !Ref GqlApiName
+          - datasource_s3
   IndexDataSource:
     Type: "AWS::AppSync::DataSource"
     Properties:
@@ -328,6 +410,16 @@ Resources:
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: vertex
       Kind: UNIT
+  QueryGetVertexResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/query_get_vertex_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/query_vertex_response.vtl
+      TypeName: Query
+      DataSourceName: !GetAtt IndexDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: get_vertex
+      Kind: UNIT
   ListVertexesResolver:
     Type: "AWS::AppSync::Resolver"
     Properties:
@@ -354,9 +446,39 @@ Resources:
       RequestMappingTemplateS3Location: gql/resolvers/vertex_vertex_properties_request.vtl
       ResponseMappingTemplateS3Location: gql/resolvers/vertex_vertex_properties_response.vtl
       TypeName: Vertex
-      DataSourceName: !GetAtt EmptyDataSource.Name
+      DataSourceName: !GetAtt IndexDataSource.Name
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: vertex_properties
+      Kind: UNIT
+  EdgeConnectionEdgePageResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/edge_connection_edge_page_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: EdgeConnection
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: edges
+      Kind: UNIT
+  QueryQueryResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/query_query_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Query
+      DataSourceName: !GetAtt GraphDataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: free_query
+      Kind: UNIT
+  QuerySnapshotResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      RequestMappingTemplateS3Location: gql/resolvers/query_snapshot_request.vtl
+      ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
+      TypeName: Query
+      DataSourceName: !GetAtt S3DataSource.Name
+      ApiId: !GetAtt LeechApi.ApiId
+      FieldName: snapshot
       Kind: UNIT
   MutationAddVertexResolver:
     Type: "AWS::AppSync::Resolver"
@@ -364,7 +486,7 @@ Resources:
       RequestMappingTemplateS3Location: gql/resolvers/mutation_add_vertex_request.vtl
       ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
       TypeName: Mutation
-      DataSourceName: !GetAtt GraphDataSource.Name
+      DataSourceName: !GetAtt WriteGraphDataSource.Name
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: addVertex
       Kind: UNIT
@@ -374,7 +496,7 @@ Resources:
       RequestMappingTemplateS3Location: gql/resolvers/mutation_delete_vertex_request.vtl
       ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
       TypeName: Mutation
-      DataSourceName: !GetAtt GraphDataSource.Name
+      DataSourceName: !GetAtt WriteGraphDataSource.Name
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: deleteVertex
       Kind: UNIT
@@ -384,7 +506,7 @@ Resources:
       RequestMappingTemplateS3Location: gql/resolvers/mutation_add_edge_request.vtl
       ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
       TypeName: Mutation
-      DataSourceName: !GetAtt GraphDataSource.Name
+      DataSourceName: !GetAtt WriteGraphDataSource.Name
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: addEdge
       Kind: UNIT
@@ -394,7 +516,7 @@ Resources:
       RequestMappingTemplateS3Location: gql/resolvers/mutation_delete_edge_request.vtl
       ResponseMappingTemplateS3Location: gql/resolvers/generic_lambda_response.vtl
       TypeName: Mutation
-      DataSourceName: !GetAtt GraphDataSource.Name
+      DataSourceName: !GetAtt WriteGraphDataSource.Name
       ApiId: !GetAtt LeechApi.ApiId
       FieldName: deleteEdge
       Kind: UNIT

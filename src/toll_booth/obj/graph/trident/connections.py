@@ -109,15 +109,15 @@ class TridentNotary:
         string_to_sign = self._generate_string_to_sign(canonical_request, amz_date, credential_scope)
         signature = self._generate_signature(string_to_sign, date_stamp)
         headers = self._generate_headers(credential_scope, signature, amz_date)
-        logging.info(f'sending a command to the remote database: {command}')
+        logging.debug(f'sending a command to the remote database: {command}')
         get_results = self._session.post(self._request_url, headers=headers, data=request_parameters)
         if get_results.status_code != 200:
             raise RuntimeError(f'error passing command to remote database: {get_results.text}, command: {command}')
         response_json = rapidjson.loads(get_results.text)
         results = response_json['result']['data']
-        logging.info(f'received a response from the graph database: {results}')
+        logging.debug(f'received a response from the graph database: {results}')
         results = rapidjson.loads(rapidjson.dumps(results), object_hook=TridentDecoder.object_hook)
-        logging.info(f'after parsing and transforming the response from the graph database, results: {results}')
+        logging.debug(f'after parsing and transforming the response from the graph database, results: {results}')
         return results
 
     def _generate_canonical_request(self, amz_date, command):

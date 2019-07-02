@@ -1,6 +1,7 @@
 import hashlib
 import logging
-from _pydecimal import Decimal
+from datetime import timezone
+from decimal import Decimal
 from typing import Dict, Union
 
 import boto3
@@ -181,7 +182,9 @@ def _set_property_value_data_type(property_value: str, data_type: str) -> Union[
         return property_value
     if data_type == 'DT':
         test_datetime = dateutil.parser.parse(property_value)
-        return test_datetime.isoformat()
+        if test_datetime.tzinfo is None or test_datetime.tzinfo.utcoffset(test_datetime) is None:
+            test_datetime = test_datetime.replace(tzinfo=timezone.utc)
+        return Decimal(test_datetime.timestamp())
     raise NotImplementedError(f'attempted to create ObjectPropertyValue with data_type: {data_type}, '
                               f'accepted types are: {accepted_data_types}')
 

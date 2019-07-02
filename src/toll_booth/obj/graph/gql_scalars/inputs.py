@@ -1,4 +1,4 @@
-from _pydecimal import Decimal
+from decimal import Decimal
 from typing import List, Dict
 
 from algernon import AlgObject

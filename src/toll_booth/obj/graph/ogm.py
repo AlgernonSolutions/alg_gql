@@ -1,6 +1,8 @@
 import logging
 from typing import List, Dict, Any
 
+from aws_xray_sdk.core import xray_recorder
+
 from toll_booth.obj.graph.generators import create_vertex_command_from_scalar, create_edge_command_from_scalar
 from toll_booth.obj.graph.gql_scalars.connected_edges import PageInfo, ConnectedEdge, ConnectedEdgePage
 from toll_booth.obj.graph.gql_scalars.inputs import InputVertex, InputEdge
@@ -14,12 +16,14 @@ class Ogm:
             trident_driver = TridentDriver()
         self._trident_driver = trident_driver
 
+    @xray_recorder.capture()
     def query_vertex(self, internal_id: str):
         query = f"g.V('{internal_id}')"
         results = self._trident_driver.execute(query, read_only=True)
         for result in results:
             return result
 
+    @xray_recorder.capture()
     def query_vertex_properties(self, internal_id: str, property_names: List[str] = None):
         if not property_names:
             property_names = []
@@ -31,22 +35,27 @@ class Ogm:
             return []
         return results
 
+    @xray_recorder.capture()
     def delete_vertex(self, internal_id: str):
         command = f"g.V('{internal_id}').drop()"
         return self._trident_driver.execute(command)
 
+    @xray_recorder.capture()
     def delete_edge(self, internal_id: str):
         command = f"g.E('{internal_id}').drop()"
         return self._trident_driver.execute(command)
 
+    @xray_recorder.capture()
     def graph_vertex(self, vertex_scalar: InputVertex):
         command = create_vertex_command_from_scalar(vertex_scalar)
         return self._trident_driver.execute(command)
 
+    @xray_recorder.capture()
     def graph_edge(self, edge_scalar: InputEdge):
         command = create_edge_command_from_scalar(edge_scalar)
         return self._trident_driver.execute(command)
 
+    @xray_recorder.capture()
     def get_connected_edge_page(self,
                                 username: str,
                                 internal_id: str,
@@ -59,14 +68,16 @@ class Ogm:
         inclusive_start = pagination_token.inclusive_start
         exclusive_end = inclusive_start + page_size
         query = f"g.V('{internal_id}').bothE().hasLabel('{edge_label}').range({inclusive_start}, {exclusive_end + 1})"
-        queried_edges = self._trident_driver.execute(query, read_only=True)
-        edges = queried_edges[:-1]
-        more = len(queried_edges) > len(edges)
+        edges = self._trident_driver.execute(query, read_only=True)
+        more = len(edges) > page_size
+        if more:
+            edges = edges[:-1]
         pagination_token.increment()
         connected_edges = [ConnectedEdge.from_raw_edge(x, internal_id) for x in edges]
         page_info = PageInfo(pagination_token, more)
         return ConnectedEdgePage(connected_edges, page_info)
 
+    @xray_recorder.capture()
     def query_edge_connections(self,
                                internal_id: str,
                                edge_labels: List[str] = None) -> List[Dict[str, Any]]:
@@ -84,3 +95,7 @@ class Ogm:
                     '__typename': 'EdgeConnection',
                     'source_internal_id': internal_id
                 } for x, y in result.items()]
+
+    @xray_recorder.capture()
+    def run_read_query(self, query):
+        return self._trident_driver.execute(query, read_only=True)

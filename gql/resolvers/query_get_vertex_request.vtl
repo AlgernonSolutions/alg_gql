@@ -1,0 +1,21 @@
+{
+    "version" : "2018-05-29",
+    "operation" : "Query",
+    "query" : {
+      "expression": "#i = :i AND #s = :s",
+        "expressionNames": {
+            "#i": "identifier_stem",
+            "#s": "sid_value"
+        },
+        "expressionValues" : {
+          ":i" : { "S" : "${context.arguments.identifier_stem}" },
+          ":s" : { "S" : "${context.arguments.sid_value}" },
+        }
+    }
+    #if( ${context.arguments.count} )
+        ,"limit": ${context.arguments.count}
+    #end
+    #if( ${context.arguments.nextToken} )
+        ,"nextToken": "${context.arguments.nextToken}"
+    #end
+}

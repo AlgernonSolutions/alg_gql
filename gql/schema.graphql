@@ -1,11 +1,8 @@
 ﻿#  all the edges originating from or terminating at a vertex
-type ConnectedEdges {
+type ConnectedEdgePage {
 	#  all the edges connected to the vertex
-	all: [Edge]!
-	#  only the edges terminating at the vertex
-	inbound: [Edge]!
-	#  only the edges originating at the vertex
-	outbound: [Edge]!
+	edges: [Edge]!
+	page_info: PageInfo!
 }
 
 enum DataTypes {
@@ -31,18 +28,19 @@ type Edge {
 	to_vertex: Vertex!
 }
 
-#  the connection object used to inspect and paginate ConnectedEdges
+#  the connection object used to inspect and paginate all the edges of a given type
 type EdgeConnection {
-	#  the connected edges, grouped by their direction (all, inbound, outbound), filterable by edge_label
-	edges(edge_labels: [String]): ConnectedEdges!
-	#  the count of the edges terminating at the vertex
-	in_count: Int!
-	#  the count of the edges originating at the vertex
-	out_count: Int!
-	#  information about the returned page of the pagination
-	page_info: PageInfo!
-	#  the count of all the edges originating from, or terminating at, the vertex
+	edge_label: String!
+	#  the connected edges, filterable by edge_label
+	edges(token: String, page_size: Int): ConnectedEdgePage
+	#  the count of all the edges of this type connected to the vertex
 	total_count: Int!
+}
+
+type ConnectedEdge{
+	internal_id: ID!
+	edge_label: String!
+	vertex: Vertex!
 }
 
 # input type allowing complex edges to be inserted
@@ -138,17 +136,19 @@ type PageInfo {
 	#  are there more pages after this one
 	more: Boolean!
 	#  string pagination token returned to retrieve the next page of objects
-	token: ID!
+	next_token: ID!
 }
 
 # the read operations for the data space
 type Query {
+	free_query(query_text: String!): String
 	#  retrieves an edge by internal_id
 	edge(internal_id: ID!): Edge
 	#  retrieves additional edges, given an edge connection
 	edges(internal_id: ID!, token: ID): EdgeConnection
 	#  retrieves a vertex determined by it's internal_id
 	vertex(internal_id: ID!, token: ID): Vertex
+	get_vertex(identifier_stem: String!, sid_value: String): Vertex
 	#  checks the data space for vertexes based on object properties
 	find_vertexes(object_type: String!, object_properties: [InputLocalProperty]!, token: ID): VertexConnection
 	list_vertexes(
@@ -157,6 +157,9 @@ type Query {
 		object_properties: [InputLocalProperty]!,
 		token: ID
 	): VertexConnection
+	max_id_value(identifier_stem: String!): Int
+	min_id_value(identifier_stem: String!): Int
+	snapshot(bucket_name: String!, file_key: String!, expression: String!): String
 }
 
 # a vertex property which contains PHI or HIPAA relevant information, the actual vertex property holds an opaque pointer to a seperate storage location
@@ -191,7 +194,7 @@ type Vertex {
 	#  the properties of the vertex, filterable by property name
 	vertex_properties(property_names: [String]): [ObjectProperty]!
 	#  the connection object used to paginate and inspect the edges connected to the vertex
-	connected_edges(page_size: Int, token: ID): EdgeConnection
+	connected_edges(edge_labels: [String]): [EdgeConnection]
 }
 
 type VertexConnection {
