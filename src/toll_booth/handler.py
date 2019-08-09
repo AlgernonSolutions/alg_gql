@@ -3,6 +3,7 @@ import logging
 import rapidjson
 from algernon import ajson
 from algernon.aws import lambda_logged
+from algernon.aws.task_setup import stated, rebuild_event
 from aws_xray_sdk.core import xray_recorder
 
 from toll_booth.obj.graph.serializers import GqlDecoder
@@ -51,3 +52,16 @@ def handler(event, context):
     encoded_results = rapidjson.loads(strung_results, object_hook=GqlDecoder.object_hook)
     logging.info(f'results after GQL encoding: {encoded_results}')
     return encoded_results
+
+
+@lambda_logged
+@stated
+@xray_recorder.capture('alg_gql_sfn')
+def sfn_handler(event, context):
+    event = rebuild_event(event)
+    logging.info(f'received a call to run graphing operation, sfn mode: {event}/{context}')
+    task_kwargs = event['task_kwargs']
+    type_name = task_kwargs['type_name']
+    field_name = task_kwargs['field_name']
+    args = task_kwargs['args']
+    return mutation.handler(type_name, field_name, args, {}, {}, {}, {})

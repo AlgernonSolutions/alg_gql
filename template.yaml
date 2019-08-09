@@ -81,11 +81,26 @@ Resources:
       VpcConfig:
         SecurityGroupIds: !Ref NeptuneSecurityGroupIds
         SubnetIds: !Ref NeptuneSubnetIds
+  GraphSfnTask:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: toll_booth.sfn_handler
+      Role: !GetAtt GraphWorker.Arn
+      VpcConfig:
+        SecurityGroupIds: !Ref NeptuneSecurityGroupIds
+        SubnetIds: !Ref NeptuneSubnetIds
   IndexTask:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src
       Handler: toll_booth.handler
+      Role: !GetAtt GraphWorker.Arn
+  IndexSfnTask:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: toll_booth.sfn_handler
       Role: !GetAtt GraphWorker.Arn
   QueryS3Csv:
     Type: AWS::Serverless::Function

@@ -142,8 +142,11 @@ def _parse_scalar_property_data(property_data: Dict) -> List[ObjectProperty]:
         parsed_properties.append(ObjectProperty(property_name, property_value))
     for entry in sensitive_properties:
         property_name = entry['property_name']
-        sensitive_args = (entry['source_internal_id'], property_name, entry['property_value'], entry['data_type'])
-        property_value = SensitivePropertyValue.generate_from_raw(*sensitive_args)
+        try:
+            sensitive_args = (entry['source_internal_id'], property_name, entry['property_value'], entry['data_type'])
+            property_value = SensitivePropertyValue.generate_from_raw(*sensitive_args)
+        except KeyError:
+            property_value = SensitivePropertyValue(property_name, '', entry['pointer'], entry['data_type'])
         parsed_properties.append(ObjectProperty(property_name, property_value))
     for entry in stored_properties:
         property_name = entry['property_name']

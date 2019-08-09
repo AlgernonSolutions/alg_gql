@@ -1,6 +1,6 @@
 import hashlib
 import logging
-from datetime import timezone
+from datetime import timezone, datetime
 from decimal import Decimal
 from typing import Dict, Union
 
@@ -82,7 +82,7 @@ class SensitivePropertyValue(AlgObject):
         Returns:
 
         """
-        logging.info(f'starting to generate a SensitiveProperty from raw: {source_internal_id}, {property_name}')
+        logging.debug(f'starting to generate a SensitiveProperty from raw: {source_internal_id}, {property_name}')
         try:
             insensitive_pointer = _update_sensitive_data(source_internal_id, property_name, sensitive_property_value)
         except SensitiveValueAlreadyStored:
@@ -181,7 +181,10 @@ def _set_property_value_data_type(property_value: str, data_type: str) -> Union[
                                f'is not acceptable boolean. accepted are: true, false literally')
         return property_value
     if data_type == 'DT':
-        test_datetime = dateutil.parser.parse(property_value)
+        try:
+            test_datetime = dateutil.parser.parse(property_value)
+        except ValueError:
+            test_datetime = datetime.fromtimestamp(float(property_value))
         if test_datetime.tzinfo is None or test_datetime.tzinfo.utcoffset(test_datetime) is None:
             test_datetime = test_datetime.replace(tzinfo=timezone.utc)
         return Decimal(test_datetime.timestamp())
@@ -211,12 +214,12 @@ def _update_sensitive_data(source_internal_id: str,
     if not sensitive_table_name:
         import os
         sensitive_table_name = os.environ['SENSITIVES_TABLE_NAME']
-    logging.info(f'starting an update_sensitive_data function: {source_internal_id}, {property_name}')
+    logging.debug(f'starting an update_sensitive_data function: {source_internal_id}, {property_name}')
     resource = boto3.resource('dynamodb')
     table = resource.Table(sensitive_table_name)
-    logging.info(f'starting to create the sensitive pointer: {source_internal_id}, {property_name}')
+    logging.debug(f'starting to create the sensitive pointer: {source_internal_id}, {property_name}')
     insensitive_value = _create_sensitive_pointer(property_name, source_internal_id)
-    logging.info(f'created the sensitive pointer: {source_internal_id}, {property_name}, {insensitive_value}')
+    logging.debug(f'created the sensitive pointer: {source_internal_id}, {property_name}, {insensitive_value}')
     try:
         table.update_item(
             Key={'insensitive': insensitive_value},
