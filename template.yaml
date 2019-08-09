@@ -67,7 +67,7 @@ Resources:
   GraphTask:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src
+      CodeUri: src/
       Handler: toll_booth.handler
       Role: !GetAtt GraphWorker.Arn
       VpcConfig:
@@ -76,7 +76,7 @@ Resources:
   GraphSfnTask:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src
+      CodeUri: src/
       Handler: toll_booth.sfn_handler
       Role: !GetAtt GraphWorker.Arn
       VpcConfig:
@@ -85,19 +85,19 @@ Resources:
   IndexTask:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src
+      CodeUri: src/
       Handler: toll_booth.handler
       Role: !GetAtt GraphWorker.Arn
   IndexSfnTask:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src
+      CodeUri: src/
       Handler: toll_booth.sfn_handler
       Role: !GetAtt GraphWorker.Arn
   QueryS3Csv:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src
+      CodeUri: src/
       Handler: toll_booth.query_handler
       Role: !GetAtt GraphWorker.Arn
   GraphWorker:
