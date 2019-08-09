@@ -1,1 +1,1 @@
-moncrief>=2.2.2
+moncrief
