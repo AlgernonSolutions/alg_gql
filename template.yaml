@@ -57,14 +57,6 @@ Globals:
     Runtime: python3.6
     Timeout: 300
     Tracing: Active
-    Layers:
-      - !Ref LayerArn
-    Environment:
-      Variables:
-        INDEX_TABLE_NAME: !Ref IndexTableName
-        SENSITIVES_TABLE_NAME: !Ref SensitivesTableName
-        GRAPH_DB_ENDPOINT: !Ref NeptuneClusterEndpoint
-        GRAPH_DB_READER_ENDPOINT: !Ref NeptuneClusterReadEndpoint
 Conditions:
   DefaultSensitivesTableRegion: !Equals [!Ref SensitivesTableRegion, '']
   DefaultIndexTableRegion: !Equals [!Ref IndexTableRegion, '']

@@ -1,5 +1,7 @@
 import logging
+import os
 
+import boto3
 import rapidjson
 from algernon import ajson
 from algernon.aws import lambda_logged
@@ -8,6 +10,28 @@ from aws_xray_sdk.core import xray_recorder
 
 from toll_booth.obj.graph.serializers import GqlDecoder
 from toll_booth.tasks import mutation, vertex, edge_connection, query
+
+
+ENVIRON_VARIABLES = [
+    'ALGERNON_BUCKET_NAME',
+    'STORAGE_BUCKET_NAME',
+    'ENCOUNTER_BUCKET_NAME',
+    'GRAPH_GQL_ENDPOINT',
+    'GRAPH_DB_ENDPOINT',
+    'GRAPH_DB_READER_ENDPOINT',
+    'INDEX_TABLE_NAME',
+    'SENSITIVE_TABLE_NAME',
+    'PROGRESS_TABLE_NAME',
+    'FIRE_HOSE_NAME'
+]
+
+
+def _load_config(variable_names):
+    client = boto3.client('ssm')
+    response = client.get_parameters(Names=[x for x in variable_names])
+    results = [(x['Name'], x['Value']) for x in response['Parameters']]
+    for entry in results:
+        os.environ[entry[0]] = entry[1]
 
 
 def _decision_tree(type_name, field_name, args, source, result, request, identity):
@@ -30,6 +54,7 @@ def _decision_tree(type_name, field_name, args, source, result, request, identit
 @xray_recorder.capture('alg_gql')
 def handler(event, context):
     logging.info(f'received a call to run a graph_object command: event/context: {event}/{context}')
+    _load_config(ENVIRON_VARIABLES)
     if isinstance(event, list):
         results = []
         for entry in event:
