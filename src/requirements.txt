@@ -1,2 +1,1 @@
-moncrief
-pytest
+moncrief>=2.2.2
