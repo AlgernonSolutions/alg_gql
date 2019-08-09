@@ -54,7 +54,7 @@ Parameters:
     Description: A collection of Subnet IDs which can interact with the Neptune Cluster
 Globals:
   Function:
-    Runtime: python3.6
+    Runtime: python3.7
     Timeout: 300
     Tracing: Active
 Conditions:
