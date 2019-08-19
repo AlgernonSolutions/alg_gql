@@ -18,7 +18,7 @@ type Edge {
 	internal_id: ID!
 	#  the descriptive label for the edge
 	edge_label: String!
-	identifier_stem: String!
+	identifier: String!
 	id_value: String!
 	#  the properties of the edge, filterable by property name
 	edge_properties(property_names: [String]): [ObjectProperty]!
@@ -100,7 +100,7 @@ input InputVertex {
 	vertex_type: String!
 	# the uniquely identifiable pointer for the vertex in the remote system
 	id_value: InputLocalProperty!
-	identifier_stem: InputLocalProperty!
+	identifier: InputLocalProperty!
 	vertex_properties: InputProperties
 }
 
@@ -148,17 +148,17 @@ type Query {
 	edges(internal_id: ID!, token: ID): EdgeConnection
 	#  retrieves a vertex determined by it's internal_id
 	vertex(internal_id: ID!, token: ID): Vertex
-	get_vertex(identifier_stem: String!, sid_value: String): Vertex
+	get_vertex(identifier: String!, sid_value: String): Vertex
 	#  checks the data space for vertexes based on object properties
 	find_vertexes(object_type: String!, object_properties: [InputLocalProperty]!, token: ID): VertexConnection
 	list_vertexes(
-		identifier_stem: String!,
+		identifier: String!,
 		object_type: String!,
 		object_properties: [InputLocalProperty]!,
 		token: ID
 	): VertexConnection
-	max_id_value(identifier_stem: String!): Int
-	min_id_value(identifier_stem: String!): Int
+	max_id_value(identifier: String!): Int
+	min_id_value(identifier: String!): Int
 	snapshot(bucket_name: String!, file_key: String!, expression: String!): String
 }
 
@@ -188,7 +188,7 @@ type Vertex {
 	#  the type of object represented by the vertex
 	vertex_type: String!
 	# the object identifier, which combines with the the id_value to generate a unique reference to an object in a remote source
-	identifier_stem: ObjectProperty!
+	identifier: ObjectProperty!
 	# the unique pointer which identifies an object from the other peer objects in a remote system
 	id_value: ObjectProperty!
 	#  the properties of the vertex, filterable by property name
