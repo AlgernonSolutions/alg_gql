@@ -97,5 +97,5 @@ class Ogm:
                 } for x, y in result.items()]
 
     @xray_recorder.capture()
-    def run_read_query(self, query):
-        return self._trident_driver.execute(query, read_only=True)
+    def run_read_query(self, query, read_only):
+        return self._trident_driver.execute(query, read_only=read_only)
