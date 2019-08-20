@@ -8,4 +8,4 @@ def handler(type_name, field_name, args, source, result, request, identity):
     ogm = Ogm()
     query_text = args['query_text']
     read_only = args.get('read_only', True)
-    return ogm.run_read_query(query_text)
+    return ogm.run_read_query(query_text, read_only)
