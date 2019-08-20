@@ -141,7 +141,7 @@ type PageInfo {
 
 # the read operations for the data space
 type Query {
-	free_query(query_text: String!): String
+	free_query(query_text: String!, read_only: Boolean): String
 	#  retrieves an edge by internal_id
 	edge(internal_id: ID!): Edge
 	#  retrieves additional edges, given an edge connection
